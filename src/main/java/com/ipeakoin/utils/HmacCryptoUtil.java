@@ -2,17 +2,15 @@ package com.ipeakoin.utils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Formatter;
 import java.util.Map;
 
 /**
  * @author klover
- * @description HmacCryptoUtil
- * @date 2023/5/24 21:22
+ * description HmacCryptoUtil
+ * date 2023/5/24 21:22
  */
 public class HmacCryptoUtil {
     private static final String ALGORITHM = "HmacSHA256";
@@ -22,17 +20,22 @@ public class HmacCryptoUtil {
      *
      * @param data   待签名数据
      * @param secret 密钥
-     * @return
+     * @return String
      */
-    public static String encryptHmacSHA256(Map<String, Object> data, String secret) throws NoSuchAlgorithmException, InvalidKeyException {
-        String str = jsonToString(data);
+    public static String encryptHmacSHA256(Map<String, Object> data, String secret) {
+        try {
+            String str = jsonToString(data);
 
-        Key sk = new SecretKeySpec(secret.getBytes(), ALGORITHM);
-        Mac mac = Mac.getInstance(sk.getAlgorithm());
-        mac.init(sk);
+            Key sk = new SecretKeySpec(secret.getBytes(), ALGORITHM);
+            Mac mac = Mac.getInstance(sk.getAlgorithm());
+            mac.init(sk);
 
-        byte[] bytes = mac.doFinal(str.getBytes());
-        return bytesToHex(bytes);
+            byte[] bytes = mac.doFinal(str.getBytes());
+            return bytesToHex(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     /**
@@ -55,7 +58,7 @@ public class HmacCryptoUtil {
      * json to string 并且排序
      *
      * @param data 待处理数据
-     * @return
+     * @return String
      */
     private static String jsonToString(Map<String, Object> data) {
         String[] keys = data.keySet().toArray(new String[0]);
