@@ -1,4 +1,4 @@
-package com.ipeakoin.service.dto;
+package com.ipeakoin.dto;
 
 /**
  * @author klover

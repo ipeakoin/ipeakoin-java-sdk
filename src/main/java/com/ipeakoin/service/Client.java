@@ -3,7 +3,7 @@ package com.ipeakoin.service;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.httpclient.MyHttpClientBuilder;
-import com.ipeakoin.service.dto.CodeRes;
+import com.ipeakoin.dto.res.CodeRes;
 import com.ipeakoin.service.impl.ClientImpl;
 import org.apache.http.impl.client.CloseableHttpClient;
 

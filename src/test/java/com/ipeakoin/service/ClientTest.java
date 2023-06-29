@@ -2,7 +2,7 @@ package com.ipeakoin.service;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
-import com.ipeakoin.service.dto.CodeRes;
+import com.ipeakoin.dto.res.CodeRes;
 import org.junit.Test;
 
 

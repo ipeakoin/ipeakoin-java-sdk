@@ -4,7 +4,7 @@ import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
-import com.ipeakoin.service.dto.CodeRes;
+import com.ipeakoin.dto.res.CodeRes;
 import jakarta.ws.rs.core.GenericType;
 import org.apache.http.impl.client.CloseableHttpClient;
 

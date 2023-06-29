@@ -41,27 +41,23 @@
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>8</java.version>
 
-        <!-- 插件版本 直接拷贝 start -->
         <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <!-- 插件版本 直接拷贝 end -->
-        <jersey-version>3.0.4</jersey-version>
-        <jakarta-annotation-version>2.1.0</jakarta-annotation-version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.glassfish.jersey.connectors</groupId>
             <artifactId>jersey-apache-connector</artifactId>
-            <version>${jersey-version}</version>
+            <version>3.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.12.4</version>
+            <version>2.15.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -72,13 +68,11 @@
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
-            <version>RELEASE</version>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
 
-
-    <!-- 默认配置 直接拷贝 start -->
     <profiles>
         <profile>
             <id>release</id>
