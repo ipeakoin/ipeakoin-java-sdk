@@ -6,7 +6,7 @@
 
     <artifactId>ipeakoin-sdk</artifactId>
     <groupId>com.ipeakoin</groupId>
-    <version>0.0.1-beta</version>
+    <version>0.0.3-beta</version>
     <packaging>jar</packaging>
     <name>iPeakoin api</name>
     <description>iPeakoin bass api</description>
@@ -48,41 +48,61 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <!-- 插件版本 直接拷贝 end -->
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <swagger-annotations-version>1.6.5</swagger-annotations-version>
+        <jersey-version>3.0.4</jersey-version>
+        <jackson-version>2.13.2</jackson-version>
+        <jackson-databind-version>2.13.4.2</jackson-databind-version>
+        <jackson-databind-nullable-version>0.2.3</jackson-databind-nullable-version>
+        <jakarta-annotation-version>2.1.0</jakarta-annotation-version>
+        <junit-version>5.8.2</junit-version>
+        <spotless.version>2.21.0</spotless.version>
     </properties>
 
     <dependencies>
-        <!-- 插件包 直接拷贝 start -->
+        <!--  JSON processing: jackson  -->
         <dependency>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${nexus-staging-maven-plugin.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>${maven-source-plugin.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>${maven-javadoc-plugin.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>${maven-gpg-plugin.version}</version>
-        </dependency>
-        <!-- 插件包 直接拷贝 end -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.6.6</version>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${jakarta-annotation-version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.connectors</groupId>
+            <artifactId>jersey-apache-connector</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

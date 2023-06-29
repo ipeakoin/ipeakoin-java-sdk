@@ -1,9 +1,12 @@
 package com.ipeakoin.httpclient.http;
 
+import com.ipeakoin.dto.ApiException;
+import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.httpclient.MyHttpClientBuilder;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.dto.Res;
-import com.ipeakoin.utils.JsonUtil;
+import jakarta.ws.rs.core.GenericType;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.config.RequestConfig;
@@ -17,6 +20,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
@@ -62,6 +66,42 @@ public class HttpRequestsBase {
         public HttpRequestsBase build() {
             return new HttpRequestsBase(httpClient, accessToken);
         }
+    }
+
+    /**
+     * 代理请求 参数处理
+     *
+     * @param path       路径
+     * @param method     请求方式
+     * @param params     请求参数
+     * @param <T>        返回泛型
+     * @param returnType 返回参数类型
+     * @return {@link ApiResponse<T>}
+     */
+    public <T> ApiResponse<T> invokeAPI(String path, String method, Map<String, Object> params, GenericType<T> returnType) throws ApiException {
+        Res res = null;
+        switch (method) {
+            case "POST":
+                res = this.postRequest(path, params);
+                break;
+            case "GET":
+                res = this.getRequest(path, params);
+                break;
+            case "PUT":
+                res = this.putRequest(path, params);
+                break;
+            case "DELETE":
+                res = this.deleteRequest(path, params);
+                break;
+            default:
+                throw new ApiException(500, "Method parameter error");
+        }
+
+        int status = res.getStatus();
+        if (status >= 200 && status < 300) {
+            return new ApiResponse<>(res.getHeaders(), null);
+        }
+        throw new ApiException(status, res.getContent(), res.getHeaders(), res.getContent());
     }
 
     /**
@@ -139,7 +179,7 @@ public class HttpRequestsBase {
                     setSocketTimeout(20000).build();
             req.setConfig(config);
 
-            String jsonString = JsonUtil.toJSONString(params);
+            String jsonString = String.valueOf(params);
 
             // 设置请求体
             req.setEntity(new StringEntity(jsonString, Constant.CHARSET));
@@ -185,7 +225,7 @@ public class HttpRequestsBase {
                     setSocketTimeout(20000).build();
             req.setConfig(config);
 
-            String jsonString = JsonUtil.toJSONString(params);
+            String jsonString = String.valueOf(params);
 
             // 设置请求体
             req.setEntity(new StringEntity(jsonString, Constant.CHARSET));
@@ -231,7 +271,7 @@ public class HttpRequestsBase {
                     setSocketTimeout(20000).build();
             req.setConfig(config);
 
-            String jsonString = JsonUtil.toJSONString(params);
+            String jsonString = String.valueOf(params);
 
             // 设置请求体
             req.setEntity(new StringEntity(jsonString, Constant.CHARSET));
@@ -280,6 +320,21 @@ public class HttpRequestsBase {
         output.setStatus(statusCode);
         output.setReason(reason);
         output.setContent(res);
+        output.setHeaders(dealResponseHeaders(response));
         return output;
+    }
+
+    /**
+     * 请求头参数处理
+     *
+     * @param response {@link CloseableHttpResponse}
+     * @return {@link Map}
+     */
+    private Map<String, String> dealResponseHeaders(CloseableHttpResponse response) {
+        Map<String, String> responseHeaders = new HashMap<>(0);
+        for (Header header : response.getAllHeaders()) {
+            responseHeaders.put(header.getName(), header.getValue());
+        }
+        return responseHeaders;
     }
 }

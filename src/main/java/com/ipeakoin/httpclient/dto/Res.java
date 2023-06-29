@@ -2,6 +2,8 @@ package com.ipeakoin.httpclient.dto;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author klover
@@ -28,6 +30,11 @@ public class Res implements Serializable {
      */
     private String content;
 
+    /**
+     * 请求头
+     */
+    private Map<String, String> headers;
+
     public int getStatus() {
         return status;
     }
@@ -52,12 +59,21 @@ public class Res implements Serializable {
         this.content = content;
     }
 
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
     @Override
     public String toString() {
-        return "ResponseOutput{" +
+        return "Res{" +
                 "status=" + status +
                 ", reason='" + reason + '\'' +
                 ", content='" + content + '\'' +
+                ", headers=" + headers +
                 '}';
     }
 }

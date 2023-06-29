@@ -3,9 +3,7 @@ package com.ipeakoin.service.impl;
 import com.ipeakoin.httpclient.dto.Res;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
-import com.ipeakoin.service.dto.CodeContentOutput;
 import com.ipeakoin.service.dto.CodeOutput;
-import com.ipeakoin.utils.JsonUtil;
 
 import java.util.HashMap;
 
@@ -38,7 +36,7 @@ public class ClientImpl implements Client {
             map.put("clientSecret", clientSecret);
             Res res = service.getRequest(uri, map);
             CodeOutput output = new CodeOutput();
-            output.setContent(JsonUtil.toBean(res.getContent(), CodeContentOutput.class));
+//            output.setContent(JsonUtil.toBean(res.getContent(), CodeContentOutput.class));
             output.setReason(res.getReason());
             output.setStatus(res.getStatus());
             return output;
