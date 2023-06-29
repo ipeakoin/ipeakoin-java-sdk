@@ -48,55 +48,20 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <!-- 插件版本 直接拷贝 end -->
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <swagger-annotations-version>1.6.5</swagger-annotations-version>
         <jersey-version>3.0.4</jersey-version>
-        <jackson-version>2.13.2</jackson-version>
-        <jackson-databind-version>2.13.4.2</jackson-databind-version>
-        <jackson-databind-nullable-version>0.2.3</jackson-databind-nullable-version>
         <jakarta-annotation-version>2.1.0</jakarta-annotation-version>
-        <junit-version>5.8.2</junit-version>
-        <spotless.version>2.21.0</spotless.version>
     </properties>
 
     <dependencies>
-        <!--  JSON processing: jackson  -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson-databind-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-            <version>${jackson-databind-nullable-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-            <version>${jakarta-annotation-version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.connectors</groupId>
             <artifactId>jersey-apache-connector</artifactId>
             <version>${jersey-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.4</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

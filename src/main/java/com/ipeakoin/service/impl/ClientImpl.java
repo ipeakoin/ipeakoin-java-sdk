@@ -1,9 +1,13 @@
 package com.ipeakoin.service.impl;
 
+import com.ipeakoin.dto.ApiException;
+import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.httpclient.dto.Res;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
+import com.ipeakoin.service.dto.CodeContentOutput;
 import com.ipeakoin.service.dto.CodeOutput;
+import jakarta.ws.rs.core.GenericType;
 
 import java.util.HashMap;
 
@@ -25,21 +29,21 @@ public class ClientImpl implements Client {
 
     /**
      * 获取code
+     *
+     * @return {@link ApiResponse<CodeContentOutput>}
+     * @throws {@link ApiException}
      */
     @Override
-    public CodeOutput getCode() {
+    public ApiResponse<CodeContentOutput> getCode() throws ApiException {
         HttpRequestsBase service = new HttpRequestsBase.Builder().config("").build();
         try {
             String uri = this.baseurl + "/open-api/oauth/authorize";
             HashMap<String, Object> map = new HashMap<>(2);
             map.put("clientId", clientId);
             map.put("clientSecret", clientSecret);
-            Res res = service.getRequest(uri, map);
-            CodeOutput output = new CodeOutput();
-//            output.setContent(JsonUtil.toBean(res.getContent(), CodeContentOutput.class));
-            output.setReason(res.getReason());
-            output.setStatus(res.getStatus());
-            return output;
+            GenericType<CodeContentOutput> returnType = new GenericType<>() {
+            };
+            return service.invokeAPI(uri, "GET", map, returnType);
         } finally {
             service.close();
         }

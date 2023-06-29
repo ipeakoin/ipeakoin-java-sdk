@@ -1,10 +1,13 @@
 package com.ipeakoin.httpclient.http;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.httpclient.MyHttpClientBuilder;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.dto.Res;
+import com.ipeakoin.service.dto.CodeContentOutput;
 import jakarta.ws.rs.core.GenericType;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -99,7 +102,13 @@ public class HttpRequestsBase {
 
         int status = res.getStatus();
         if (status >= 200 && status < 300) {
-            return new ApiResponse<>(res.getHeaders(), null);
+            Class<?> rawType = returnType.getRawType();
+            try {
+                Object o = new ObjectMapper().readValue(res.getContent(), rawType);
+                return new ApiResponse<>(res.getHeaders(), (T) o);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
         throw new ApiException(status, res.getContent(), res.getHeaders(), res.getContent());
     }
