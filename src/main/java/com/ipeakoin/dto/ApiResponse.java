@@ -1,5 +1,6 @@
 package com.ipeakoin.dto;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -8,6 +9,12 @@ import java.util.Map;
  * date 2023/6/28 16:40
  */
 public class ApiResponse<T> {
+    /**
+     * serial version UID
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final Map<String, String> headers;
 
     private final T data;

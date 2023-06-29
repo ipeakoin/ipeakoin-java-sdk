@@ -1,5 +1,6 @@
 package com.ipeakoin.dto;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -8,6 +9,12 @@ import java.util.Map;
  * date 2023/6/28 16:45
  */
 public class ApiException extends Exception {
+    /**
+     * serial version UID
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private int code = 0;
 
     private Map<String, String> responseHeaders = null;

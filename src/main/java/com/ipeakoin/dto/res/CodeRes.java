@@ -9,7 +9,6 @@ import java.io.Serializable;
  * date 2023/6/27 17:27
  */
 public class CodeRes implements Serializable {
-
     /**
      * serial version UID
      */

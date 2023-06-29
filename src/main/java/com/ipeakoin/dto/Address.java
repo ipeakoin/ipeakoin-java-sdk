@@ -1,11 +1,18 @@
 package com.ipeakoin.dto;
 
+import java.io.Serial;
+
 /**
  * @author klover
  * description Address
  * date 2023/6/29 14:39
  */
 public class Address {
+    /**
+     * serial version UID
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 地址栏第一行
      */
