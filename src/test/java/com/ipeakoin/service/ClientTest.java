@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ClientTest {
 
     @Test
-    public void getAccessToken() {
+    public void getCode() {
         Client service = new Client.Builder()
                 .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
                 .build();

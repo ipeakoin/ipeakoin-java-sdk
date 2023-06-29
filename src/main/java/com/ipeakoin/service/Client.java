@@ -2,8 +2,11 @@ package com.ipeakoin.service;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
+import com.ipeakoin.dto.req.CodeReq;
+import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.httpclient.MyHttpClientBuilder;
 import com.ipeakoin.dto.res.CodeRes;
+import com.ipeakoin.dto.res.AccessTokenRes;
 import com.ipeakoin.service.impl.ClientImpl;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -51,11 +54,21 @@ public interface Client {
         /**
          * 构造服务
          *
+         * @param isCloseHttpClient 是否主动关闭链接池
+         * @return Client
+         */
+        public Client build(Boolean isCloseHttpClient) {
+            CloseableHttpClient httpClient = MyHttpClientBuilder.create().build();
+            return this.build(httpClient, isCloseHttpClient);
+        }
+
+        /**
+         * 构造服务
+         *
          * @return Client
          */
         public Client build() {
-            CloseableHttpClient httpClient = MyHttpClientBuilder.create().build();
-            return this.build(httpClient, true);
+            return this.build(false);
         }
     }
 
@@ -67,15 +80,35 @@ public interface Client {
     /**
      * 获取code
      *
-     * @return {@link ApiResponse}
+     * @return {@link ApiResponse<CodeRes>}
      * @throws ApiException
      */
     ApiResponse<CodeRes> getCode() throws ApiException;
 
     /**
+     * 获取code
+     *
+     * @param input {@link CodeReq}
+     * @return {@link ApiResponse<CodeRes>}
+     * @throws ApiException
+     */
+    ApiResponse<CodeRes> getCode(CodeReq input) throws ApiException;
+
+    /**
      * 获取access token
      *
-     * @param code code
+     * @param code {@link String}
+     * @return {@link ApiResponse<AccessTokenRes>}
+     * @throws ApiException
      */
-    void getAccessToken(String code);
+    ApiResponse<AccessTokenRes> getAccessToken(String code) throws ApiException;
+
+    /**
+     * 刷新access token
+     *
+     * @param refreshToken {@link String}
+     * @return {@link ApiResponse<RefreshAccessTokenRes>}
+     * @throws ApiException
+     */
+    ApiResponse<RefreshAccessTokenRes> refreshAccessToken(String refreshToken) throws ApiException;
 }
