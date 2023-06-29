@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 /**
  * @author klover
- * description CodeContentOutput
+ * description CodeRes
  * date 2023/6/27 17:27
  */
-public class CodeContentOutput implements Serializable {
+public class CodeRes implements Serializable {
 
     /**
      * serial version UID
@@ -55,7 +55,7 @@ public class CodeContentOutput implements Serializable {
 
     @Override
     public String toString() {
-        return "CodeContentOutput{" +
+        return "CodeRes{" +
                 "timestamp=" + timestamp +
                 ", state='" + state + '\'' +
                 ", code='" + code + '\'' +

@@ -2,8 +2,7 @@ package com.ipeakoin.service;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
-import com.ipeakoin.service.dto.CodeContentOutput;
-import com.ipeakoin.service.dto.CodeOutput;
+import com.ipeakoin.service.dto.CodeRes;
 import com.ipeakoin.service.impl.ClientImpl;
 
 /**
@@ -49,10 +48,10 @@ public interface Client {
     /**
      * 获取code
      *
-     * @return {@link ApiResponse<CodeContentOutput>}
+     * @return {@link ApiResponse< CodeRes >}
      * @throws {@link ApiException}
      */
-    ApiResponse<CodeContentOutput> getCode() throws ApiException;
+    ApiResponse<CodeRes> getCode() throws ApiException;
 
     /**
      * 获取access token

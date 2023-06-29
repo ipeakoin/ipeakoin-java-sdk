@@ -1,6 +1,5 @@
 package com.ipeakoin.dto;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,7 +12,7 @@ public class ApiException extends Exception {
 
     private Map<String, String> responseHeaders = null;
 
-    private String responseBody = null;
+    private ErrorMessage errorMessage = null;
 
     public ApiException() {
     }
@@ -26,14 +25,14 @@ public class ApiException extends Exception {
         super(message);
     }
 
-    public ApiException(String message, Throwable throwable, int code, Map<String, String> responseHeaders, String responseBody) {
+    public ApiException(String message, Throwable throwable, int code, Map<String, String> responseHeaders, ErrorMessage responseBody) {
         super(message, throwable);
         this.code = code;
         this.responseHeaders = responseHeaders;
-        this.responseBody = responseBody;
+        this.errorMessage = responseBody;
     }
 
-    public ApiException(String message, int code, Map<String, String> responseHeaders, String responseBody) {
+    public ApiException(String message, int code, Map<String, String> responseHeaders, ErrorMessage responseBody) {
         this(message, (Throwable) null, code, responseHeaders, responseBody);
     }
 
@@ -41,7 +40,7 @@ public class ApiException extends Exception {
         this(message, throwable, code, responseHeaders, null);
     }
 
-    public ApiException(int code, Map<String, String> responseHeaders, String responseBody) {
+    public ApiException(int code, Map<String, String> responseHeaders, ErrorMessage responseBody) {
         this((String) null, (Throwable) null, code, responseHeaders, responseBody);
     }
 
@@ -50,10 +49,10 @@ public class ApiException extends Exception {
         this.code = code;
     }
 
-    public ApiException(int code, String message, Map<String, String> responseHeaders, String responseBody) {
+    public ApiException(int code, String message, Map<String, String> responseHeaders, ErrorMessage responseBody) {
         this(code, message);
         this.responseHeaders = responseHeaders;
-        this.responseBody = responseBody;
+        this.errorMessage = responseBody;
     }
 
     public int getCode() {
@@ -64,7 +63,7 @@ public class ApiException extends Exception {
         return this.responseHeaders;
     }
 
-    public String getResponseBody() {
-        return this.responseBody;
+    public ErrorMessage getErrorMessage() {
+        return this.errorMessage;
     }
 }

@@ -4,10 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
+import com.ipeakoin.dto.ErrorMessage;
 import com.ipeakoin.httpclient.MyHttpClientBuilder;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.dto.Res;
-import com.ipeakoin.service.dto.CodeContentOutput;
+import com.ipeakoin.service.dto.CodeRes;
 import jakarta.ws.rs.core.GenericType;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -110,7 +111,7 @@ public class HttpRequestsBase {
                 throw new RuntimeException(e);
             }
         }
-        throw new ApiException(status, res.getContent(), res.getHeaders(), res.getContent());
+        throw new ApiException(status, res.getContent(), res.getHeaders(), delErrorMessage(res.getContent()));
     }
 
     /**
@@ -345,5 +346,27 @@ public class HttpRequestsBase {
             responseHeaders.put(header.getName(), header.getValue());
         }
         return responseHeaders;
+    }
+
+    /**
+     * 处理错误信息
+     *
+     * @param content {@link String}
+     * @return {@link ErrorMessage}
+     */
+    private ErrorMessage delErrorMessage(String content) {
+        if (content == null) {
+            return null;
+        }
+
+        GenericType<ErrorMessage> returnType = new GenericType<>() {
+        };
+
+        Class<?> rawType = returnType.getRawType();
+        try {
+            return (ErrorMessage) new ObjectMapper().readValue(content, rawType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
