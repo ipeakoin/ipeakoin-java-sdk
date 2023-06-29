@@ -6,6 +6,7 @@ import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
 import com.ipeakoin.service.dto.CodeRes;
 import jakarta.ws.rs.core.GenericType;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.util.HashMap;
 
@@ -18,11 +19,29 @@ public class ClientImpl implements Client {
     private final String clientId;
     private final String clientSecret;
     private final String baseurl;
+    private final CloseableHttpClient httpClient;
+    /**
+     * 是否主动关闭连接池
+     */
+    private final Boolean isCloseHttpClient;
 
-    public ClientImpl(String clientId, String clientSecret, String baseurl) {
+    public ClientImpl(CloseableHttpClient httpClient, String clientId, String clientSecret, String baseurl, Boolean isCloseHttpClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.baseurl = baseurl;
+        this.httpClient = httpClient;
+        this.isCloseHttpClient = isCloseHttpClient;
+    }
+
+    /**
+     * 关闭http 请求连接池
+     */
+    @Override
+    public void closeHttpClient() {
+        try {
+            httpClient.close();
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -33,18 +52,19 @@ public class ClientImpl implements Client {
      */
     @Override
     public ApiResponse<CodeRes> getCode() throws ApiException {
-        HttpRequestsBase service = new HttpRequestsBase.Builder().config("").build();
-        try {
-            String uri = this.baseurl + "/open-api/oauth/authorize";
-            HashMap<String, Object> map = new HashMap<>(2);
-            map.put("clientId", clientId);
-            map.put("clientSecret", clientSecret);
-            GenericType<CodeRes> returnType = new GenericType<>() {
-            };
-            return service.invokeAPI(uri, "GET", map, returnType);
-        } finally {
-            service.close();
+
+        HttpRequestsBase service = new HttpRequestsBase.Builder().build(this.httpClient, "");
+        String uri = this.baseurl + "/open-api/oauth/authorize";
+        HashMap<String, Object> map = new HashMap<>(2);
+        map.put("clientId", clientId);
+        map.put("clientSecret", clientSecret);
+        GenericType<CodeRes> returnType = new GenericType<>() {
+        };
+        ApiResponse<CodeRes> api = service.invokeAPI(uri, "GET", map, returnType);
+        if (this.isCloseHttpClient) {
+            this.closeHttpClient();
         }
+        return api;
     }
 
     /**

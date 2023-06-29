@@ -47,27 +47,12 @@ public class HttpRequestsBase {
      * Service构造器
      */
     public static class Builder {
-        private CloseableHttpClient httpClient;
-        private String accessToken;
-
         /**
-         * 设置请求配置，以该配置构造默认的httpClient，若未调用httpClient()方法，则必须调用该方法
-         *
-         * @param accessToken access_token
-         * @return Builder
+         * @param httpClient  httpClient
+         * @param accessToken accessToken
+         * @return HttpRequestsBase
          */
-        public Builder config(String accessToken) {
-            this.httpClient = MyHttpClientBuilder.create().build();
-            this.accessToken = accessToken;
-            return this;
-        }
-
-        /**
-         * 构造服务
-         *
-         * @return QbitService
-         */
-        public HttpRequestsBase build() {
+        public HttpRequestsBase build(CloseableHttpClient httpClient, String accessToken) {
             return new HttpRequestsBase(httpClient, accessToken);
         }
     }
@@ -103,9 +88,8 @@ public class HttpRequestsBase {
 
         int status = res.getStatus();
         if (status >= 200 && status < 300) {
-            Class<?> rawType = returnType.getRawType();
             try {
-                Object o = new ObjectMapper().readValue(res.getContent(), rawType);
+                Object o = new ObjectMapper().readValue(res.getContent(), returnType.getRawType());
                 return new ApiResponse<>(res.getHeaders(), (T) o);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
@@ -302,16 +286,6 @@ public class HttpRequestsBase {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    /**
-     * 关闭流请求
-     */
-    public void close() {
-        try {
-            this.httpClient.close();
-        } catch (IOException ignored) {
         }
     }
 

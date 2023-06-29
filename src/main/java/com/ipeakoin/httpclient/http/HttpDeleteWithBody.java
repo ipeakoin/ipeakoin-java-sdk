@@ -1,5 +1,6 @@
 package com.ipeakoin.httpclient.http;
 
+import net.jcip.annotations.NotThreadSafe;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 
 import java.net.URI;
@@ -9,7 +10,7 @@ import java.net.URI;
  * description HttpDeleteWithBody
  * date 2023/6/27 16:31
  */
-//@NotThreadSafe
+@NotThreadSafe
 public class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
     public static final String METHOD_NAME = "DELETE";
 

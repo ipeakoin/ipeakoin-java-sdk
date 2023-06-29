@@ -2,12 +2,11 @@ package com.ipeakoin.httpclient.dto;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author klover
- * description ResponseOutput
+ * description Res
  * date 2023/6/27 16:49
  */
 public class Res implements Serializable {
