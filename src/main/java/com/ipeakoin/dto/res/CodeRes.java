@@ -1,5 +1,7 @@
 package com.ipeakoin.dto.res;
 
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * description CodeRes
  * date 2023/6/27 17:27
  */
+@Data
 public class CodeRes implements Serializable {
     /**
      * serial version UID
@@ -27,37 +30,4 @@ public class CodeRes implements Serializable {
      * code作为换取access token的票据, code只能使用一次, 10分钟未被使用自动过期
      */
     private String code;
-
-    public Integer getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Integer timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Override
-    public String toString() {
-        return "CodeRes{" +
-                "timestamp=" + timestamp +
-                ", state='" + state + '\'' +
-                ", code='" + code + '\'' +
-                '}';
-    }
 }
