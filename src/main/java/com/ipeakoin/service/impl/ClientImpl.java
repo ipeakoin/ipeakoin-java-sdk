@@ -8,6 +8,8 @@ import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
 import com.ipeakoin.dto.res.CodeRes;
+import com.ipeakoin.service.v1.V1;
+import com.ipeakoin.service.v2.V2;
 import jakarta.ws.rs.core.GenericType;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -24,10 +26,13 @@ public class ClientImpl implements Client {
     private final String baseurl;
     private final CloseableHttpClient httpClient;
     private HttpRequestsBase service;
+    private String accessToken;
     /**
      * 是否主动关闭连接池
      */
     private final Boolean isCloseHttpClient;
+    private static volatile V1 v1Service;
+    private static volatile V2 v2Service;
 
     public ClientImpl(CloseableHttpClient httpClient, String clientId, String clientSecret, String baseurl, Boolean isCloseHttpClient) {
         this.clientId = clientId;
@@ -35,7 +40,19 @@ public class ClientImpl implements Client {
         this.baseurl = baseurl;
         this.httpClient = httpClient;
         this.isCloseHttpClient = isCloseHttpClient;
-        this.service = new HttpRequestsBase.Builder().build(this.httpClient, "");
+        this.service = new HttpRequestsBase.Builder().build(this.httpClient);
+
+    }
+
+    /**
+     * 添加 accessToken
+     *
+     * @param accessToken {@link String}
+     */
+    @Override
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+        this.service.setAccessToken(this.accessToken);
     }
 
     /**
@@ -132,5 +149,39 @@ public class ClientImpl implements Client {
             this.closeHttpClient();
         }
         return api;
+    }
+
+    /**
+     * V1 版接口
+     *
+     * @return {@link V1}
+     */
+    @Override
+    public V1 v1() {
+        if (v1Service == null) {
+            synchronized (V1.class) {
+                if (v1Service == null) {
+                    v1Service = new V1(this.baseurl);
+                }
+            }
+        }
+        return v1Service;
+    }
+
+    /**
+     * V2 版接口
+     *
+     * @return {@link V2}
+     */
+    @Override
+    public V2 v2() {
+        if (v2Service == null) {
+            synchronized (V2.class) {
+                if (v2Service == null) {
+                    v2Service = new V2(this.baseurl);
+                }
+            }
+        }
+        return v2Service;
     }
 }

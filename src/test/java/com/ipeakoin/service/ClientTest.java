@@ -15,6 +15,7 @@ public class ClientTest {
                 .build();
 
         try {
+            service.setAccessToken("");
             ApiResponse<CodeRes> code = service.getCode();
             System.out.println(code.getData());
         } catch (ApiException e) {

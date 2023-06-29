@@ -34,10 +34,18 @@ import static java.util.Objects.requireNonNull;
  */
 public class HttpRequestsBase {
     private final CloseableHttpClient httpClient;
-    private final String accessToken;
+    private String accessToken;
 
-    public HttpRequestsBase(CloseableHttpClient httpClient, String accessToken) {
+    public HttpRequestsBase(CloseableHttpClient httpClient) {
         this.httpClient = requireNonNull(httpClient);
+    }
+
+    /**
+     * 添加 accessToken
+     *
+     * @param accessToken {@link String}
+     */
+    public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
@@ -46,12 +54,11 @@ public class HttpRequestsBase {
      */
     public static class Builder {
         /**
-         * @param httpClient  httpClient
-         * @param accessToken accessToken
+         * @param httpClient httpClient
          * @return HttpRequestsBase
          */
-        public HttpRequestsBase build(CloseableHttpClient httpClient, String accessToken) {
-            return new HttpRequestsBase(httpClient, accessToken);
+        public HttpRequestsBase build(CloseableHttpClient httpClient) {
+            return new HttpRequestsBase(httpClient);
         }
     }
 

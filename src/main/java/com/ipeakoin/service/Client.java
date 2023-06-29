@@ -8,6 +8,8 @@ import com.ipeakoin.httpclient.MyHttpClientBuilder;
 import com.ipeakoin.dto.res.CodeRes;
 import com.ipeakoin.dto.res.AccessTokenRes;
 import com.ipeakoin.service.impl.ClientImpl;
+import com.ipeakoin.service.v1.V1;
+import com.ipeakoin.service.v2.V2;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
@@ -27,16 +29,24 @@ public interface Client {
         /**
          * 配置
          *
+         * @return Client.Builder
+         */
+        public Client.Builder config(String baseurl) {
+            return this.config(null, null, baseurl);
+        }
+
+        /**
+         * 配置
+         *
          * @param clientId     clientId
          * @param clientSecret clientSecret
          * @param baseurl      baseurl
-         * @return IPeakoinClient.Builder
+         * @return Client.Builder
          */
         public Client.Builder config(String clientId, String clientSecret, String baseurl) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
             this.baseurl = baseurl;
-
             return this;
         }
 
@@ -71,6 +81,13 @@ public interface Client {
             return this.build(false);
         }
     }
+
+    /**
+     * 添加 accessToken
+     *
+     * @param accessToken {@link String}
+     */
+    void setAccessToken(String accessToken);
 
     /**
      * 关闭http 请求连接池
@@ -111,4 +128,18 @@ public interface Client {
      * @throws ApiException
      */
     ApiResponse<RefreshAccessTokenRes> refreshAccessToken(String refreshToken) throws ApiException;
+
+    /**
+     * V1 版接口
+     *
+     * @return {@link V1}
+     */
+    V1 v1();
+
+    /**
+     * V2 版接口
+     *
+     * @return {@link V2}
+     */
+    V2 v2();
 }
