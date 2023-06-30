@@ -64,7 +64,9 @@ public class test {
         try {
             ApiResponse<CodeRes> code = service.getCode();
             ApiResponse<AccessTokenRes> accessToken = service.getAccessToken(code.getData().getCode());
-            // 主动关闭 http 连接池service.closeHttpClient();System.out.println(accessToken.getData());
+            // Actively close http Connection pool
+            service.closeHttpClient();
+            System.out.println(accessToken.getData());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
             e.printStackTrace();
