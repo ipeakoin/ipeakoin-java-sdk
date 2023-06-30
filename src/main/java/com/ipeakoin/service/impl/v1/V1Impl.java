@@ -1,16 +1,31 @@
-package com.ipeakoin.service.v1;
+package com.ipeakoin.service.impl.v1;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.v1.*;
+import com.ipeakoin.service.v1.V1;
 
 /**
  * @author klover
  * description V1
- * date 2023/6/30 17:31
+ * date 2023/6/29 16:59
  */
-public interface V1 {
+public class V1Impl implements V1 {
+    /**
+     * base url
+     */
+    private final String baseUrl;
+
+    /**
+     * v1
+     *
+     * @param baseUrl base url
+     */
+    public V1Impl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
     /**
      * Create a account
      *
@@ -18,7 +33,10 @@ public interface V1 {
      * @return {@link ApiResponse<CreateAccountRes>}
      * @throws ApiException error
      */
-    ApiResponse<CreateAccountRes> createAccount(CreateAccountReq input) throws ApiException;
+    @Override
+    public ApiResponse<CreateAccountRes> createAccount(CreateAccountReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * List all accounts
@@ -27,7 +45,10 @@ public interface V1 {
      * @return {@link ApiResponse<AccountsRes>}
      * @throws ApiException error
      */
-    ApiResponse<AccountsRes> getAccounts(AccountsReq input) throws ApiException;
+    @Override
+    public ApiResponse<AccountsRes> getAccounts(AccountsReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * List all users
@@ -36,7 +57,10 @@ public interface V1 {
      * @return {@link ApiResponse<UsersRes>}
      * @throws ApiException error
      */
-    ApiResponse<UsersRes> getUsers(UsersReq input) throws ApiException;
+    @Override
+    public ApiResponse<UsersRes> getUsers(UsersReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Upload file
@@ -45,7 +69,10 @@ public interface V1 {
      * @return {@link ApiResponse<UploadFileRes>}
      * @throws ApiException error
      */
-    ApiResponse<UploadFileRes> uploadFile(UploadFileReq input) throws ApiException;
+    @Override
+    public ApiResponse<UploadFileRes> uploadFile(UploadFileReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * OCR (ID card - Face)
@@ -54,7 +81,10 @@ public interface V1 {
      * @return {@link ApiResponse<OcrIdCardFaceRes>}
      * @throws ApiException error
      */
-    ApiResponse<OcrIdCardFaceRes> ocrIdCardFace(OcrIdCardFaceReq input) throws ApiException;
+    @Override
+    public ApiResponse<OcrIdCardFaceRes> ocrIdCardFace(OcrIdCardFaceReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * OCR (ID card - Back)
@@ -63,7 +93,10 @@ public interface V1 {
      * @return {@link ApiResponse<OcrIdCardBackRes>}
      * @throws ApiException error
      */
-    ApiResponse<OcrIdCardBackRes> ocrIdCardBack(OcrIdCardBackReq input) throws ApiException;
+    @Override
+    public ApiResponse<OcrIdCardBackRes> ocrIdCardBack(OcrIdCardBackReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * OCR (Passport)
@@ -72,7 +105,10 @@ public interface V1 {
      * @return {@link ApiResponse<OcrPassportRes>}
      * @throws ApiException error
      */
-    ApiResponse<OcrPassportRes> ocrPassport(OcrPassportReq input) throws ApiException;
+    @Override
+    public ApiResponse<OcrPassportRes> ocrPassport(OcrPassportReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Submit account KYC
@@ -81,7 +117,10 @@ public interface V1 {
      * @return {@link ApiResponse<SubmitAccountKycRes>}
      * @throws ApiException error
      */
-    ApiResponse<SubmitAccountKycRes> submitAccountKyc(SubmitAccountKycReq input) throws ApiException;
+    @Override
+    public ApiResponse<SubmitAccountKycRes> submitAccountKyc(SubmitAccountKycReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Reset account KYC
@@ -90,7 +129,10 @@ public interface V1 {
      * @return {@link ApiResponse<ResetAccountKycRes>}
      * @throws ApiException error
      */
-    ApiResponse<ResetAccountKycRes> resetAccountKyc(ResetAccountKycReq input) throws ApiException;
+    @Override
+    public ApiResponse<ResetAccountKycRes> resetAccountKyc(ResetAccountKycReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Get a face authentication url
@@ -99,7 +141,10 @@ public interface V1 {
      * @return {@link ApiResponse<FaceAuthUrlRes>}
      * @throws ApiException error
      */
-    ApiResponse<FaceAuthUrlRes> getFaceAuthUrl(FaceAuthUrlReq input) throws ApiException;
+    @Override
+    public ApiResponse<FaceAuthUrlRes> getFaceAuthUrl(FaceAuthUrlReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Face authentication
@@ -108,7 +153,10 @@ public interface V1 {
      * @return {@link ApiResponse<FaceAuthRes>}
      * @throws ApiException error
      */
-    ApiResponse<FaceAuthRes> faceAuth(FaceAuthReq input) throws ApiException;
+    @Override
+    public ApiResponse<FaceAuthRes> faceAuth(FaceAuthReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Get a account KYC
@@ -117,7 +165,10 @@ public interface V1 {
      * @return {@link ApiResponse<AccountKycRes>}
      * @throws ApiException error
      */
-    ApiResponse<AccountKycRes> getAccountKyc(AccountKycReq input) throws ApiException;
+    @Override
+    public ApiResponse<AccountKycRes> getAccountKyc(AccountKycReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * List all balances
@@ -126,7 +177,10 @@ public interface V1 {
      * @return {@link ApiResponse<BalancesRes>}
      * @throws ApiException error
      */
-    ApiResponse<BalancesRes> getBalances(BalancesReq input) throws ApiException;
+    @Override
+    public ApiResponse<BalancesRes> getBalances(BalancesReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Create a transfer
@@ -135,7 +189,10 @@ public interface V1 {
      * @return {@link ApiResponse<CreateTransferRes>}
      * @throws ApiException error
      */
-    ApiResponse<CreateTransferRes> createTransfer(CreateTransferReq input) throws ApiException;
+    @Override
+    public ApiResponse<CreateTransferRes> createTransfer(CreateTransferReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Get a transfer
@@ -144,7 +201,10 @@ public interface V1 {
      * @return {@link ApiResponse<TransferRes>}
      * @throws ApiException error
      */
-    ApiResponse<TransferRes> getTransfer(TransferReq input) throws ApiException;
+    @Override
+    public ApiResponse<TransferRes> getTransfer(TransferReq input) throws ApiException {
+        return null;
+    }
 
     /**
      * Trigger webhook
@@ -153,5 +213,8 @@ public interface V1 {
      * @return {@link ApiResponse<TriggerWebhookRes>}
      * @throws ApiException error
      */
-    ApiResponse<TriggerWebhookRes> triggerWebhook(TriggerWebhookReq input) throws ApiException;
+    @Override
+    public ApiResponse<TriggerWebhookRes> triggerWebhook(TriggerWebhookReq input) throws ApiException {
+        return null;
+    }
 }

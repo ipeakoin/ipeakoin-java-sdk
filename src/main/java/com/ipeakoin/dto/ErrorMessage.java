@@ -14,21 +14,47 @@ public class ErrorMessage {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * error code
+     */
     private Integer code;
+    /**
+     * error message
+     */
     private String message;
 
+    /**
+     * error code
+     *
+     * @return Integer
+     */
     public Integer getCode() {
         return code;
     }
 
+    /**
+     * error code
+     *
+     * @param code code
+     */
     public void setCode(Integer code) {
         this.code = code;
     }
 
+    /**
+     * error message
+     *
+     * @return String
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * error message
+     *
+     * @param message message
+     */
     public void setMessage(String message) {
         this.message = message;
     }

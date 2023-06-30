@@ -12,22 +12,43 @@ import java.net.URI;
  */
 @NotThreadSafe
 public class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
+    /**
+     * METHOD_NAME
+     */
     public static final String METHOD_NAME = "DELETE";
 
+    /**
+     * getMethod
+     *
+     * @return String
+     */
     public String getMethod() {
         return METHOD_NAME;
     }
 
+    /**
+     * HttpDeleteWithBody
+     *
+     * @param uri uri
+     */
     public HttpDeleteWithBody(final String uri) {
         super();
         setURI(URI.create(uri));
     }
 
+    /**
+     * HttpDeleteWithBody
+     *
+     * @param uri uri
+     */
     public HttpDeleteWithBody(final URI uri) {
         super();
         setURI(uri);
     }
 
+    /**
+     * HttpDeleteWithBody
+     */
     public HttpDeleteWithBody() {
         super();
     }

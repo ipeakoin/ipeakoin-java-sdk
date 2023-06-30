@@ -1,5 +1,7 @@
 package com.ipeakoin.dto.req;
 
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * description CodeReq
  * date 2023/6/29 16:05
  */
+@Data
 public class CodeReq implements Serializable {
     /**
      * serial version UID
@@ -15,30 +18,12 @@ public class CodeReq implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * state
+     */
     private String state;
+    /**
+     * redirectUri
+     */
     private String redirectUri;
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getRedirectUri() {
-        return redirectUri;
-    }
-
-    public void setRedirectUri(String redirectUri) {
-        this.redirectUri = redirectUri;
-    }
-
-    @Override
-    public String toString() {
-        return "CodeReq{" +
-                "state='" + state + '\'' +
-                ", redirectUri='" + redirectUri + '\'' +
-                '}';
-    }
 }

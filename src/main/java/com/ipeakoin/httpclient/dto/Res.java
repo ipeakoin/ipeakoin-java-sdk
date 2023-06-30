@@ -34,34 +34,74 @@ public class Res implements Serializable {
      */
     private Map<String, String> headers;
 
+    /**
+     * getStatus
+     *
+     * @return int
+     */
     public int getStatus() {
         return status;
     }
 
+    /**
+     * setStatus
+     *
+     * @param status status
+     */
     public void setStatus(int status) {
         this.status = status;
     }
 
+    /**
+     * getReason
+     *
+     * @return String
+     */
     public String getReason() {
         return reason;
     }
 
+    /**
+     * setReason
+     *
+     * @param reason reason
+     */
     public void setReason(String reason) {
         this.reason = reason;
     }
 
+    /**
+     * getContent
+     *
+     * @return String
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * setContent
+     *
+     * @param content content
+     */
     public void setContent(String content) {
         this.content = content;
     }
 
+    /**
+     * getHeaders
+     *
+     * @return Map
+     */
     public Map<String, String> getHeaders() {
         return headers;
     }
 
+    /**
+     * setHeaders
+     *
+     * @param headers headers
+     */
     public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
     }

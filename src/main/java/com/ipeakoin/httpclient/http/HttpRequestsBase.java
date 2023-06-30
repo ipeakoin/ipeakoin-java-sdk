@@ -38,6 +38,11 @@ public class HttpRequestsBase {
     private final CloseableHttpClient httpClient;
     private String accessToken;
 
+    /**
+     * HttpRequestsBase
+     *
+     * @param httpClient httpClient
+     */
     public HttpRequestsBase(CloseableHttpClient httpClient) {
         this.httpClient = requireNonNull(httpClient);
     }
@@ -73,6 +78,7 @@ public class HttpRequestsBase {
      * @param <T>        返回泛型
      * @param returnType 返回参数类型
      * @return {@link ApiResponse<T>}
+     * @throws ApiException error
      */
     public <T> ApiResponse<T> invokeAPI(String path, String method, Map<String, Object> params, GenericType<T> returnType) throws ApiException {
         Res res = null;

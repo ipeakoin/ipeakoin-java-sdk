@@ -8,6 +8,8 @@ import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
 import com.ipeakoin.dto.res.CodeRes;
+import com.ipeakoin.service.impl.v1.V1Impl;
+import com.ipeakoin.service.impl.v2.V2Impl;
 import com.ipeakoin.service.v1.V1;
 import com.ipeakoin.service.v2.V2;
 import jakarta.ws.rs.core.GenericType;
@@ -34,6 +36,15 @@ public class ClientImpl implements Client {
     private static volatile V1 v1Service;
     private static volatile V2 v2Service;
 
+    /**
+     * ClientImpl
+     *
+     * @param httpClient        httpClient
+     * @param clientId          clientId
+     * @param clientSecret      clientSecret
+     * @param baseurl           baseurl
+     * @param isCloseHttpClient isCloseHttpClient
+     */
     public ClientImpl(CloseableHttpClient httpClient, String clientId, String clientSecret, String baseurl, Boolean isCloseHttpClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -70,7 +81,7 @@ public class ClientImpl implements Client {
      * 获取code
      *
      * @return {@link ApiResponse<CodeRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     @Override
     public ApiResponse<CodeRes> getCode() throws ApiException {
@@ -82,7 +93,7 @@ public class ClientImpl implements Client {
      *
      * @param input {@link CodeReq}
      * @return {@link ApiResponse<CodeRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     @Override
     public ApiResponse<CodeRes> getCode(CodeReq input) throws ApiException {
@@ -109,7 +120,7 @@ public class ClientImpl implements Client {
      *
      * @param code {@link String}
      * @return {@link ApiResponse<AccessTokenRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     @Override
     public ApiResponse<AccessTokenRes> getAccessToken(String code) throws ApiException {
@@ -133,7 +144,7 @@ public class ClientImpl implements Client {
      *
      * @param refreshToken {@link String}
      * @return {@link ApiResponse<RefreshAccessTokenRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     @Override
     public ApiResponse<RefreshAccessTokenRes> refreshAccessToken(String refreshToken) throws ApiException {
@@ -159,9 +170,9 @@ public class ClientImpl implements Client {
     @Override
     public V1 v1() {
         if (v1Service == null) {
-            synchronized (V1.class) {
+            synchronized (V1Impl.class) {
                 if (v1Service == null) {
-                    v1Service = new V1(this.baseurl);
+                    v1Service = new V1Impl(this.baseurl);
                 }
             }
         }
@@ -176,9 +187,9 @@ public class ClientImpl implements Client {
     @Override
     public V2 v2() {
         if (v2Service == null) {
-            synchronized (V2.class) {
+            synchronized (V2Impl.class) {
                 if (v2Service == null) {
-                    v2Service = new V2(this.baseurl);
+                    v2Service = new V2Impl(this.baseurl);
                 }
             }
         }

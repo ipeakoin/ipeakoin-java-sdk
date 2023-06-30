@@ -6,16 +6,34 @@ package com.ipeakoin.httpclient.constant;
  * date 2023/6/27 16:32
  */
 public final class Constant {
+    /**
+     * X_ACCESS_TOKEN
+     */
     public static final String X_ACCESS_TOKEN = "x-ipeakoin-access-token";
 
+    /**
+     * CONTENT_TYPE
+     */
     public static final String CONTENT_TYPE = "Content-Type";
 
+    /**
+     * CONTENT_TYPE_VALUR
+     */
     public static final String CONTENT_TYPE_VALUR = "application/json;charset=utf-8";
 
+    /**
+     * OS
+     */
     public static final String OS = System.getProperty("os.name") + "/" + System.getProperty("os.version");
 
+    /**
+     * VERSION
+     */
     public static final String VERSION = System.getProperty("java.version");
 
+    /**
+     * CHARSET
+     */
     public static final String CHARSET = "UTF-8";
 
     /**

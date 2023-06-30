@@ -8,6 +8,8 @@ import com.ipeakoin.httpclient.MyHttpClientBuilder;
 import com.ipeakoin.dto.res.CodeRes;
 import com.ipeakoin.dto.res.AccessTokenRes;
 import com.ipeakoin.service.impl.ClientImpl;
+import com.ipeakoin.service.impl.v1.V1Impl;
+import com.ipeakoin.service.impl.v2.V2Impl;
 import com.ipeakoin.service.v1.V1;
 import com.ipeakoin.service.v2.V2;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,6 +31,7 @@ public interface Client {
         /**
          * 配置
          *
+         * @param baseurl baseurl
          * @return Client.Builder
          */
         public Client.Builder config(String baseurl) {
@@ -98,7 +101,7 @@ public interface Client {
      * 获取code
      *
      * @return {@link ApiResponse<CodeRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     ApiResponse<CodeRes> getCode() throws ApiException;
 
@@ -107,7 +110,7 @@ public interface Client {
      *
      * @param input {@link CodeReq}
      * @return {@link ApiResponse<CodeRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     ApiResponse<CodeRes> getCode(CodeReq input) throws ApiException;
 
@@ -116,7 +119,7 @@ public interface Client {
      *
      * @param code {@link String}
      * @return {@link ApiResponse<AccessTokenRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     ApiResponse<AccessTokenRes> getAccessToken(String code) throws ApiException;
 
@@ -125,7 +128,7 @@ public interface Client {
      *
      * @param refreshToken {@link String}
      * @return {@link ApiResponse<RefreshAccessTokenRes>}
-     * @throws ApiException
+     * @throws ApiException error
      */
     ApiResponse<RefreshAccessTokenRes> refreshAccessToken(String refreshToken) throws ApiException;
 
