@@ -2,6 +2,7 @@ package com.ipeakoin.service;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
+import com.ipeakoin.dto.res.AccessTokenRes;
 import com.ipeakoin.dto.res.CodeRes;
 import org.junit.Test;
 
@@ -15,9 +16,9 @@ public class ClientTest {
                 .build();
 
         try {
-            service.setAccessToken("");
             ApiResponse<CodeRes> code = service.getCode();
-            System.out.println(code.getData());
+            ApiResponse<AccessTokenRes> accessToken = service.getAccessToken(code.getData().getCode());
+            System.out.println(accessToken.getData());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
             e.printStackTrace();
