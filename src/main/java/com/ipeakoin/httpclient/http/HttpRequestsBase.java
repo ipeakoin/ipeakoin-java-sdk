@@ -1,5 +1,6 @@
 package com.ipeakoin.httpclient.http;
 
+import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
@@ -7,6 +8,7 @@ import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.ErrorMessage;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.dto.Res;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -178,8 +180,7 @@ public class HttpRequestsBase {
                     setSocketTimeout(20000).build();
             req.setConfig(config);
 
-            String jsonString = String.valueOf(params);
-
+            String jsonString = JSON.toJSONString(params);
             // 设置请求体
             req.setEntity(new StringEntity(jsonString, Constant.CHARSET));
             // 获取返回对象
@@ -224,7 +225,7 @@ public class HttpRequestsBase {
                     setSocketTimeout(20000).build();
             req.setConfig(config);
 
-            String jsonString = String.valueOf(params);
+            String jsonString = JSON.toJSONString(params);
 
             // 设置请求体
             req.setEntity(new StringEntity(jsonString, Constant.CHARSET));
@@ -270,7 +271,7 @@ public class HttpRequestsBase {
                     setSocketTimeout(20000).build();
             req.setConfig(config);
 
-            String jsonString = String.valueOf(params);
+            String jsonString = JSON.toJSONString(params);
 
             // 设置请求体
             req.setEntity(new StringEntity(jsonString, Constant.CHARSET));

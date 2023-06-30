@@ -78,7 +78,7 @@ public interface Client {
          * @return Client
          */
         public Client build() {
-            return this.build(false);
+            return this.build(true);
         }
     }
 
