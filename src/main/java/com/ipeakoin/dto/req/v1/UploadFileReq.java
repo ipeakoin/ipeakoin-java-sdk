@@ -1,6 +1,6 @@
 package com.ipeakoin.dto.req.v1;
 
-import com.ipeakoin.dto.Files;
+import com.ipeakoin.dto.FileData;
 import lombok.Data;
 
 import java.util.List;
@@ -15,5 +15,5 @@ public class UploadFileReq {
     /**
      * file
      */
-    private List<Files> files;
+    private List<FileData> files;
 }

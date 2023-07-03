@@ -106,10 +106,10 @@ public interface V1 {
      * Face authentication
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse<FaceAuthRes>}
+     * @return {@link ApiResponse< BooleanRes >}
      * @throws ApiException error
      */
-    ApiResponse<FaceAuthRes> faceAuth(FaceAuthReq input) throws ApiException;
+    ApiResponse<BooleanRes> faceAuth(FaceAuthReq input) throws ApiException;
 
     /**
      * Get a account KYC

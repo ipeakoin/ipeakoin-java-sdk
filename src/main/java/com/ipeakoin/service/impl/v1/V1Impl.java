@@ -2,7 +2,7 @@ package com.ipeakoin.service.impl.v1;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
-import com.ipeakoin.dto.Files;
+import com.ipeakoin.dto.FileData;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.v1.*;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
@@ -14,8 +14,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import javax.ws.rs.core.GenericType;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author klover
@@ -97,7 +95,7 @@ public class V1Impl implements V1 {
         builder.setMode(HttpMultipartMode.RFC6532);
 
         ContentType fileContentType;
-        for (Files file : input.getFiles()) {
+        for (FileData file : input.getFiles()) {
             String mimeType = URLConnection.guessContentTypeFromName(file.getFilename());
             if (mimeType == null) {
                 // guess this is a video uploading
@@ -190,12 +188,36 @@ public class V1Impl implements V1 {
      * Face authentication
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse<FaceAuthRes>}
+     * @return {@link ApiResponse< BooleanRes >}
      * @throws ApiException error
      */
     @Override
-    public ApiResponse<FaceAuthRes> faceAuth(FaceAuthReq input) throws ApiException {
-        return null;
+    public ApiResponse<BooleanRes> faceAuth(FaceAuthReq input) throws ApiException {
+        String uri = "/open-api/v1/kyc/face-auth";
+
+        GenericType<BooleanRes> returnType = new GenericType<>() {
+        };
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.RFC6532);
+
+        FileData file = input.getFile();
+
+        ContentType fileContentType;
+        String mimeType = URLConnection.guessContentTypeFromName(file.getFilename());
+        if (mimeType == null) {
+            // guess this is a video uploading
+            fileContentType = ContentType.APPLICATION_OCTET_STREAM;
+        } else {
+            fileContentType = ContentType.create(mimeType);
+        }
+
+        builder.addBinaryBody("file", file.getStream(), fileContentType, file.getFilename());
+        builder.addTextBody("accountId", input.getAccountId());
+
+        HttpEntity httpEntity = builder.build();
+
+        return this.service.invokeAPI(uri, "UPLOAD", httpEntity, returnType);
     }
 
     /**
