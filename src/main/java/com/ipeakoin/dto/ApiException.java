@@ -135,7 +135,7 @@ public class ApiException extends Exception {
     /**
      * getResponseHeaders
      *
-     * @return Map<String, String>
+     * @return Map
      */
     public Map<String, String> getResponseHeaders() {
         return this.responseHeaders;

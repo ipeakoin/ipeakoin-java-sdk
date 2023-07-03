@@ -41,7 +41,7 @@ public class ApiResponse<T> {
     /**
      * getHeaders
      *
-     * @return Map<String, String>
+     * @return Map
      */
     public Map<String, String> getHeaders() {
         return headers;
