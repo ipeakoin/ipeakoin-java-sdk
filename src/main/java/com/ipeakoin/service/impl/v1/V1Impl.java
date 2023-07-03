@@ -1,19 +1,28 @@
 package com.ipeakoin.service.impl.v1;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.FileData;
 import com.ipeakoin.dto.req.v1.*;
+import com.ipeakoin.dto.res.BooleanRes;
+import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.dto.res.v1.*;
+import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.v1.V1;
+import com.ipeakoin.utils.Util;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import javax.ws.rs.core.GenericType;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author klover
@@ -50,7 +59,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<CreateAccountRes> createAccount(CreateAccountReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/accounts/register";
+        GenericType<CreateAccountRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -62,7 +77,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<AccountsRes> getAccounts(AccountsReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/accounts";
+        GenericType<AccountsRes> returnType = new GenericType<>() {
+        };
+        Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
+        });
+
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
     }
 
     /**
@@ -74,7 +95,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<UsersRes> getUsers(UsersReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/users";
+        GenericType<UsersRes> returnType = new GenericType<>() {
+        };
+        Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
+        });
+
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
     }
 
     /**
@@ -121,7 +148,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<OcrIdCardFaceRes> ocrIdCardFace(OcrIdCardFaceReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/ocr/idcard/face";
+        GenericType<OcrIdCardFaceRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -133,7 +166,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<OcrIdCardBackRes> ocrIdCardBack(OcrIdCardBackReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/ocr/idcard/back";
+        GenericType<OcrIdCardBackRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -145,7 +184,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<OcrPassportRes> ocrPassport(OcrPassportReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/ocr/passport";
+        GenericType<OcrPassportRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -157,7 +202,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<SubmitAccountKycRes> submitAccountKyc(SubmitAccountKycReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/kyc/submit";
+        GenericType<SubmitAccountKycRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -169,7 +220,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<ResetAccountKycRes> resetAccountKyc(ResetAccountKycReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/kyc/reset";
+        GenericType<ResetAccountKycRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -181,7 +238,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<FaceAuthUrlRes> getFaceAuthUrl(FaceAuthUrlReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/kyc/face-auth-url";
+        GenericType<FaceAuthUrlRes> returnType = new GenericType<>() {
+        };
+        Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
+        });
+
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
     }
 
     /**
@@ -229,7 +292,10 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<AccountKycRes> getAccountKyc(AccountKycReq input) throws ApiException {
-        return null;
+        String uri = String.format("/open-api/v1/kyc/%s", input.getAccountId());
+        GenericType<AccountKycRes> returnType = new GenericType<>() {
+        };
+        return this.service.invokeAPI(Util.dealGetParams(null, uri), "GET", null, returnType);
     }
 
     /**
@@ -241,7 +307,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<BalancesRes> getBalances(BalancesReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/balances";
+        GenericType<BalancesRes> returnType = new GenericType<>() {
+        };
+        Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
+        });
+
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
     }
 
     /**
@@ -253,7 +325,13 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<CreateTransferRes> createTransfer(CreateTransferReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/asset/transfers";
+        GenericType<CreateTransferRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -265,7 +343,10 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<TransferRes> getTransfer(TransferReq input) throws ApiException {
-        return null;
+        String uri = String.format("/open-api/v1/asset/transfers/%s", input.getId());
+        GenericType<TransferRes> returnType = new GenericType<>() {
+        };
+        return this.service.invokeAPI(Util.dealGetParams(null, uri), "GET", null, returnType);
     }
 
     /**
@@ -277,6 +358,12 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<TriggerWebhookRes> triggerWebhook(TriggerWebhookReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/notifications/trigger";
+        GenericType<TriggerWebhookRes> returnType = new GenericType<>() {
+        };
+        String jsonString = JSON.toJSONString(input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 }

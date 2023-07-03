@@ -5,7 +5,7 @@ import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.FileData;
 import com.ipeakoin.dto.req.v1.FaceAuthReq;
 import com.ipeakoin.dto.req.v1.UploadFileReq;
-import com.ipeakoin.dto.res.v1.BooleanRes;
+import com.ipeakoin.dto.res.BooleanRes;
 import com.ipeakoin.dto.res.v1.UploadFileRes;
 import com.ipeakoin.service.Client;
 import junit.framework.TestCase;

@@ -16,6 +16,9 @@ public class Util {
      * @return String
      */
     public static String dealGetParams(Map<String, Object> map, String url) {
+        if (map == null) {
+            return url;
+        }
         StringBuilder uri = new StringBuilder(url);
         int i = 0;
         for (Map.Entry<String, Object> entry : map.entrySet()) {

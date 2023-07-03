@@ -3,6 +3,7 @@ package com.ipeakoin.service.v1;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v1.*;
+import com.ipeakoin.dto.res.BooleanRes;
 import com.ipeakoin.dto.res.v1.*;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 
@@ -106,7 +107,7 @@ public interface V1 {
      * Face authentication
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse< BooleanRes >}
+     * @return {@link ApiResponse<  BooleanRes  >}
      * @throws ApiException error
      */
     ApiResponse<BooleanRes> faceAuth(FaceAuthReq input) throws ApiException;

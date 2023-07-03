@@ -1,14 +1,14 @@
-package com.ipeakoin.dto.res.v1;
+package com.ipeakoin.dto.res;
 
 import lombok.Data;
 
 /**
  * @author klover
- * description BooleanRes
- * date 2023/6/30 17:47
+ * description StringRes
+ * date 2023/7/3 18:16
  */
 @Data
-public class BooleanRes {
+public class StringRes {
     private Integer code;
     private String message;
     private Boolean data;
