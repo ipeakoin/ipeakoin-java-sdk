@@ -4,6 +4,7 @@ import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.v1.*;
+import com.ipeakoin.httpclient.http.HttpRequestsBase;
 
 /**
  * @author klover
@@ -154,4 +155,11 @@ public interface V1 {
      * @throws ApiException error
      */
     ApiResponse<TriggerWebhookRes> triggerWebhook(TriggerWebhookReq input) throws ApiException;
+
+    /**
+     * 设置 http service
+     *
+     * @param service {@link HttpRequestsBase}
+     */
+    void setService(HttpRequestsBase service);
 }

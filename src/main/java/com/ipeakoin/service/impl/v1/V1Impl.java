@@ -2,9 +2,20 @@ package com.ipeakoin.service.impl.v1;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
+import com.ipeakoin.dto.Files;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.v1.*;
+import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.v1.V1;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+
+import javax.ws.rs.core.GenericType;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author klover
@@ -13,17 +24,23 @@ import com.ipeakoin.service.v1.V1;
  */
 public class V1Impl implements V1 {
     /**
-     * base url
+     * http service
      */
-    private final String baseUrl;
+    private HttpRequestsBase service;
 
     /**
      * v1
-     *
-     * @param baseUrl base url
      */
-    public V1Impl(String baseUrl) {
-        this.baseUrl = baseUrl;
+    public V1Impl() {
+    }
+
+    /**
+     * 设置 http service
+     *
+     * @param service {@link HttpRequestsBase}
+     */
+    public void setService(HttpRequestsBase service) {
+        this.service = service;
     }
 
     /**
@@ -71,7 +88,30 @@ public class V1Impl implements V1 {
      */
     @Override
     public ApiResponse<UploadFileRes> uploadFile(UploadFileReq input) throws ApiException {
-        return null;
+        String uri = "/open-api/v1/files/upload";
+
+        GenericType<UploadFileRes> returnType = new GenericType<>() {
+        };
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.RFC6532);
+
+        ContentType fileContentType;
+        for (Files file : input.getFiles()) {
+            String mimeType = URLConnection.guessContentTypeFromName(file.getFilename());
+            if (mimeType == null) {
+                // guess this is a video uploading
+                fileContentType = ContentType.APPLICATION_OCTET_STREAM;
+            } else {
+                fileContentType = ContentType.create(mimeType);
+            }
+
+            builder.addBinaryBody("files", file.getStream(), fileContentType, file.getFilename());
+        }
+
+        HttpEntity httpEntity = builder.build();
+
+        return this.service.invokeAPI(uri, "UPLOAD", httpEntity, returnType);
     }
 
     /**

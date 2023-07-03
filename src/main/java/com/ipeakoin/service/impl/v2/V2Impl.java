@@ -1,5 +1,6 @@
 package com.ipeakoin.service.impl.v2;
 
+import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.v2.V2;
 
 /**
@@ -8,17 +9,14 @@ import com.ipeakoin.service.v2.V2;
  * date 2023/6/29 16:58
  */
 public class V2Impl implements V2 {
-    /**
-     * base url
-     */
-    private final String baseUrl;
+    private final HttpRequestsBase service;
 
     /**
      * v2
      *
-     * @param baseUrl base url
+     * @param service http service
      */
-    public V2Impl(String baseUrl) {
-        this.baseUrl = baseUrl;
+    public V2Impl(HttpRequestsBase service) {
+        this.service = service;
     }
 }

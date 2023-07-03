@@ -1,10 +1,12 @@
 package com.ipeakoin.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.CodeReq;
 import com.ipeakoin.dto.res.AccessTokenRes;
 import com.ipeakoin.dto.res.RefreshAccessTokenRes;
+import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
 import com.ipeakoin.dto.res.CodeRes;
@@ -12,10 +14,13 @@ import com.ipeakoin.service.impl.v1.V1Impl;
 import com.ipeakoin.service.impl.v2.V2Impl;
 import com.ipeakoin.service.v1.V1;
 import com.ipeakoin.service.v2.V2;
-import jakarta.ws.rs.core.GenericType;
+import com.ipeakoin.utils.Util;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import javax.ws.rs.core.GenericType;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author klover
@@ -27,12 +32,8 @@ public class ClientImpl implements Client {
     private final String clientSecret;
     private final String baseurl;
     private final CloseableHttpClient httpClient;
-    private HttpRequestsBase service;
+    private final HttpRequestsBase service;
     private String accessToken;
-    /**
-     * 是否主动关闭连接池
-     */
-    private final Boolean isCloseHttpClient;
     private static volatile V1 v1Service;
     private static volatile V2 v2Service;
 
@@ -50,9 +51,7 @@ public class ClientImpl implements Client {
         this.clientSecret = clientSecret;
         this.baseurl = baseurl;
         this.httpClient = httpClient;
-        this.isCloseHttpClient = isCloseHttpClient;
-        this.service = new HttpRequestsBase.Builder().build(this.httpClient);
-
+        this.service = new HttpRequestsBase.Builder().build(this.httpClient, baseurl, isCloseHttpClient);
     }
 
     /**
@@ -72,7 +71,7 @@ public class ClientImpl implements Client {
     @Override
     public void closeHttpClient() {
         try {
-            httpClient.close();
+            this.service.closeHttpClient();
         } catch (Exception e) {
         }
     }
@@ -97,8 +96,8 @@ public class ClientImpl implements Client {
      */
     @Override
     public ApiResponse<CodeRes> getCode(CodeReq input) throws ApiException {
-        String uri = this.baseurl + "/open-api/oauth/authorize";
-        HashMap<String, Object> map = new HashMap<>(2);
+        String url = "/open-api/oauth/authorize";
+        Map<String, Object> map = new HashMap<>(2);
         map.put("clientId", clientId);
         if (input.getState() != null) {
             map.put("state", input.getState());
@@ -108,11 +107,8 @@ public class ClientImpl implements Client {
         }
         GenericType<CodeRes> returnType = new GenericType<>() {
         };
-        ApiResponse<CodeRes> api = this.service.invokeAPI(uri, "GET", map, returnType);
-        if (this.isCloseHttpClient) {
-            this.closeHttpClient();
-        }
-        return api;
+
+        return this.service.invokeAPI(Util.dealGetParams(map, url), "GET", null, returnType);
     }
 
     /**
@@ -124,19 +120,18 @@ public class ClientImpl implements Client {
      */
     @Override
     public ApiResponse<AccessTokenRes> getAccessToken(String code) throws ApiException {
-        String uri = this.baseurl + "/open-api/oauth/access-token";
-        HashMap<String, Object> map = new HashMap<>(2);
+        String uri = "/open-api/oauth/access-token";
+        Map<String, Object> map = new HashMap<>(2);
         map.put("clientId", clientId);
         map.put("clientSecret", clientSecret);
         map.put("code", code);
 
         GenericType<AccessTokenRes> returnType = new GenericType<>() {
         };
-        ApiResponse<AccessTokenRes> api = this.service.invokeAPI(uri, "POST", map, returnType);
-        if (this.isCloseHttpClient) {
-            this.closeHttpClient();
-        }
-        return api;
+        String jsonString = JSON.toJSONString(map);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -148,18 +143,17 @@ public class ClientImpl implements Client {
      */
     @Override
     public ApiResponse<RefreshAccessTokenRes> refreshAccessToken(String refreshToken) throws ApiException {
-        String uri = this.baseurl + "/open-api/oauth/refresh-token";
-        HashMap<String, Object> map = new HashMap<>(2);
+        String uri = "/open-api/oauth/refresh-token";
+        Map<String, Object> map = new HashMap<>(2);
         map.put("clientId", clientId);
         map.put("refreshToken", refreshToken);
 
         GenericType<RefreshAccessTokenRes> returnType = new GenericType<>() {
         };
-        ApiResponse<RefreshAccessTokenRes> api = this.service.invokeAPI(uri, "POST", map, returnType);
-        if (this.isCloseHttpClient) {
-            this.closeHttpClient();
-        }
-        return api;
+        String jsonString = JSON.toJSONString(map);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "POST", entity, returnType);
     }
 
     /**
@@ -172,10 +166,11 @@ public class ClientImpl implements Client {
         if (v1Service == null) {
             synchronized (V1Impl.class) {
                 if (v1Service == null) {
-                    v1Service = new V1Impl(this.baseurl);
+                    v1Service = new V1Impl();
                 }
             }
         }
+        v1Service.setService(this.service);
         return v1Service;
     }
 
@@ -189,7 +184,7 @@ public class ClientImpl implements Client {
         if (v2Service == null) {
             synchronized (V2Impl.class) {
                 if (v2Service == null) {
-                    v2Service = new V2Impl(this.baseurl);
+                    v2Service = new V2Impl(this.service);
                 }
             }
         }
