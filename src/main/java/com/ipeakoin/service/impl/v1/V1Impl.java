@@ -7,7 +7,6 @@ import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.FileData;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.BooleanRes;
-import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.dto.res.v1.*;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
@@ -33,20 +32,14 @@ public class V1Impl implements V1 {
     /**
      * http service
      */
-    private HttpRequestsBase service;
+    private final HttpRequestsBase service;
 
     /**
      * v1
-     */
-    public V1Impl() {
-    }
-
-    /**
-     * 设置 http service
      *
      * @param service {@link HttpRequestsBase}
      */
-    public void setService(HttpRequestsBase service) {
+    public V1Impl(HttpRequestsBase service) {
         this.service = service;
     }
 
@@ -65,7 +58,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -83,7 +76,7 @@ public class V1Impl implements V1 {
         Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
         });
 
-        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, input.getAccessToken(), returnType);
     }
 
     /**
@@ -101,7 +94,7 @@ public class V1Impl implements V1 {
         Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
         });
 
-        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, input.getAccessToken(), returnType);
     }
 
     /**
@@ -136,7 +129,7 @@ public class V1Impl implements V1 {
 
         HttpEntity httpEntity = builder.build();
 
-        return this.service.invokeAPI(uri, "UPLOAD", httpEntity, returnType);
+        return this.service.invokeAPI(uri, "UPLOAD", httpEntity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -154,7 +147,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -172,7 +165,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -190,7 +183,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -208,7 +201,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -226,7 +219,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -244,7 +237,7 @@ public class V1Impl implements V1 {
         Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
         });
 
-        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, input.getAccessToken(), returnType);
     }
 
     /**
@@ -280,7 +273,7 @@ public class V1Impl implements V1 {
 
         HttpEntity httpEntity = builder.build();
 
-        return this.service.invokeAPI(uri, "UPLOAD", httpEntity, returnType);
+        return this.service.invokeAPI(uri, "UPLOAD", httpEntity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -295,7 +288,7 @@ public class V1Impl implements V1 {
         String uri = String.format("/open-api/v1/kyc/%s", input.getAccountId());
         GenericType<AccountKycRes> returnType = new GenericType<>() {
         };
-        return this.service.invokeAPI(Util.dealGetParams(null, uri), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(null, uri), "GET", null, input.getAccessToken(), returnType);
     }
 
     /**
@@ -313,7 +306,7 @@ public class V1Impl implements V1 {
         Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
         });
 
-        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(map, uri), "GET", null, input.getAccessToken(), returnType);
     }
 
     /**
@@ -331,7 +324,7 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
@@ -346,7 +339,7 @@ public class V1Impl implements V1 {
         String uri = String.format("/open-api/v1/asset/transfers/%s", input.getId());
         GenericType<TransferRes> returnType = new GenericType<>() {
         };
-        return this.service.invokeAPI(Util.dealGetParams(null, uri), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(null, uri), "GET", null, input.getAccessToken(), returnType);
     }
 
     /**
@@ -364,6 +357,6 @@ public class V1Impl implements V1 {
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 }

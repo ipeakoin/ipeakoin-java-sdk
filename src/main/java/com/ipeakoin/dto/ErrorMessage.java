@@ -13,48 +13,22 @@ public class ErrorMessage {
      */
     @Serial
     private static final long serialVersionUID = 1L;
-
-    /**
-     * error code
-     */
     private Integer code;
-    /**
-     * error message
-     */
     private String message;
 
-    /**
-     * error code
-     *
-     * @return Integer
-     */
+
     public Integer getCode() {
         return code;
     }
 
-    /**
-     * error code
-     *
-     * @param code code
-     */
     public void setCode(Integer code) {
         this.code = code;
     }
 
-    /**
-     * error message
-     *
-     * @return String
-     */
     public String getMessage() {
         return message;
     }
 
-    /**
-     * error message
-     *
-     * @param message message
-     */
     public void setMessage(String message) {
         this.message = message;
     }
@@ -65,5 +39,29 @@ public class ErrorMessage {
                 "code=" + code +
                 ", message='" + message + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ErrorMessage)) {
+            return false;
+        }
+
+        ErrorMessage that = (ErrorMessage) o;
+
+        if (getCode() != null ? !getCode().equals(that.getCode()) : that.getCode() != null) {
+            return false;
+        }
+        return getMessage() != null ? getMessage().equals(that.getMessage()) : that.getMessage() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCode() != null ? getCode().hashCode() : 0;
+        result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
+        return result;
     }
 }

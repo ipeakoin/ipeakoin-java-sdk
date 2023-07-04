@@ -33,36 +33,23 @@ public class ClientImpl implements Client {
     private final String baseurl;
     private final CloseableHttpClient httpClient;
     private final HttpRequestsBase service;
-    private String accessToken;
     private static volatile V1 v1Service;
     private static volatile V2 v2Service;
 
     /**
      * ClientImpl
      *
-     * @param httpClient        httpClient
-     * @param clientId          clientId
-     * @param clientSecret      clientSecret
-     * @param baseurl           baseurl
-     * @param isCloseHttpClient isCloseHttpClient
+     * @param httpClient   httpClient
+     * @param clientId     clientId
+     * @param clientSecret clientSecret
+     * @param baseurl      baseurl
      */
-    public ClientImpl(CloseableHttpClient httpClient, String clientId, String clientSecret, String baseurl, Boolean isCloseHttpClient) {
+    public ClientImpl(CloseableHttpClient httpClient, String clientId, String clientSecret, String baseurl) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.baseurl = baseurl;
         this.httpClient = httpClient;
-        this.service = new HttpRequestsBase.Builder().build(this.httpClient, baseurl, isCloseHttpClient);
-    }
-
-    /**
-     * 添加 accessToken
-     *
-     * @param accessToken {@link String}
-     */
-    @Override
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-        this.service.setAccessToken(this.accessToken);
+        this.service = new HttpRequestsBase.Builder().build(this.httpClient, baseurl);
     }
 
     /**
@@ -108,7 +95,7 @@ public class ClientImpl implements Client {
         GenericType<CodeRes> returnType = new GenericType<>() {
         };
 
-        return this.service.invokeAPI(Util.dealGetParams(map, url), "GET", null, returnType);
+        return this.service.invokeAPI(Util.dealGetParams(map, url), "GET", null, null, returnType);
     }
 
     /**
@@ -131,7 +118,7 @@ public class ClientImpl implements Client {
         String jsonString = JSON.toJSONString(map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, null, returnType);
     }
 
     /**
@@ -153,7 +140,7 @@ public class ClientImpl implements Client {
         String jsonString = JSON.toJSONString(map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, returnType);
+        return this.service.invokeAPI(uri, "POST", entity, null, returnType);
     }
 
     /**
@@ -166,11 +153,10 @@ public class ClientImpl implements Client {
         if (v1Service == null) {
             synchronized (V1Impl.class) {
                 if (v1Service == null) {
-                    v1Service = new V1Impl();
+                    v1Service = new V1Impl(this.service);
                 }
             }
         }
-        v1Service.setService(this.service);
         return v1Service;
     }
 

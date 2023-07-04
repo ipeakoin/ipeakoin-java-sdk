@@ -11,7 +11,7 @@ public class ApiException extends Exception {
     /**
      * http status
      */
-    private int code = 0;
+    private int status = 0;
 
     /**
      * res headers
@@ -52,13 +52,13 @@ public class ApiException extends Exception {
      *
      * @param message         {@link String}
      * @param throwable       {@link Throwable}
-     * @param code            {@link int}
+     * @param status          {@link int}
      * @param responseHeaders {@link Map}
      * @param responseBody    {@link ErrorMessage}
      */
-    public ApiException(String message, Throwable throwable, int code, Map<String, String> responseHeaders, ErrorMessage responseBody) {
+    public ApiException(String message, Throwable throwable, int status, Map<String, String> responseHeaders, ErrorMessage responseBody) {
         super(message, throwable);
-        this.code = code;
+        this.status = status;
         this.responseHeaders = responseHeaders;
         this.errorMessage = responseBody;
     }
@@ -67,12 +67,12 @@ public class ApiException extends Exception {
      * ApiException
      *
      * @param message         {@link String}
-     * @param code            {@link int}
+     * @param status          {@link int}
      * @param responseHeaders {@link Map}
      * @param responseBody    {@link ErrorMessage}
      */
-    public ApiException(String message, int code, Map<String, String> responseHeaders, ErrorMessage responseBody) {
-        this(message, (Throwable) null, code, responseHeaders, responseBody);
+    public ApiException(String message, int status, Map<String, String> responseHeaders, ErrorMessage responseBody) {
+        this(message, (Throwable) null, status, responseHeaders, responseBody);
     }
 
     /**
@@ -80,56 +80,56 @@ public class ApiException extends Exception {
      *
      * @param message         {@link String}
      * @param throwable       {@link Throwable}
-     * @param code            {@link int}
+     * @param status          {@link int}
      * @param responseHeaders {@link Map}
      */
-    public ApiException(String message, Throwable throwable, int code, Map<String, String> responseHeaders) {
-        this(message, throwable, code, responseHeaders, null);
+    public ApiException(String message, Throwable throwable, int status, Map<String, String> responseHeaders) {
+        this(message, throwable, status, responseHeaders, null);
     }
 
     /**
      * ApiException
      *
-     * @param code            {@link int}
+     * @param status            {@link int}
      * @param responseHeaders {@link Map}
      * @param responseBody    {@link ErrorMessage}
      */
-    public ApiException(int code, Map<String, String> responseHeaders, ErrorMessage responseBody) {
-        this((String) null, (Throwable) null, code, responseHeaders, responseBody);
+    public ApiException(int status, Map<String, String> responseHeaders, ErrorMessage responseBody) {
+        this((String) null, (Throwable) null, status, responseHeaders, responseBody);
     }
 
     /**
      * ApiException
      *
-     * @param code    {@link int}
+     * @param status  {@link int}
      * @param message {@link String}
      */
-    public ApiException(int code, String message) {
+    public ApiException(int status, String message) {
         super(message);
-        this.code = code;
+        this.status = status;
     }
 
     /**
      * ApiException
      *
-     * @param code            {@link int}
+     * @param status          {@link int}
      * @param message         {@link String}
      * @param responseHeaders {@link Map}
      * @param responseBody    {@link ErrorMessage}
      */
-    public ApiException(int code, String message, Map<String, String> responseHeaders, ErrorMessage responseBody) {
-        this(code, message);
+    public ApiException(int status, String message, Map<String, String> responseHeaders, ErrorMessage responseBody) {
+        this(status, message);
         this.responseHeaders = responseHeaders;
         this.errorMessage = responseBody;
     }
 
     /**
-     * get code
+     * get status
      *
      * @return int
      */
-    public int getCode() {
-        return this.code;
+    public int getStatus() {
+        return this.status;
     }
 
     /**

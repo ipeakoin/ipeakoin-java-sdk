@@ -9,7 +9,7 @@ import java.util.Map;
  * description Res
  * date 2023/6/27 16:49
  */
-public class Res implements Serializable {
+public class HttpRes implements Serializable {
     /**
      * serial version UID
      */

@@ -6,7 +6,7 @@ import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.ErrorMessage;
 import com.ipeakoin.httpclient.constant.Constant;
-import com.ipeakoin.httpclient.dto.Res;
+import com.ipeakoin.httpclient.dto.HttpRes;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
@@ -33,31 +33,16 @@ import static java.util.Objects.requireNonNull;
  */
 public class HttpRequestsBase {
     private final CloseableHttpClient httpClient;
-    private String accessToken;
     private final String baseurl;
-    /**
-     * 是否主动关闭连接池
-     */
-    private final Boolean isCloseHttpClient;
 
     /**
      * HttpRequestsBase
      *
      * @param httpClient httpClient
      */
-    public HttpRequestsBase(CloseableHttpClient httpClient, String baseurl, Boolean isCloseHttpClient) {
+    public HttpRequestsBase(CloseableHttpClient httpClient, String baseurl) {
         this.httpClient = requireNonNull(httpClient);
         this.baseurl = baseurl;
-        this.isCloseHttpClient = isCloseHttpClient;
-    }
-
-    /**
-     * 添加 accessToken
-     *
-     * @param accessToken {@link String}
-     */
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
     }
 
     /**
@@ -68,8 +53,8 @@ public class HttpRequestsBase {
          * @param httpClient httpClient
          * @return HttpRequestsBase
          */
-        public HttpRequestsBase build(CloseableHttpClient httpClient, String baseurl, Boolean isCloseHttpClient) {
-            return new HttpRequestsBase(httpClient, baseurl, isCloseHttpClient);
+        public HttpRequestsBase build(CloseableHttpClient httpClient, String baseurl) {
+            return new HttpRequestsBase(httpClient, baseurl);
         }
     }
 
@@ -84,25 +69,25 @@ public class HttpRequestsBase {
      * @return {@link ApiResponse<T>}
      * @throws ApiException error
      */
-    public <T> ApiResponse<T> invokeAPI(String path, String method, HttpEntity entity, GenericType<T> returnType) throws ApiException {
+    public <T> ApiResponse<T> invokeAPI(String path, String method, HttpEntity entity, String accessToken, GenericType<T> returnType) throws ApiException {
         try {
             String url = this.baseurl + path;
-            Res res;
+            HttpRes res;
             switch (method) {
                 case "POST":
-                    res = this.postRequest(url, entity);
+                    res = this.postRequest(url, entity, accessToken);
                     break;
                 case "GET":
-                    res = this.getRequest(url);
+                    res = this.getRequest(url, accessToken);
                     break;
                 case "PUT":
-                    res = this.putRequest(url, entity);
+                    res = this.putRequest(url, entity, accessToken);
                     break;
                 case "DELETE":
-                    res = this.deleteRequest(url, entity);
+                    res = this.deleteRequest(url, entity, accessToken);
                     break;
                 case "UPLOAD":
-                    res = this.uploadRequest(url, entity);
+                    res = this.uploadRequest(url, entity, accessToken);
                     break;
                 default:
                     throw new ApiException(500, "Method parameter error");
@@ -120,28 +105,26 @@ public class HttpRequestsBase {
             throw new ApiException(status, res.getContent(), res.getHeaders(), delErrorMessage(res.getContent()));
         } catch (ApiException error) {
             throw error;
-        } finally {
-            if (this.isCloseHttpClient) {
-                this.closeHttpClient();
-            }
         }
     }
 
     /**
      * get 请求
      *
-     * @param url url
+     * @param url         url
+     * @param accessToken 参数
      * @return String
      */
-    public Res getRequest(String url) {
+    public HttpRes getRequest(String url, String accessToken) {
         CloseableHttpResponse response = null;
         try {
             // 构建Get请求对象
             HttpGet req = new HttpGet(url);
             // 设置传送的内容类型是json格式
             req.setHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_VALUR);
-            // 接收的内容类型也是json格式
-            req.setHeader(Constant.X_ACCESS_TOKEN, this.accessToken);
+            if (accessToken != null) {
+                req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
+            }
 
             // 设置超时时间，其中connectionRequestTimout（从连接池获取连接的超时时间）、connetionTimeout（客户端和服务器建立连接的超时时间）、socketTimeout（客户端从服务器读取数据的超时时间），单位都是毫秒
             RequestConfig config = RequestConfig.custom().setConnectTimeout(10000).setConnectionRequestTimeout(3000)
@@ -170,11 +153,12 @@ public class HttpRequestsBase {
     /**
      * post 请求
      *
-     * @param url    url
-     * @param entity 参数
+     * @param url         url
+     * @param entity      参数
+     * @param accessToken 参数
      * @return String
      */
-    public Res postRequest(String url, HttpEntity entity) {
+    public HttpRes postRequest(String url, HttpEntity entity, String accessToken) {
         CloseableHttpResponse response = null;
         try {
             // 构建Post请求对象
@@ -182,8 +166,9 @@ public class HttpRequestsBase {
 
             // 设置传送的内容类型是json格式
             req.setHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_VALUR);
-            // 接收的内容类型也是json格式
-            req.setHeader(Constant.X_ACCESS_TOKEN, this.accessToken);
+            if (accessToken != null) {
+                req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
+            }
             // 设置超时时间，其中connectionRequestTimout（从连接池获取连接的超时时间）、connetionTimeout（客户端和服务器建立连接的超时时间）、socketTimeout（客户端从服务器读取数据的超时时间），单位都是毫秒
             RequestConfig config = RequestConfig.custom().setConnectTimeout(10000).setConnectionRequestTimeout(3000).
                     setSocketTimeout(20000).build();
@@ -213,16 +198,19 @@ public class HttpRequestsBase {
     /**
      * upload file 请求
      *
-     * @param url    url
-     * @param entity 参数
+     * @param url         url
+     * @param entity      参数
+     * @param accessToken 参数
      * @return String
      */
-    public Res uploadRequest(String url, HttpEntity entity) {
+    public HttpRes uploadRequest(String url, HttpEntity entity, String accessToken) {
         CloseableHttpResponse response = null;
         try {
             // 构建Post请求对象
             HttpPost req = new HttpPost(url);
-            req.setHeader(Constant.X_ACCESS_TOKEN, this.accessToken);
+            if (accessToken != null) {
+                req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
+            }
             // 设置超时时间，其中connectionRequestTimout（从连接池获取连接的超时时间）、connetionTimeout（客户端和服务器建立连接的超时时间）、socketTimeout（客户端从服务器读取数据的超时时间），单位都是毫秒
             RequestConfig config = RequestConfig.custom().setConnectTimeout(10000).setConnectionRequestTimeout(3000).
                     setSocketTimeout(20000).build();
@@ -252,11 +240,12 @@ public class HttpRequestsBase {
     /**
      * put 请求
      *
-     * @param url    url
-     * @param entity 参数
+     * @param url         url
+     * @param entity      参数
+     * @param accessToken 参数
      * @return String
      */
-    public Res putRequest(String url, HttpEntity entity) {
+    public HttpRes putRequest(String url, HttpEntity entity, String accessToken) {
         CloseableHttpResponse response = null;
         try {
             // 构建Put请求对象
@@ -264,8 +253,9 @@ public class HttpRequestsBase {
 
             // 设置传送的内容类型是json格式
             req.setHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_VALUR);
-            // 接收的内容类型也是json格式
-            req.setHeader(Constant.X_ACCESS_TOKEN, this.accessToken);
+            if (accessToken != null) {
+                req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
+            }
             // 设置超时时间，其中connectionRequestTimout（从连接池获取连接的超时时间）、connetionTimeout（客户端和服务器建立连接的超时时间）、socketTimeout（客户端从服务器读取数据的超时时间），单位都是毫秒
             RequestConfig config = RequestConfig.custom().setConnectTimeout(10000).setConnectionRequestTimeout(3000).
                     setSocketTimeout(20000).build();
@@ -296,11 +286,12 @@ public class HttpRequestsBase {
     /**
      * delete 请求
      *
-     * @param url    url
-     * @param entity 参数
+     * @param url         url
+     * @param entity      参数
+     * @param accessToken 参数
      * @return String
      */
-    public Res deleteRequest(String url, HttpEntity entity) {
+    public HttpRes deleteRequest(String url, HttpEntity entity, String accessToken) {
         CloseableHttpResponse response = null;
         try {
             // 构建Delete请求对象
@@ -308,8 +299,9 @@ public class HttpRequestsBase {
 
             // 设置传送的内容类型是json格式
             req.setHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_VALUR);
-            // 接收的内容类型也是json格式
-            req.setHeader(Constant.X_ACCESS_TOKEN, this.accessToken);
+            if (accessToken != null) {
+                req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
+            }
             // 设置超时时间，其中connectionRequestTimout（从连接池获取连接的超时时间）、connetionTimeout（客户端和服务器建立连接的超时时间）、socketTimeout（客户端从服务器读取数据的超时时间），单位都是毫秒
             RequestConfig config = RequestConfig.custom().setConnectTimeout(10000).setConnectionRequestTimeout(3000).
                     setSocketTimeout(20000).build();
@@ -340,7 +332,7 @@ public class HttpRequestsBase {
     /**
      * 处理返回
      */
-    private Res delResponse(CloseableHttpResponse response) throws IOException {
+    private HttpRes delResponse(CloseableHttpResponse response) throws IOException {
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
         String reason = statusLine.getReasonPhrase();
@@ -348,7 +340,7 @@ public class HttpRequestsBase {
         HttpEntity entity = response.getEntity();
         String res = EntityUtils.toString(entity, "UTF-8");
 
-        Res output = new Res();
+        HttpRes output = new HttpRes();
         output.setStatus(statusCode);
         output.setReason(reason);
         output.setContent(res);

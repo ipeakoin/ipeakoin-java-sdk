@@ -16,6 +16,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class V1ImplTest extends TestCase {
+    private static Client service = new Client.Builder()
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
+            .build();
 
     public void testSetService() {
     }
@@ -30,13 +33,9 @@ public class V1ImplTest extends TestCase {
     }
 
     public void testUploadFile() {
-        Client service = new Client.Builder()
-                .config("http://127.0.0.1:3000")
-                .build();
-
         try {
-            service.setAccessToken("d1984e8775898b623c4309845c1d3f9a6c87d315");
             UploadFileReq req = new UploadFileReq();
+            req.setAccessToken("d1984e8775898b623c4309845c1d3f9a6c87d315");
             InputStream fileInputStream = new FileInputStream("D:\\workspace\\ipeakoin-java-sdk\\src\\test\\java\\com\\ipeakoin\\service\\1.jpg");
             InputStream fileInputStream2 = new FileInputStream("D:\\workspace\\ipeakoin-java-sdk\\src\\test\\java\\com\\ipeakoin\\service\\1.jpg");
             FileData file1 = new FileData("1.jpg", fileInputStream);
@@ -74,13 +73,9 @@ public class V1ImplTest extends TestCase {
     }
 
     public void testFaceAuth() {
-        Client service = new Client.Builder()
-                .config("http://127.0.0.1:3000")
-                .build();
-
         try {
-            service.setAccessToken("d1984e8775898b623c4309845c1d3f9a6c87d315");
             FaceAuthReq req = new FaceAuthReq();
+            req.setAccessToken("d1984e8775898b623c4309845c1d3f9a6c87d315");
             InputStream fileInputStream = new FileInputStream("D:\\workspace\\ipeakoin-java-sdk\\src\\test\\java\\com\\ipeakoin\\service\\face.mp4");
             FileData file = new FileData("face.mp4", fileInputStream);
             req.setAccountId("32b74f5a-260d-41ab-9d54-dd994b9f0a3e");

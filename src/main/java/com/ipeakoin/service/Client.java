@@ -3,13 +3,11 @@ package com.ipeakoin.service;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.CodeReq;
+import com.ipeakoin.dto.res.AccessTokenRes;
+import com.ipeakoin.dto.res.CodeRes;
 import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.httpclient.MyHttpClientBuilder;
-import com.ipeakoin.dto.res.CodeRes;
-import com.ipeakoin.dto.res.AccessTokenRes;
 import com.ipeakoin.service.impl.ClientImpl;
-import com.ipeakoin.service.impl.v1.V1Impl;
-import com.ipeakoin.service.impl.v2.V2Impl;
 import com.ipeakoin.service.v1.V1;
 import com.ipeakoin.service.v2.V2;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -56,23 +54,11 @@ public interface Client {
         /**
          * 构造服务
          *
-         * @param httpClient        {@link CloseableHttpClient}
-         * @param isCloseHttpClient 是否主动关闭链接池
+         * @param httpClient {@link CloseableHttpClient}
          * @return Client
          */
-        public Client build(CloseableHttpClient httpClient, Boolean isCloseHttpClient) {
-            return new ClientImpl(httpClient, clientId, clientSecret, baseurl, isCloseHttpClient);
-        }
-
-        /**
-         * 构造服务
-         *
-         * @param isCloseHttpClient 是否主动关闭链接池
-         * @return Client
-         */
-        public Client build(Boolean isCloseHttpClient) {
-            CloseableHttpClient httpClient = MyHttpClientBuilder.create().build();
-            return this.build(httpClient, isCloseHttpClient);
+        public Client build(CloseableHttpClient httpClient) {
+            return new ClientImpl(httpClient, clientId, clientSecret, baseurl);
         }
 
         /**
@@ -81,16 +67,10 @@ public interface Client {
          * @return Client
          */
         public Client build() {
-            return this.build(true);
+            CloseableHttpClient httpClient = MyHttpClientBuilder.create().build();
+            return this.build(httpClient);
         }
     }
-
-    /**
-     * 添加 accessToken
-     *
-     * @param accessToken {@link String}
-     */
-    void setAccessToken(String accessToken);
 
     /**
      * 关闭http 请求连接池
