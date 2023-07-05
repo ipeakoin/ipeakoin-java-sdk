@@ -11,7 +11,7 @@ public class test {
     public static void main(String[] args) {
         try {
             ApiResponse<RefreshAccessTokenRes> res = service.refreshAccessToken("12c4aec847b969b11a610a7ced6027506e88699fc1868893b2396ffb329a01b2");
-            System.out.println(res.getData());
+            System.out.println(res.getContent());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
             e.printStackTrace();

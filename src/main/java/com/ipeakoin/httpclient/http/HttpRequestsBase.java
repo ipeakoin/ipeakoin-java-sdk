@@ -69,43 +69,79 @@ public class HttpRequestsBase {
      * @return {@link ApiResponse<T>}
      * @throws ApiException error
      */
-    public <T> ApiResponse<T> invokeAPI(String path, String method, HttpEntity entity, String accessToken, GenericType<T> returnType) throws ApiException {
-        try {
-            String url = this.baseurl + path;
-            HttpRes res;
-            switch (method) {
-                case "POST":
-                    res = this.postRequest(url, entity, accessToken);
-                    break;
-                case "GET":
-                    res = this.getRequest(url, accessToken);
-                    break;
-                case "PUT":
-                    res = this.putRequest(url, entity, accessToken);
-                    break;
-                case "DELETE":
-                    res = this.deleteRequest(url, entity, accessToken);
-                    break;
-                case "UPLOAD":
-                    res = this.uploadRequest(url, entity, accessToken);
-                    break;
-                default:
-                    throw new ApiException(500, "Method parameter error");
-            }
+    public <T> ApiResponse<T> authInvokeAPI(String path, String method, HttpEntity entity, String accessToken, GenericType<T> returnType) throws ApiException {
+        HttpRes res = this.request(path, method, entity, accessToken);
 
-            int status = res.getStatus();
-            if (status >= 200 && status < 300) {
-                try {
-                    Object o = new ObjectMapper().readValue(res.getContent(), returnType.getRawType());
-                    return new ApiResponse<>(res.getHeaders(), (T) o);
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+        int status = res.getStatus();
+        if (status >= 200 && status < 300) {
+            try {
+                T o = (T) new ObjectMapper().readValue(res.getContent(), returnType.getRawType());
+                return new ApiResponse<>(o);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
-            throw new ApiException(status, res.getContent(), res.getHeaders(), delErrorMessage(res.getContent()));
-        } catch (ApiException error) {
-            throw error;
         }
+        throw new ApiException(status, res.getContent(), res.getHeaders(), delErrorMessage(res.getContent()));
+    }
+
+    /**
+     * 代理请求 参数处理
+     *
+     * @param path       路径
+     * @param method     请求方式
+     * @param entity     请求参数
+     * @param <T>        返回泛型
+     * @param returnType 返回参数类型
+     * @return {@link ApiResponse<T>}
+     * @throws ApiException error
+     */
+    public <T> ApiResponse<T> invokeAPI(String path, String method, HttpEntity entity, String accessToken, GenericType<ApiResponse<T>> returnType) throws ApiException {
+        HttpRes res = this.request(path, method, entity, accessToken);
+        int status = res.getStatus();
+        if (status >= 200 && status < 300) {
+            try {
+                Object o = new ObjectMapper().readValue(res.getContent(), returnType.getRawType());
+                return (ApiResponse<T>) o;
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        throw new ApiException(status, res.getContent(), res.getHeaders(), delErrorMessage(res.getContent()));
+    }
+
+    /**
+     * 请求 参数处理
+     *
+     * @param path   路径
+     * @param method 请求方式
+     * @param entity 请求参数
+     * @return {@link HttpRes}
+     * @throws ApiException error
+     */
+    private HttpRes request(String path, String method, HttpEntity entity, String accessToken) throws ApiException {
+        String url = this.baseurl + path;
+        HttpRes res;
+        switch (method) {
+            case "POST":
+                res = this.postRequest(url, entity, accessToken);
+                break;
+            case "GET":
+                res = this.getRequest(url, accessToken);
+                break;
+            case "PUT":
+                res = this.putRequest(url, entity, accessToken);
+                break;
+            case "DELETE":
+                res = this.deleteRequest(url, entity, accessToken);
+                break;
+            case "UPLOAD":
+                res = this.uploadRequest(url, entity, accessToken);
+                break;
+            default:
+                throw new ApiException(500, "Method parameter error");
+        }
+
+        return res;
     }
 
     /**

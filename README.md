@@ -62,11 +62,12 @@ public class test {
     private static Client service = new Client.Builder()
             .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
             .build();
+
     public static void main(String[] args) {
         try {
             ApiResponse<CodeRes> code = service.getCode();
-            ApiResponse<AccessTokenRes> accessToken = service.getAccessToken(code.getData().getCode());
-            System.out.println(accessToken.getData());
+            ApiResponse<AccessTokenRes> accessToken = service.getAccessToken(code.getContent().getCode());
+            System.out.println(accessToken.getContent());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
             e.printStackTrace();
@@ -87,10 +88,11 @@ public class test {
     private static Client service = new Client.Builder()
             .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
             .build();
+
     public static void main(String[] args) {
         try {
             ApiResponse<RefreshAccessTokenRes> res = service.refreshAccessToken("12c4aec847b969b11a610a7ced6027506e88699fc1868893b2396ffb329a01b2");
-            System.out.println(res.getData());
+            System.out.println(res.getContent());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
             e.printStackTrace();

@@ -5,9 +5,10 @@ package com.ipeakoin.dto.res;
  * description Res
  * date 2023/7/4 15:39
  */
-public class Res {
+public class Res<T> {
     protected Integer code;
     protected String message;
+    private T data;
 
     public Integer getCode() {
         return code;
@@ -23,5 +24,13 @@ public class Res {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

@@ -95,7 +95,7 @@ public class ClientImpl implements Client {
         GenericType<CodeRes> returnType = new GenericType<>() {
         };
 
-        return this.service.invokeAPI(Util.dealGetParams(map, url), "GET", null, null, returnType);
+        return this.service.authInvokeAPI(Util.dealGetParams(map, url), "GET", null, null, returnType);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ClientImpl implements Client {
         String jsonString = JSON.toJSONString(map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, null, returnType);
+        return this.service.authInvokeAPI(uri, "POST", entity, null, returnType);
     }
 
     /**
@@ -140,7 +140,7 @@ public class ClientImpl implements Client {
         String jsonString = JSON.toJSONString(map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.invokeAPI(uri, "POST", entity, null, returnType);
+        return this.service.authInvokeAPI(uri, "POST", entity, null, returnType);
     }
 
     /**

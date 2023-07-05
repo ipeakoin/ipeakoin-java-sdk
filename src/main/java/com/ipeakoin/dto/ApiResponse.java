@@ -1,6 +1,6 @@
 package com.ipeakoin.dto;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 /**
  * @author klover
@@ -8,24 +8,47 @@ import java.util.Map;
  * date 2023/6/28 16:40
  */
 public class ApiResponse<T> {
-    private final Map<String, String> headers;
+    @JsonAlias("data")
+    private T content;
 
-    private final T data;
+    private Integer code;
 
-    public ApiResponse(Map<String, String> headers) {
-        this(headers, null);
+    private String message;
+
+    public ApiResponse() {
     }
 
-    public ApiResponse(Map<String, String> headers, T data) {
-        this.headers = headers;
-        this.data = data;
+    public ApiResponse(T content) {
+        this.content = content;
     }
 
-    public Map<String, String> getHeaders() {
-        return headers;
+    public ApiResponse(T content, Integer code, String message) {
+        this.content = content;
+        this.code = code;
+        this.message = message;
     }
 
-    public T getData() {
-        return data;
+    public T getContent() {
+        return content;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setContent(T content) {
+        this.content = content;
     }
 }
