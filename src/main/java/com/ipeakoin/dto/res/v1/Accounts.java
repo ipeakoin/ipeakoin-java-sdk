@@ -139,45 +139,6 @@ public class Accounts {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Accounts)) return false;
-
-        Accounts that = (Accounts) o;
-
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        if (getCreateTime() != null ? !getCreateTime().equals(that.getCreateTime()) : that.getCreateTime() != null)
-            return false;
-        if (getType() != null ? !getType().equals(that.getType()) : that.getType() != null) return false;
-        if (getStatus() != null ? !getStatus().equals(that.getStatus()) : that.getStatus() != null) return false;
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getDisplayId() != null ? !getDisplayId().equals(that.getDisplayId()) : that.getDisplayId() != null)
-            return false;
-        if (getKycStatus() != null ? !getKycStatus().equals(that.getKycStatus()) : that.getKycStatus() != null)
-            return false;
-        if (getCardKybStatus() != null ? !getCardKybStatus().equals(that.getCardKybStatus()) : that.getCardKybStatus() != null)
-            return false;
-        if (getGlobalAccountKybStatus() != null ? !getGlobalAccountKybStatus().equals(that.getGlobalAccountKybStatus()) : that.getGlobalAccountKybStatus() != null)
-            return false;
-        return getMessage() != null ? getMessage().equals(that.getMessage()) : that.getMessage() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getCreateTime() != null ? getCreateTime().hashCode() : 0);
-        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
-        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getDisplayId() != null ? getDisplayId().hashCode() : 0);
-        result = 31 * result + (getKycStatus() != null ? getKycStatus().hashCode() : 0);
-        result = 31 * result + (getCardKybStatus() != null ? getCardKybStatus().hashCode() : 0);
-        result = 31 * result + (getGlobalAccountKybStatus() != null ? getGlobalAccountKybStatus().hashCode() : 0);
-        result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "AccountsData{" +
                 "id='" + id + '\'' +

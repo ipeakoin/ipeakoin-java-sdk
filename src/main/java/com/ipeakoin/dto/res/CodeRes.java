@@ -1,6 +1,5 @@
 package com.ipeakoin.dto.res;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,12 +8,6 @@ import java.io.Serializable;
  * date 2023/6/27 17:27
  */
 public class CodeRes implements Serializable {
-    /**
-     * serial version UID
-     */
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     /**
      * 接口响应时间戳
      */

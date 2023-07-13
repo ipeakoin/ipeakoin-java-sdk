@@ -1,6 +1,5 @@
 package com.ipeakoin.dto.res;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,11 +8,6 @@ import java.io.Serializable;
  * date 2023/6/29 16:11
  */
 public class AccessTokenRes implements Serializable {
-    /**
-     * serial version UID
-     */
-    @Serial
-    private static final long serialVersionUID = 1L;
     /**
      * Interface call credential
      */

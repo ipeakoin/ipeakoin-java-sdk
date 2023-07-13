@@ -1,6 +1,5 @@
 package com.ipeakoin.dto;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,11 +8,6 @@ import java.io.Serializable;
  * date 2023/6/29 14:39
  */
 public class Address implements Serializable {
-    /**
-     * serial version UID
-     */
-    @Serial
-    private static final long serialVersionUID = 1L;
     /**
      * 地址栏第一行
      */

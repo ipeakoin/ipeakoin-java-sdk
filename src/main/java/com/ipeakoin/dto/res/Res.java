@@ -6,8 +6,8 @@ package com.ipeakoin.dto.res;
  * date 2023/7/4 15:39
  */
 public class Res<T> {
-    protected Integer code;
-    protected String message;
+    private Integer code;
+    private String message;
     private T data;
 
     public Integer getCode() {

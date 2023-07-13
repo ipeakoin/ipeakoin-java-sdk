@@ -24,4 +24,12 @@ public class CreateAccount {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "CreateAccount{" +
+                "accountId='" + accountId + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }

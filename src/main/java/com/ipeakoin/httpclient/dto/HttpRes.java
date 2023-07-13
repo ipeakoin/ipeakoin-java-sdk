@@ -1,6 +1,5 @@
 package com.ipeakoin.httpclient.dto;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -10,12 +9,6 @@ import java.util.Map;
  * date 2023/6/27 16:49
  */
 public class HttpRes implements Serializable {
-    /**
-     * serial version UID
-     */
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     /**
      * http 状态码
      */

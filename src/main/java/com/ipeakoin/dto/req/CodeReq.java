@@ -1,6 +1,5 @@
 package com.ipeakoin.dto.req;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,12 +8,6 @@ import java.io.Serializable;
  * date 2023/6/29 16:05
  */
 public class CodeReq implements Serializable {
-    /**
-     * serial version UID
-     */
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     /**
      * state
      */
