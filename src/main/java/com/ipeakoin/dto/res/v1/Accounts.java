@@ -1,4 +1,4 @@
-package com.ipeakoin.dto.res.v1.data;
+package com.ipeakoin.dto.res.v1;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import java.util.Date;
  * description AccountsData
  * date 2023/7/4 17:28
  */
-public class AccountsData {
+public class Accounts {
     /**
      * 账户 ID
      */
@@ -141,9 +141,9 @@ public class AccountsData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AccountsData)) return false;
+        if (!(o instanceof Accounts)) return false;
 
-        AccountsData that = (AccountsData) o;
+        Accounts that = (Accounts) o;
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getCreateTime() != null ? !getCreateTime().equals(that.getCreateTime()) : that.getCreateTime() != null)

@@ -5,9 +5,9 @@ import com.alibaba.fastjson2.TypeReference;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v1.*;
-import com.ipeakoin.dto.res.Res;
-import com.ipeakoin.dto.res.v1.data.CreateAccountData;
-import com.ipeakoin.dto.res.v1.list.AccountsList;
+import com.ipeakoin.dto.res.ListRes;
+import com.ipeakoin.dto.res.v1.Accounts;
+import com.ipeakoin.dto.res.v1.CreateAccount;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.v1.V1;
@@ -42,31 +42,31 @@ public class V1Impl implements V1 {
      * Create a account
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse<Res<CreateAccountData>>}
+     * @return {@link ApiResponse< CreateAccount >}
      * @throws ApiException error
      */
     @Override
-    public ApiResponse<Res<CreateAccountData>> createAccount(CreateAccountReq input) throws ApiException {
+    public ApiResponse<CreateAccount> createAccount(CreateAccountReq input) throws ApiException {
         String uri = "/open-api/v1/accounts/register";
-        GenericType<Res<CreateAccountData>> returnType = new GenericType<>() {
+        GenericType<ApiResponse<CreateAccount>> returnType = new GenericType<>() {
         };
         String jsonString = JSON.toJSONString(input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
-        return this.service.authInvokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType);
     }
 
     /**
      * List all accounts
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse<AccountsList>}
+     * @return {@link ApiResponse< ListRes < Accounts >>}
      * @throws ApiException error
      */
     @Override
-    public ApiResponse<AccountsList> getAccounts(AccountsReq input) throws ApiException {
+    public ApiResponse<ListRes<Accounts>> getAccounts(AccountsReq input) throws ApiException {
         String uri = "/open-api/v1/accounts";
-        GenericType<ApiResponse<AccountsList>> returnType = new GenericType<>() {
+        GenericType<ApiResponse<ListRes<Accounts>>> returnType = new GenericType<>() {
         };
         Map<String, Object> map = JSON.parseObject(JSON.toJSONString(input), new TypeReference<HashMap<String, Object>>() {
         });

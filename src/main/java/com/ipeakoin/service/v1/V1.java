@@ -3,12 +3,9 @@ package com.ipeakoin.service.v1;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v1.*;
-import com.ipeakoin.dto.res.BooleanRes;
-import com.ipeakoin.dto.res.Res;
-import com.ipeakoin.dto.res.v1.*;
-import com.ipeakoin.dto.res.v1.data.CreateAccountData;
-import com.ipeakoin.dto.res.v1.list.AccountsList;
-import com.ipeakoin.httpclient.http.HttpRequestsBase;
+import com.ipeakoin.dto.res.ListRes;
+import com.ipeakoin.dto.res.v1.Accounts;
+import com.ipeakoin.dto.res.v1.CreateAccount;
 
 /**
  * @author klover
@@ -20,19 +17,19 @@ public interface V1 {
      * Create a account
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse<Res<CreateAccountData>>}
+     * @return {@link CreateAccount}
      * @throws ApiException error
      */
-    ApiResponse<Res<CreateAccountData>> createAccount(CreateAccountReq input) throws ApiException;
+    ApiResponse<CreateAccount> createAccount(CreateAccountReq input) throws ApiException;
 
     /**
      * List all accounts
      *
      * @param input {@link CreateAccountReq}
-     * @return {@link ApiResponse<AccountsList>}
+     * @return {@link ApiResponse}
      * @throws ApiException error
      */
-    ApiResponse<AccountsList> getAccounts(AccountsReq input) throws ApiException;
+    ApiResponse<ListRes<Accounts>> getAccounts(AccountsReq input) throws ApiException;
 
 //    /**
 //     * List all users

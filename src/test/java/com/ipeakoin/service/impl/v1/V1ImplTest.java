@@ -3,7 +3,8 @@ package com.ipeakoin.service.impl.v1;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v1.AccountsReq;
-import com.ipeakoin.dto.res.v1.list.AccountsList;
+import com.ipeakoin.dto.res.ListRes;
+import com.ipeakoin.dto.res.v1.Accounts;
 import com.ipeakoin.service.Client;
 import junit.framework.TestCase;
 
@@ -22,7 +23,7 @@ public class V1ImplTest extends TestCase {
         try {
             AccountsReq req = new AccountsReq();
             req.setAccessToken(this.accessToken);
-            ApiResponse<AccountsList> accounts = service.v1().getAccounts(req);
+            ApiResponse<ListRes<Accounts>> accounts = service.v1().getAccounts(req);
             System.out.println(accounts.getContent().getData());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
