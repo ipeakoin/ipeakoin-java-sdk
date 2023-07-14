@@ -4,10 +4,10 @@ import java.util.Date;
 
 /**
  * @author klover
- * description AccountsData
+ * description Account
  * date 2023/7/4 17:28
  */
-public class Accounts {
+public class Account {
     /**
      * 账户 ID
      */

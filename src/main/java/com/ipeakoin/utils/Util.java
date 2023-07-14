@@ -1,5 +1,9 @@
 package com.ipeakoin.utils;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ipeakoin.dto.ApiResponse;
+
 import java.util.Map;
 
 /**
@@ -32,5 +36,27 @@ public class Util {
         }
 
         return uri.toString();
+    }
+
+    /**
+     * returnType
+     *
+     * @param mapper  mapper
+     * @param generic generic
+     * @return JavaType
+     */
+    public static JavaType returnType(ObjectMapper mapper, JavaType generic) {
+        return mapper.getTypeFactory().constructParametricType(ApiResponse.class, generic);
+    }
+
+    /**
+     * returnType
+     *
+     * @param mapper         mapper
+     * @param parameterClass parameterClass
+     * @return JavaType
+     */
+    public static JavaType returnType(ObjectMapper mapper, Class<?> parameterClass) {
+        return mapper.getTypeFactory().constructParametricType(ApiResponse.class, parameterClass);
     }
 }

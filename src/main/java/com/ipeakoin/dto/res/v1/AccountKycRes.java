@@ -1,22 +1,28 @@
-package com.ipeakoin.dto.req.v1;
+package com.ipeakoin.dto.res.v1;
 
 import com.ipeakoin.dto.Address;
 import com.ipeakoin.dto.Identification;
 import com.ipeakoin.dto.Name;
-import com.ipeakoin.dto.req.DefaultReq;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author klover
- * description SubmitAccountKycReq
- * date 2023/6/30 17:48
+ * @description AccountKycRes
+ * @date 2023/7/13 21:06
  */
-public class SubmitAccountKycReq extends DefaultReq {
+public class AccountKycRes {
     private String accountId;
     private Address address;
     private Address addressEn;
     private Name name;
     private String dob;
+    private String nationality;
     private Identification identification;
+    private String status;
+    private String message;
+    private List<String> attachments;
 
     public String getAccountId() {
         return accountId;
@@ -58,6 +64,14 @@ public class SubmitAccountKycReq extends DefaultReq {
         this.dob = dob;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
     public Identification getIdentification() {
         return identification;
     }
@@ -66,16 +80,43 @@ public class SubmitAccountKycReq extends DefaultReq {
         this.identification = identification;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<String> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<String> attachments) {
+        this.attachments = attachments;
+    }
+
     @Override
     public String toString() {
-        return "SubmitAccountKycReq{" +
+        return "AccountKycRes{" +
                 "accountId='" + accountId + '\'' +
                 ", address=" + address +
                 ", addressEn=" + addressEn +
                 ", name=" + name +
                 ", dob='" + dob + '\'' +
+                ", nationality='" + nationality + '\'' +
                 ", identification=" + identification +
-                ", accessToken='" + accessToken + '\'' +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", attachments=" + attachments +
                 '}';
     }
 }

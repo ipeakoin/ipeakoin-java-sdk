@@ -5,7 +5,7 @@ package com.ipeakoin.dto.res.v1;
  * description CreateAccountData
  * date 2023/7/4 15:50
  */
-public class CreateAccount {
+public class CreateAccountRes {
     private String accountId;
     private String userId;
 

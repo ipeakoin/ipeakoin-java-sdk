@@ -28,7 +28,7 @@ public class ClientTest {
     @Test
     public void refreshAccessToken() {
         try {
-            ApiResponse<RefreshAccessTokenRes> res = service.refreshAccessToken("12c4aec847b969b11a610a7ced6027506e88699fc1868893b2396ffb329a01b2");
+            ApiResponse<RefreshAccessTokenRes> res = service.refreshAccessToken("948538afe166c4b6eb10bf7da166ea272fbe7e4525067a2a5a07720dd89de6f2");
             System.out.println(res.getContent());
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());

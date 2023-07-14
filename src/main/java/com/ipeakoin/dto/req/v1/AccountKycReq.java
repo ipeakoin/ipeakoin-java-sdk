@@ -19,21 +19,6 @@ public class AccountKycReq extends DefaultReq {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AccountKycReq)) return false;
-
-        AccountKycReq that = (AccountKycReq) o;
-
-        return getAccountId() != null ? getAccountId().equals(that.getAccountId()) : that.getAccountId() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return getAccountId() != null ? getAccountId().hashCode() : 0;
-    }
-
-    @Override
     public String toString() {
         return "AccountKycReq{" +
                 "accountId='" + accountId + '\'' +

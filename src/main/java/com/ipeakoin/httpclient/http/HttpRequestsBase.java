@@ -1,6 +1,7 @@
 package com.ipeakoin.httpclient.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
@@ -35,14 +36,19 @@ public class HttpRequestsBase {
     private final CloseableHttpClient httpClient;
     private final String baseurl;
 
+    private final ObjectMapper mapper;
+
     /**
      * HttpRequestsBase
      *
      * @param httpClient httpClient
+     * @param baseurl    String
+     * @param mapper     ObjectMapper
      */
-    public HttpRequestsBase(CloseableHttpClient httpClient, String baseurl) {
+    public HttpRequestsBase(CloseableHttpClient httpClient, String baseurl, ObjectMapper mapper) {
         this.httpClient = requireNonNull(httpClient);
         this.baseurl = baseurl;
+        this.mapper = mapper;
     }
 
     /**
@@ -53,8 +59,8 @@ public class HttpRequestsBase {
          * @param httpClient httpClient
          * @return HttpRequestsBase
          */
-        public HttpRequestsBase build(CloseableHttpClient httpClient, String baseurl) {
-            return new HttpRequestsBase(httpClient, baseurl);
+        public HttpRequestsBase build(CloseableHttpClient httpClient, String baseurl, ObjectMapper mapper) {
+            return new HttpRequestsBase(httpClient, baseurl, mapper);
         }
     }
 
@@ -75,7 +81,7 @@ public class HttpRequestsBase {
         int status = res.getStatus();
         if (status >= 200 && status < 300) {
             try {
-                T o = (T) new ObjectMapper().readValue(res.getContent(), returnType.getRawType());
+                T o = (T) mapper.readValue(res.getContent(), returnType.getRawType());
                 return new ApiResponse<>(o);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
@@ -95,12 +101,25 @@ public class HttpRequestsBase {
      * @return {@link ApiResponse<T>}
      * @throws ApiException error
      */
+    public <T> ApiResponse<T> invokeAPI(String path, String method, HttpEntity entity, String accessToken, JavaType returnType) throws ApiException {
+        HttpRes res = this.request(path, method, entity, accessToken);
+        int status = res.getStatus();
+        if (status >= 200 && status < 300) {
+            try {
+                return mapper.readValue(res.getContent(), returnType);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        throw new ApiException(status, res.getContent(), res.getHeaders(), delErrorMessage(res.getContent()));
+    }
+
     public <T> ApiResponse<T> invokeAPI(String path, String method, HttpEntity entity, String accessToken, GenericType<ApiResponse<T>> returnType) throws ApiException {
         HttpRes res = this.request(path, method, entity, accessToken);
         int status = res.getStatus();
         if (status >= 200 && status < 300) {
             try {
-                Object o = new ObjectMapper().readValue(res.getContent(), returnType.getRawType());
+                Object o = mapper.readValue(res.getContent(), returnType.getRawType());
                 return (ApiResponse<T>) o;
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
@@ -409,12 +428,12 @@ public class HttpRequestsBase {
             return null;
         }
 
-        GenericType<ErrorMessage> returnType = new GenericType<>() {
+        GenericType<ErrorMessage> returnType = new GenericType<ErrorMessage>() {
         };
 
         Class<?> rawType = returnType.getRawType();
         try {
-            return (ErrorMessage) new ObjectMapper().readValue(content, rawType);
+            return (ErrorMessage) mapper.readValue(content, rawType);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

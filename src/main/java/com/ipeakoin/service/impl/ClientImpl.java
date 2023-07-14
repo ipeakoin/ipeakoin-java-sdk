@@ -1,6 +1,7 @@
 package com.ipeakoin.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.CodeReq;
@@ -36,6 +37,8 @@ public class ClientImpl implements Client {
     private static volatile V1 v1Service;
     private static volatile V2 v2Service;
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     /**
      * ClientImpl
      *
@@ -49,7 +52,7 @@ public class ClientImpl implements Client {
         this.clientSecret = clientSecret;
         this.baseurl = baseurl;
         this.httpClient = httpClient;
-        this.service = new HttpRequestsBase.Builder().build(this.httpClient, baseurl);
+        this.service = new HttpRequestsBase.Builder().build(this.httpClient, baseurl, mapper);
     }
 
     /**
@@ -92,7 +95,7 @@ public class ClientImpl implements Client {
         if (input.getRedirectUri() != null) {
             map.put("redirectUri", input.getRedirectUri());
         }
-        GenericType<CodeRes> returnType = new GenericType<>() {
+        GenericType<CodeRes> returnType = new GenericType<CodeRes>() {
         };
 
         return this.service.authInvokeAPI(Util.dealGetParams(map, url), "GET", null, null, returnType);
@@ -113,7 +116,7 @@ public class ClientImpl implements Client {
         map.put("clientSecret", clientSecret);
         map.put("code", code);
 
-        GenericType<AccessTokenRes> returnType = new GenericType<>() {
+        GenericType<AccessTokenRes> returnType = new GenericType<AccessTokenRes>() {
         };
         String jsonString = JSON.toJSONString(map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
@@ -135,7 +138,7 @@ public class ClientImpl implements Client {
         map.put("clientId", clientId);
         map.put("refreshToken", refreshToken);
 
-        GenericType<RefreshAccessTokenRes> returnType = new GenericType<>() {
+        GenericType<RefreshAccessTokenRes> returnType = new GenericType<RefreshAccessTokenRes>() {
         };
         String jsonString = JSON.toJSONString(map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
@@ -153,7 +156,7 @@ public class ClientImpl implements Client {
         if (v1Service == null) {
             synchronized (V1Impl.class) {
                 if (v1Service == null) {
-                    v1Service = new V1Impl(this.service);
+                    v1Service = new V1Impl(this.service, this.mapper);
                 }
             }
         }
