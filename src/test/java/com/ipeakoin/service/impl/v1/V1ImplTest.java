@@ -21,10 +21,10 @@ import java.util.List;
 
 public class V1ImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://global.service.test.qbitnetwork.com")
             .build();
 
-    private static String accessToken = "87d5535340b032ed8cf94240f3b62380d51c3a08";
+    private static String accessToken = "af42bf2e75328908c9861aa65b073c06d4c5946a";
 
 
     public void testCreateAccount() throws ApiException {
@@ -221,12 +221,21 @@ public class V1ImplTest extends TestCase {
     public void testGetTransfer() throws ApiException {
         ApiResponse<TransferRes> res = service.v1().getTransfer(new TransferReq() {{
             this.setAccessToken(V1ImplTest.accessToken);
+            this.setId("ab346a9f-ce85-4035-8b95-73191963d6c0");
         }});
         System.out.println(res.getContent());
     }
 
     public void testTriggerWebhook() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().triggerWebhook(new TriggerWebhookReq());
+        Conditions conditions = new Conditions() {{
+            this.setChain("ETH");
+            this.setTransactionHash("0x7816198be4832f9d3faceb3249b030cbad2a14c6fbbd2f0885f7ad23223bfcca");
+        }};
+        ApiResponse<Boolean> res = service.v1().triggerWebhook(new TriggerWebhookReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setType("AssetsDeposit");
+            this.setConditions(conditions);
+        }});
         System.out.println(res.getContent());
     }
 }
