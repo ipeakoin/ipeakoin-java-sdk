@@ -1,5 +1,6 @@
 package com.ipeakoin.dto.res.v1;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -10,12 +11,13 @@ import java.util.Date;
 public class Balance {
     private String id;
     private String accountId;
-    private String available;
-    private String pending;
-    private String frozen;
+    private BigDecimal available;
+    private BigDecimal pending;
+    private BigDecimal frozen;
     private String currency;
     private String status;
     private Date createTime;
+    private String walletType;
 
     public String getId() {
         return id;
@@ -33,27 +35,27 @@ public class Balance {
         this.accountId = accountId;
     }
 
-    public String getAvailable() {
+    public BigDecimal getAvailable() {
         return available;
     }
 
-    public void setAvailable(String available) {
+    public void setAvailable(BigDecimal available) {
         this.available = available;
     }
 
-    public String getPending() {
+    public BigDecimal getPending() {
         return pending;
     }
 
-    public void setPending(String pending) {
+    public void setPending(BigDecimal pending) {
         this.pending = pending;
     }
 
-    public String getFrozen() {
+    public BigDecimal getFrozen() {
         return frozen;
     }
 
-    public void setFrozen(String frozen) {
+    public void setFrozen(BigDecimal frozen) {
         this.frozen = frozen;
     }
 
@@ -81,17 +83,26 @@ public class Balance {
         this.createTime = createTime;
     }
 
+    public String getWalletType() {
+        return walletType;
+    }
+
+    public void setWalletType(String walletType) {
+        this.walletType = walletType;
+    }
+
     @Override
     public String toString() {
         return "Balance{" +
                 "id='" + id + '\'' +
                 ", accountId='" + accountId + '\'' +
-                ", available='" + available + '\'' +
-                ", pending='" + pending + '\'' +
-                ", frozen='" + frozen + '\'' +
+                ", available=" + available +
+                ", pending=" + pending +
+                ", frozen=" + frozen +
                 ", currency='" + currency + '\'' +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
+                ", walletType='" + walletType + '\'' +
                 '}';
     }
 }

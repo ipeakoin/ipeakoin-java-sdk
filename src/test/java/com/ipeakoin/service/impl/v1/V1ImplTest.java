@@ -1,10 +1,9 @@
 package com.ipeakoin.service.impl.v1;
 
-import com.ipeakoin.dto.ApiException;
-import com.ipeakoin.dto.ApiResponse;
-import com.ipeakoin.dto.FileData;
+import com.ipeakoin.dto.*;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.ListRes;
+import com.ipeakoin.dto.res.enums.TransferTypeEnum;
 import com.ipeakoin.dto.res.v1.*;
 import com.ipeakoin.service.Client;
 import junit.framework.TestCase;
@@ -13,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class V1ImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://global.service.test.qbitnetwork.com")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
             .build();
 
     private static String accessToken = "87d5535340b032ed8cf94240f3b62380d51c3a08";
@@ -30,7 +30,7 @@ public class V1ImplTest extends TestCase {
     public void testCreateAccount() throws ApiException {
         ApiResponse<CreateAccountRes> account = service.v1().createAccount(new CreateAccountReq() {{
             this.setAccessToken(V1ImplTest.accessToken);
-            this.setPhone("+8613100200011");
+            this.setPhone("+8613100200012");
             this.setName("klover");
         }});
         System.out.println(account.getContent());
@@ -110,42 +110,118 @@ public class V1ImplTest extends TestCase {
     }
 
     public void testSubmitAccountKyc() throws ApiException {
-        ApiResponse<String> res = service.v1().submitAccountKyc(new SubmitAccountKycReq());
+        Address address = new Address() {{
+            this.setAddressLine1("39#");
+            this.setAddressLine2("");
+            this.setCity("杭州");
+            this.setCountry("中国");
+            this.setState("浙江");
+            this.setPostalCode("330000");
+        }};
+
+        Address addressEn = new Address() {{
+            this.setAddressLine1("39#");
+            this.setAddressLine2("");
+            this.setCity("hangzhou");
+            this.setCountry("CN");
+            this.setState("zhejiang");
+            this.setPostalCode("330000");
+        }};
+
+        Name name = new Name() {{
+            this.setFirstName("klover");
+            this.setLastName("w");
+        }};
+
+        Identification identification = new Identification() {{
+            this.setType("CN-RIC");
+            this.setFrontAttachmentId("28e01a1e-3ea1-4d51-950b-6e3b2122a5e7");
+            this.setBackAttachmentId("640cac41-665a-4fb3-ac1c-8da01c7b18de");
+            this.setNumber("130521200005181912");
+            this.setStartDate("2022-01-01");
+            this.setExpirationDate("2025-01-01");
+        }};
+
+        ApiResponse<String> res = service.v1().submitAccountKyc(new SubmitAccountKycReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setAddress(address);
+            this.setAddressEn(addressEn);
+            this.setName(name);
+            this.setIdentification(identification);
+            this.setAccountId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+            this.setDob("1996-12-04");
+            this.setNationality("CN");
+        }});
         System.out.println(res.getContent());
     }
 
     public void testResetAccountKyc() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().resetAccountKyc(new ResetAccountKycReq());
+        ApiResponse<Boolean> res = service.v1().resetAccountKyc(new ResetAccountKycReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setAccountId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+        }});
         System.out.println(res.getContent());
     }
 
     public void testGetFaceAuthUrl() throws ApiException {
-        ApiResponse<String> res = service.v1().getFaceAuthUrl(new FaceAuthUrlReq());
+        ApiResponse<String> res = service.v1().getFaceAuthUrl(new FaceAuthUrlReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setAccountId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+        }});
         System.out.println(res.getContent());
     }
 
-    public void testFaceAuth() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().faceAuth(new FaceAuthReq());
+    public void testFaceAuth() throws ApiException, IOException {
+        InputStream stream = Files.newInputStream(Paths.get("D:\\workspace\\ipeakoin-java-sdk\\src\\test\\java\\com\\ipeakoin\\service\\face.mp4"));
+        FileData file = new FileData() {{
+            this.setStream(stream);
+            this.setFilename("face.mp4");
+        }};
+        ApiResponse<Boolean> res = service.v1().faceAuth(new FaceAuthReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setAccountId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+            this.setFile(file);
+        }});
         System.out.println(res.getContent());
     }
 
     public void testGetAccountKyc() throws ApiException {
-        ApiResponse<AccountKycRes> res = service.v1().getAccountKyc(new AccountKycReq());
+        ApiResponse<AccountKycRes> res = service.v1().getAccountKyc(new AccountKycReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setAccountId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+        }});
         System.out.println(res.getContent());
     }
 
     public void testGetBalances() throws ApiException {
-        ApiResponse<ListRes<Balance>> res = service.v1().getBalances(new BalancesReq());
+        ApiResponse<ListRes<Balance>> res = service.v1().getBalances(new BalancesReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setAccountId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+        }});
         System.out.println(res.getContent());
     }
 
     public void testCreateTransfer() throws ApiException {
-        ApiResponse<TransferRes> res = service.v1().createTransfer(new CreateTransferReq());
+        TransferSource source = new TransferSource() {{
+            this.setType(TransferTypeEnum.quantum_account);
+        }};
+        TransferDestination destination = new TransferDestination() {{
+            this.setType(TransferTypeEnum.quantum_sub_account);
+            this.setId("7b26ccd2-cf51-44f5-9426-00cd532ea80c");
+        }};
+        ApiResponse<TransferRes> res = service.v1().createTransfer(new CreateTransferReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+            this.setSource(source);
+            this.setDestination(destination);
+            this.setAmount(BigDecimal.valueOf(100).toString());
+        }});
         System.out.println(res.getContent());
     }
 
     public void testGetTransfer() throws ApiException {
-        ApiResponse<TransferRes> res = service.v1().getTransfer(new TransferReq());
+        ApiResponse<TransferRes> res = service.v1().getTransfer(new TransferReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+        }});
         System.out.println(res.getContent());
     }
 

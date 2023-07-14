@@ -16,6 +16,7 @@ public class SubmitAccountKycReq extends DefaultReq {
     private Address addressEn;
     private Name name;
     private String dob;
+    private String nationality;
     private Identification identification;
 
     public String getAccountId() {
@@ -66,6 +67,14 @@ public class SubmitAccountKycReq extends DefaultReq {
         this.identification = identification;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
     @Override
     public String toString() {
         return "SubmitAccountKycReq{" +
@@ -74,6 +83,7 @@ public class SubmitAccountKycReq extends DefaultReq {
                 ", addressEn=" + addressEn +
                 ", name=" + name +
                 ", dob='" + dob + '\'' +
+                ", nationality='" + nationality + '\'' +
                 ", identification=" + identification +
                 ", accessToken='" + accessToken + '\'' +
                 '}';

@@ -1,16 +1,15 @@
 package com.ipeakoin.service.impl;
 
-import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.CodeReq;
 import com.ipeakoin.dto.res.AccessTokenRes;
+import com.ipeakoin.dto.res.CodeRes;
 import com.ipeakoin.dto.res.RefreshAccessTokenRes;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.Client;
-import com.ipeakoin.dto.res.CodeRes;
 import com.ipeakoin.service.impl.v1.V1Impl;
 import com.ipeakoin.service.impl.v2.V2Impl;
 import com.ipeakoin.service.v1.V1;
@@ -22,6 +21,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import javax.ws.rs.core.GenericType;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.ipeakoin.utils.Util.JsonToString;
 
 /**
  * @author klover
@@ -118,7 +119,7 @@ public class ClientImpl implements Client {
 
         GenericType<AccessTokenRes> returnType = new GenericType<AccessTokenRes>() {
         };
-        String jsonString = JSON.toJSONString(map);
+        String jsonString = JsonToString(mapper, map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
         return this.service.authInvokeAPI(uri, "POST", entity, null, returnType);
@@ -140,7 +141,7 @@ public class ClientImpl implements Client {
 
         GenericType<RefreshAccessTokenRes> returnType = new GenericType<RefreshAccessTokenRes>() {
         };
-        String jsonString = JSON.toJSONString(map);
+        String jsonString = JsonToString(mapper, map);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
         return this.service.authInvokeAPI(uri, "POST", entity, null, returnType);

@@ -4,6 +4,8 @@ import com.ipeakoin.dto.req.DefaultReq;
 import com.ipeakoin.dto.res.v1.TransferDestination;
 import com.ipeakoin.dto.res.v1.TransferSource;
 
+import java.math.BigDecimal;
+
 /**
  * @author klover
  * description CreateTransferReq

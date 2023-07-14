@@ -1,19 +1,21 @@
 package com.ipeakoin.dto;
 
+import java.math.BigDecimal;
+
 /**
  * @author klover
  * @description Amount
  * @date 2023/7/13 22:44
  */
 public class Amount {
-    private String amount;
+    private BigDecimal amount;
     private String currency;
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -28,7 +30,7 @@ public class Amount {
     @Override
     public String toString() {
         return "Amount{" +
-                "amount='" + amount + '\'' +
+                "amount=" + amount +
                 ", currency='" + currency + '\'' +
                 '}';
     }
