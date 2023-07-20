@@ -157,4 +157,25 @@ public interface V1 {
      * @throws ApiException error
      */
     ApiResponse<Boolean> triggerWebhook(TriggerWebhookReq input) throws ApiException;
+
+    /**
+     * card
+     *
+     * @return {@link Card}
+     */
+    Card card();
+
+    /**
+     * global account
+     *
+     * @return {@link GlobalAccount}
+     */
+    GlobalAccount globalAccount();
+
+    /**
+     * crypto assets
+     *
+     * @return {@link CryptoAssets}
+     */
+    CryptoAssets cryptoAssets();
 }

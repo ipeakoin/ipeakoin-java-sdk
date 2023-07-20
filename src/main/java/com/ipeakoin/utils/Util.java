@@ -10,6 +10,7 @@ import com.ipeakoin.dto.ApiResponse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author klover
@@ -31,6 +32,8 @@ public class Util {
         StringBuilder uri = new StringBuilder(url);
         int i = 0;
         for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getValue() == null) continue;
+            if (Objects.equals(entry.getKey(), "accessToken")) continue;
             if (i == 0) {
                 uri.append("?");
             } else {

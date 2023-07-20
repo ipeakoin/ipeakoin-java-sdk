@@ -10,6 +10,9 @@ import com.ipeakoin.dto.res.ListRes;
 import com.ipeakoin.dto.res.v1.*;
 import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
+import com.ipeakoin.service.v1.Card;
+import com.ipeakoin.service.v1.CryptoAssets;
+import com.ipeakoin.service.v1.GlobalAccount;
 import com.ipeakoin.service.v1.V1;
 import com.ipeakoin.utils.Util;
 import org.apache.http.HttpEntity;
@@ -37,6 +40,9 @@ public class V1Impl implements V1 {
     private final HttpRequestsBase service;
 
     private final ObjectMapper mapper;
+    private static volatile Card cardService;
+    private static volatile GlobalAccount globalAccountService;
+    private static volatile CryptoAssets cryptoAssetsService;
 
     /**
      * v1
@@ -347,5 +353,56 @@ public class V1Impl implements V1 {
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
         return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType(mapper, Boolean.class));
+    }
+
+    /**
+     * card
+     *
+     * @return {@link Card}
+     */
+    @Override
+    public Card card() {
+        if (cardService == null) {
+            synchronized (CardImpl.class) {
+                if (cardService == null) {
+                    cardService = new CardImpl(this.service, this.mapper);
+                }
+            }
+        }
+        return cardService;
+    }
+
+    /**
+     * global account
+     *
+     * @return {@link GlobalAccount}
+     */
+    @Override
+    public GlobalAccount globalAccount() {
+        if (globalAccountService == null) {
+            synchronized (GlobalAccountImpl.class) {
+                if (globalAccountService == null) {
+                    globalAccountService = new GlobalAccountImpl(this.service, this.mapper);
+                }
+            }
+        }
+        return globalAccountService;
+    }
+
+    /**
+     * crypto assets
+     *
+     * @return {@link CryptoAssets}
+     */
+    @Override
+    public CryptoAssets cryptoAssets() {
+        if (cryptoAssetsService == null) {
+            synchronized (CryptoAssetsImpl.class) {
+                if (cryptoAssetsService == null) {
+                    cryptoAssetsService = new CryptoAssetsImpl(this.service, this.mapper);
+                }
+            }
+        }
+        return cryptoAssetsService;
     }
 }

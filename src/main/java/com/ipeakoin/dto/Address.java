@@ -33,6 +33,8 @@ public class Address implements Serializable {
      */
     private String state;
 
+    private String district;
+
     public String getAddressLine1() {
         return addressLine1;
     }
@@ -81,44 +83,12 @@ public class Address implements Serializable {
         this.state = state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Address)) {
-            return false;
-        }
-
-        Address address = (Address) o;
-
-        if (getAddressLine1() != null ? !getAddressLine1().equals(address.getAddressLine1()) : address.getAddressLine1() != null) {
-            return false;
-        }
-        if (getAddressLine2() != null ? !getAddressLine2().equals(address.getAddressLine2()) : address.getAddressLine2() != null) {
-            return false;
-        }
-        if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) {
-            return false;
-        }
-        if (getCountry() != null ? !getCountry().equals(address.getCountry()) : address.getCountry() != null) {
-            return false;
-        }
-        if (getPostalCode() != null ? !getPostalCode().equals(address.getPostalCode()) : address.getPostalCode() != null) {
-            return false;
-        }
-        return getState() != null ? getState().equals(address.getState()) : address.getState() == null;
+    public String getDistrict() {
+        return district;
     }
 
-    @Override
-    public int hashCode() {
-        int result = getAddressLine1() != null ? getAddressLine1().hashCode() : 0;
-        result = 31 * result + (getAddressLine2() != null ? getAddressLine2().hashCode() : 0);
-        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getPostalCode() != null ? getPostalCode().hashCode() : 0);
-        result = 31 * result + (getState() != null ? getState().hashCode() : 0);
-        return result;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     @Override
@@ -130,6 +100,7 @@ public class Address implements Serializable {
                 ", country='" + country + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", state='" + state + '\'' +
+                ", district='" + district + '\'' +
                 '}';
     }
 }

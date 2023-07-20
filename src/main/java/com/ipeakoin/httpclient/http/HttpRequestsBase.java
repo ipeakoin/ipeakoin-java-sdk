@@ -137,7 +137,7 @@ public class HttpRequestsBase {
      * @return {@link HttpRes}
      * @throws ApiException error
      */
-    private HttpRes request(String path, String method, HttpEntity entity, String accessToken) throws ApiException {
+    public HttpRes request(String path, String method, HttpEntity entity, String accessToken) throws ApiException {
         String url = this.baseurl + path;
         HttpRes res;
         switch (method) {
@@ -423,7 +423,7 @@ public class HttpRequestsBase {
      * @param content {@link String}
      * @return {@link ErrorMessage}
      */
-    private ErrorMessage delErrorMessage(String content) {
+    public ErrorMessage delErrorMessage(String content) {
         if (content == null) {
             return null;
         }
