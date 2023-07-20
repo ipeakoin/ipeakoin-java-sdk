@@ -78,7 +78,9 @@ public class Util {
      */
     public static String JsonToString(ObjectMapper mapper, Object value) throws RuntimeException {
         try {
-            return mapper.writeValueAsString(value);
+            Map<String, Object> map = JsonToMap(mapper, value);
+            map.remove("accessToken");
+            return mapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
