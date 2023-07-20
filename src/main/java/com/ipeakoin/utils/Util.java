@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
+import com.ipeakoin.dto.req.DefaultReq;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,9 +79,13 @@ public class Util {
      */
     public static String JsonToString(ObjectMapper mapper, Object value) throws RuntimeException {
         try {
-            Map<String, Object> map = JsonToMap(mapper, value);
-            map.remove("accessToken");
-            return mapper.writeValueAsString(map);
+            if (value instanceof DefaultReq) {
+                Map<String, Object> map = mapper.readValue(mapper.writeValueAsString(value), new TypeReference<HashMap<String, Object>>() {
+                });
+                map.remove("accessToken");
+                return mapper.writeValueAsString(map);
+            }
+            return mapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -95,7 +100,7 @@ public class Util {
      */
     public static Map<String, Object> JsonToMap(ObjectMapper mapper, Object value) throws RuntimeException {
         try {
-            return mapper.readValue(JsonToString(mapper, value), new TypeReference<HashMap<String, Object>>() {
+            return mapper.readValue(mapper.writeValueAsString(value), new TypeReference<HashMap<String, Object>>() {
             });
         } catch (JsonMappingException e) {
             throw new RuntimeException(e);

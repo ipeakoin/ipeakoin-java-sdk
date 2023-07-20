@@ -21,7 +21,7 @@ import java.util.List;
 
 public class V1ImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://global.service.test.qbitnetwork.com")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
             .build();
 
     private static String accessToken = "af42bf2e75328908c9861aa65b073c06d4c5946a";

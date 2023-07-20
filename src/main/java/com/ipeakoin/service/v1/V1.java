@@ -166,13 +166,6 @@ public interface V1 {
     Card card();
 
     /**
-     * global account
-     *
-     * @return {@link GlobalAccount}
-     */
-    GlobalAccount globalAccount();
-
-    /**
      * crypto assets
      *
      * @return {@link CryptoAssets}

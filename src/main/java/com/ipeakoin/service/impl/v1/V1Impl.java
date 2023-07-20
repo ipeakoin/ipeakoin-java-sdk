@@ -12,7 +12,6 @@ import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.v1.Card;
 import com.ipeakoin.service.v1.CryptoAssets;
-import com.ipeakoin.service.v1.GlobalAccount;
 import com.ipeakoin.service.v1.V1;
 import com.ipeakoin.utils.Util;
 import org.apache.http.HttpEntity;
@@ -41,7 +40,6 @@ public class V1Impl implements V1 {
 
     private final ObjectMapper mapper;
     private static volatile Card cardService;
-    private static volatile GlobalAccount globalAccountService;
     private static volatile CryptoAssets cryptoAssetsService;
 
     /**
@@ -370,23 +368,6 @@ public class V1Impl implements V1 {
             }
         }
         return cardService;
-    }
-
-    /**
-     * global account
-     *
-     * @return {@link GlobalAccount}
-     */
-    @Override
-    public GlobalAccount globalAccount() {
-        if (globalAccountService == null) {
-            synchronized (GlobalAccountImpl.class) {
-                if (globalAccountService == null) {
-                    globalAccountService = new GlobalAccountImpl(this.service, this.mapper);
-                }
-            }
-        }
-        return globalAccountService;
     }
 
     /**
