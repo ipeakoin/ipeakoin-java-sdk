@@ -41,11 +41,11 @@ public class ClientImpl implements Client {
     private static volatile V1 v1Service;
     private static volatile V2 v2Service;
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    public static final ObjectMapper mapper = new ObjectMapper();
 
     static {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     /**
@@ -182,7 +182,7 @@ public class ClientImpl implements Client {
         if (v2Service == null) {
             synchronized (V2Impl.class) {
                 if (v2Service == null) {
-                    v2Service = new V2Impl(this.service);
+                    v2Service = new V2Impl(this.service, this.mapper);
                 }
             }
         }

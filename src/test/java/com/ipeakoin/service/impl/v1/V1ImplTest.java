@@ -1,6 +1,7 @@
 package com.ipeakoin.service.impl.v1;
 
 import com.ipeakoin.dto.*;
+import com.ipeakoin.dto.req.DefaultReq;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.ListRes;
 import com.ipeakoin.dto.res.enums.TransferTypeEnum;
@@ -21,19 +22,26 @@ import java.util.List;
 
 public class V1ImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://api-sandbox.ipeakoin.com")
             .build();
 
     private static String accessToken = "af42bf2e75328908c9861aa65b073c06d4c5946a";
 
+    public void testAccountFeeRates() throws ApiException {
+        ApiResponse<List<AccountFeeRatesRes>> res = service.v1().accountFeeRates(new DefaultReq() {{
+            this.setAccessToken(V1ImplTest.accessToken);
+        }});
+        System.out.println(res);
+    }
+
 
     public void testCreateAccount() throws ApiException {
-        ApiResponse<CreateAccountRes> account = service.v1().createAccount(new CreateAccountReq() {{
+        ApiResponse<CreateAccountRes> res = service.v1().createAccount(new CreateAccountReq() {{
             this.setAccessToken(V1ImplTest.accessToken);
             this.setPhone("+8613100200012");
             this.setName("klover");
         }});
-        System.out.println(account.getContent());
+        System.out.println(res);
     }
 
     public void testGetAccounts() {
@@ -238,4 +246,5 @@ public class V1ImplTest extends TestCase {
         }});
         System.out.println(res.getContent());
     }
+
 }

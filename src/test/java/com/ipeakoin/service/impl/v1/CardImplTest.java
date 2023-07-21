@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CardImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://global.service.test.qbitnetwork.com")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://api-sandbox.ipeakoin.com")
             .build();
 
     private static String accessToken = "af42bf2e75328908c9861aa65b073c06d4c5946a";
@@ -100,19 +100,20 @@ public class CardImplTest extends TestCase {
         }};
         ApiResponse<Boolean> res = service.v1().card().createCard(new CreateCardReq() {{
             this.setAccessToken(CardImplTest.accessToken);
-            this.setType("PrepaidCard");
+            this.setType("BudgetCard");
             this.setCardAddress(address);
             this.setBin("493193");
             this.setBatchCount(1);
-            this.setCost(BigDecimal.valueOf(10));
+//            this.setCost(BigDecimal.valueOf(10));
             this.setFirstName("KLOVER");
             this.setLastName("W");
+            this.setBudgetId("929c63c9-e318-4a9c-a0b0-5276517edab5");
         }});
         System.out.println(res);
     }
 
     public void testDeleteCard() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().card().deleteCard(new DeleteCardReq(){{
+        ApiResponse<Boolean> res = service.v1().card().deleteCard(new DeleteCardReq() {{
             this.setAccessToken(CardImplTest.accessToken);
             this.setCardId("788b540b-fa00-44a7-b682-b6989e4462fa");
         }});
@@ -139,7 +140,7 @@ public class CardImplTest extends TestCase {
     }
 
     public void testSuspendCard() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().card().suspendCard(new SuspendCardReq(){{
+        ApiResponse<Boolean> res = service.v1().card().suspendCard(new SuspendCardReq() {{
             this.setAccessToken(CardImplTest.accessToken);
             this.setCardId("788b540b-fa00-44a7-b682-b6989e4462fa");
         }});
@@ -147,15 +148,25 @@ public class CardImplTest extends TestCase {
     }
 
     public void testEnableCard() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().card().enableCard(new EnableCardReq(){{
+        ApiResponse<Boolean> res = service.v1().card().enableCard(new EnableCardReq() {{
             this.setAccessToken(CardImplTest.accessToken);
             this.setCardId("788b540b-fa00-44a7-b682-b6989e4462fa");
         }});
         System.out.println(res);
     }
 
+    public void testVelocityControl() throws ApiException {
+        ApiResponse<Boolean> res = service.v1().card().velocityControl(new VelocityControlReq() {{
+            this.setAccessToken(CardImplTest.accessToken);
+            this.setCardId("168136b1-ab5d-4896-9efa-d9be30b70255");
+            this.setType("DAY");
+            this.setLimit("100");
+        }});
+        System.out.println(res);
+    }
+
     public void testFrozenCardBalance() throws ApiException {
-        ApiResponse<Boolean> res = service.v1().card().frozenCardBalance(new FrozenCardBalanceReq(){{
+        ApiResponse<Boolean> res = service.v1().card().frozenCardBalance(new FrozenCardBalanceReq() {{
             this.setAccessToken(CardImplTest.accessToken);
             this.setCardId("788b540b-fa00-44a7-b682-b6989e4462fa");
             this.setCost(BigDecimal.valueOf(1));
@@ -173,7 +184,7 @@ public class CardImplTest extends TestCase {
     }
 
     public void testGetCardPrivateInfo() throws ApiException {
-        ApiResponse<CardPrivateInfoReqRes> res = service.v1().card().getCardPrivateInfo(new CardPrivateInfoReq(){{
+        ApiResponse<CardPrivateInfoReqRes> res = service.v1().card().getCardPrivateInfo(new CardPrivateInfoReq() {{
             this.setAccessToken(CardImplTest.accessToken);
             this.setCardId("788b540b-fa00-44a7-b682-b6989e4462fa");
         }});
@@ -181,7 +192,7 @@ public class CardImplTest extends TestCase {
     }
 
     public void testGetCardTransactions() throws ApiException {
-        ApiResponse<ListRes<CardTransaction>> res = service.v1().card().getCardTransactions(new CardTransactionReq(){{
+        ApiResponse<ListRes<CardTransaction>> res = service.v1().card().getCardTransactions(new CardTransactionReq() {{
             this.setAccessToken(CardImplTest.accessToken);
             this.setCardId("788b540b-fa00-44a7-b682-b6989e4462fa");
             this.setLimit(1);

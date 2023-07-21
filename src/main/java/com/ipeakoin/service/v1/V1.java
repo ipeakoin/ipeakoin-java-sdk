@@ -2,6 +2,7 @@ package com.ipeakoin.service.v1;
 
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
+import com.ipeakoin.dto.req.DefaultReq;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.ListRes;
 import com.ipeakoin.dto.res.v1.*;
@@ -14,6 +15,15 @@ import java.util.List;
  * date 2023/6/30 17:31
  */
 public interface V1 {
+    /**
+     * List account fee rates
+     *
+     * @param input {@link DefaultReq}
+     * @return {@link List<AccountFeeRatesRes>}
+     * @throws ApiException
+     */
+    ApiResponse<List<AccountFeeRatesRes>> accountFeeRates(DefaultReq input) throws ApiException;
+
     /**
      * Create a account
      *

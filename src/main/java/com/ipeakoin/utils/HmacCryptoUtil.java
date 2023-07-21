@@ -1,11 +1,16 @@
 package com.ipeakoin.utils;
 
+import com.ipeakoin.service.impl.ClientImpl;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Formatter;
 import java.util.Map;
+import java.util.TreeMap;
+
+import static com.ipeakoin.utils.Util.JsonToString;
 
 /**
  * @author klover
@@ -50,7 +55,6 @@ public class HmacCryptoUtil {
         for (byte b : bytes) {
             formatter.format("%02x", b);
         }
-        // 完成16进制编码
         return sb.toString();
     }
 
@@ -68,6 +72,9 @@ public class HmacCryptoUtil {
             Object val = data.get(key);
             if (val == null) {
                 val = "";
+            }
+            if (val instanceof Map<?, ?>) {
+                val = JsonToString(ClientImpl.mapper, new TreeMap<>((Map<?, ?>) val));
             }
             sb.append(key).append("=").append(val).append("&");
         }

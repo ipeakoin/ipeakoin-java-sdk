@@ -1,7 +1,6 @@
 package com.ipeakoin.dto.res.v1.cryptoAssets;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * @author klover

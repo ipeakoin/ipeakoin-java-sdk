@@ -1,7 +1,10 @@
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
-import com.ipeakoin.dto.res.RefreshAccessTokenRes;
+import com.ipeakoin.dto.req.DefaultReq;
+import com.ipeakoin.dto.res.v1.AccountFeeRatesRes;
 import com.ipeakoin.service.Client;
+
+import java.util.List;
 
 public class test {
     private static Client service = new Client.Builder()
@@ -10,8 +13,11 @@ public class test {
 
     public static void main(String[] args) {
         try {
-            ApiResponse<RefreshAccessTokenRes> res = service.refreshAccessToken("12c4aec847b969b11a610a7ced6027506e88699fc1868893b2396ffb329a01b2");
-            System.out.println(res.getContent());
+            ApiResponse<List<AccountFeeRatesRes>> res = service.v1().accountFeeRates(new DefaultReq() {{
+                this.setAccessToken("accessToken");
+            }});
+            System.out.println(res);
+            System.out.println(res);
         } catch (ApiException e) {
             System.out.println(e.getErrorMessage());
             e.printStackTrace();

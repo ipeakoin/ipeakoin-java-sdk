@@ -16,8 +16,6 @@ import com.ipeakoin.service.v1.Card;
 import com.ipeakoin.utils.Util;
 import org.apache.http.entity.StringEntity;
 
-import java.io.DataInput;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -160,7 +158,7 @@ public class CardImpl implements Card {
      * List all quantum cards
      *
      * @param input {@link  CardReq}
-     * @return {@link  ListRes< CardInfo >}
+     * @return {@link  ListRes<CardInfo>}
      */
     @Override
     public ApiResponse<ListRes<CardInfo>> getCards(CardReq input) throws ApiException {
@@ -262,6 +260,23 @@ public class CardImpl implements Card {
     @Override
     public ApiResponse<Boolean> enableCard(EnableCardReq input) throws ApiException {
         String uri = "/open-api/v1/cards/enable";
+
+        String jsonString = JsonToString(mapper, input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "PUT", entity, input.getAccessToken(), returnType(mapper, Boolean.class));
+    }
+
+    /**
+     * Velocity Control
+     *
+     * @param input {@link  VelocityControlReq}
+     * @return {@link  Boolean}
+     * @throws ApiException
+     */
+    @Override
+    public ApiResponse<Boolean> velocityControl(VelocityControlReq input) throws ApiException {
+        String uri = "/open-api/v1/cards/velocity-control";
 
         String jsonString = JsonToString(mapper, input);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);

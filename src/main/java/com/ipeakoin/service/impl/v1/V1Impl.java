@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.FileData;
+import com.ipeakoin.dto.req.DefaultReq;
 import com.ipeakoin.dto.req.v1.*;
 import com.ipeakoin.dto.res.ListRes;
 import com.ipeakoin.dto.res.v1.*;
@@ -50,6 +51,21 @@ public class V1Impl implements V1 {
     public V1Impl(HttpRequestsBase service, ObjectMapper mapper) {
         this.service = service;
         this.mapper = mapper;
+    }
+
+    /**
+     * List account fee rates
+     *
+     * @param input {@link DefaultReq}
+     * @return {@link List<AccountFeeRatesRes>}
+     * @throws ApiException
+     */
+    @Override
+    public ApiResponse<List<AccountFeeRatesRes>> accountFeeRates(DefaultReq input) throws ApiException {
+        String uri = "/open-api/v1/accounts/fees";
+        JavaType generic = mapper.getTypeFactory().constructParametricType(List.class, AccountFeeRatesRes.class);
+
+        return this.service.invokeAPI(uri, "GET", null, input.getAccessToken(), returnType(mapper, generic));
     }
 
     /**

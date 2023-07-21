@@ -128,6 +128,15 @@ public interface Card {
     ApiResponse<Boolean> enableCard(EnableCardReq input) throws ApiException;
 
     /**
+     * Velocity Control
+     *
+     * @param input {@link  VelocityControlReq}
+     * @return {@link  Boolean}
+     * @throws ApiException
+     */
+    ApiResponse<Boolean> velocityControl(VelocityControlReq input) throws ApiException;
+
+    /**
      * Frozen quantum card balance
      *
      * @param input {@link  FrozenCardBalanceReq}
