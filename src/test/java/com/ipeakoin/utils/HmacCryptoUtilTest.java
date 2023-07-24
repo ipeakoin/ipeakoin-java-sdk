@@ -27,13 +27,12 @@ public class HmacCryptoUtilTest extends TestCase {
         data.put("provider", "PrepaidCard_493728");
         data.put("userName", "test test");
         data.put("createTime", "2023-05-31T07:29:46.784Z");
-        data.put("qbitCardNoLastFour", "1234");
         data.put("label", "ce08100b-fca8-4a13-bbfc-c381aeaec5d0");
         data.put("useType", "79f22263-a3fe-4347-8a40-2af6bf422839");
         data.put("balanceId", "ab43462f-93b3-4540-8601-11d759948ee7");
         data.put("budgetId", null);
         data.put("cardAddress", address);
         String s = encryptHmacSHA256(data, "25d55ad283aa400af464c76d713c07ad");
-        System.out.println(s.equals("178997e5960603afc573a28743d1680e3719a400e83936076f4dae4cb123a35a"));
+        System.out.println(s.equals("22825d6c8cd5787ef14f46862b9ba6181d02178ace76ed814001b9e34ba2971d"));
     }
 }
