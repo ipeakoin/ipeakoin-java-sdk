@@ -6,17 +6,19 @@ import com.ipeakoin.dto.ApiException;
 import com.ipeakoin.dto.ApiResponse;
 import com.ipeakoin.dto.req.v2.CardInfoReq;
 import com.ipeakoin.dto.req.v2.CardsReq;
+import com.ipeakoin.dto.req.v2.UpdateCardReq;
 import com.ipeakoin.dto.res.ListRes;
 import com.ipeakoin.dto.res.v2.CardInfo;
 import com.ipeakoin.dto.res.v2.CardInfoRes;
+import com.ipeakoin.httpclient.constant.Constant;
 import com.ipeakoin.httpclient.http.HttpRequestsBase;
 import com.ipeakoin.service.v2.Card;
 import com.ipeakoin.utils.Util;
+import org.apache.http.entity.StringEntity;
 
 import java.util.Map;
 
-import static com.ipeakoin.utils.Util.JsonToMap;
-import static com.ipeakoin.utils.Util.returnType;
+import static com.ipeakoin.utils.Util.*;
 
 /**
  * @author klover
@@ -66,5 +68,23 @@ public class CardImpl implements Card {
         String uri = String.format("/open-api/v2/cards/%s", input.getId());
 
         return this.service.invokeAPI(uri, "GET", null, input.getAccessToken(), returnType(mapper, CardInfoRes.class));
+    }
+
+    /**
+     * Update card
+     *
+     * @param input {@link UpdateCardReq}
+     * @return {@link Boolean}
+     * @throws ApiException
+     */
+    @Override
+    public ApiResponse<Boolean> updateCard(UpdateCardReq input) throws ApiException {
+        String uri = String.format("/open-api/v2/cards/%s", input.getId());
+
+        input.setId(null);
+        String jsonString = JsonToString(mapper, input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        return this.service.invokeAPI(uri, "PUT", entity, input.getAccessToken(), returnType(mapper, Boolean.class));
     }
 }

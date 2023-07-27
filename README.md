@@ -265,10 +265,11 @@ public class test {
 
 #### V2 API List
 
-| name           | func                              |
-|----------------|-----------------------------------|
-| List all cards | service.v2().card().getCards(...) |
-| Get a card     | service.v2().card().getCard(...)  |
+| name           | func                                |
+|----------------|-------------------------------------|
+| List all cards | service.v2().card().getCards(...)   |
+| Get a card     | service.v2().card().getCard(...)    |
+| Update card    | service.v2().card().updateCard(...) |
 
 ## Contact Us
 
