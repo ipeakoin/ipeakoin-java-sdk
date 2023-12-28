@@ -88,6 +88,14 @@ public interface Card {
     ApiResponse<Boolean> createCard(CreateCardReq input) throws ApiException;
 
     /**
+     * Create Quantum card parameters check
+     *
+     * @param input {@link  CreateCardReq}
+     * @return {@link  Boolean}
+     */
+    ApiResponse<List<CreateCardCheckRes>> createCardCheck(CreateCardReq input) throws ApiException;
+
+    /**
      * Delete quantum card
      *
      * @param input {@link  DeleteCardReq}

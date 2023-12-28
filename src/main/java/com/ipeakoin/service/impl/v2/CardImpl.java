@@ -81,8 +81,9 @@ public class CardImpl implements Card {
     public ApiResponse<Boolean> updateCard(UpdateCardReq input) throws ApiException {
         String uri = String.format("/open-api/v2/cards/%s", input.getId());
 
-        input.setId(null);
-        String jsonString = JsonToString(mapper, input);
+        UpdateCardReq req = input.clone();
+        req.setId(null);
+        String jsonString = JsonToString(mapper, req);
         StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
 
         return this.service.invokeAPI(uri, "PUT", entity, input.getAccessToken(), returnType(mapper, Boolean.class));

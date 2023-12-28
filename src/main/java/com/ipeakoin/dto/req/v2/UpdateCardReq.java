@@ -7,7 +7,7 @@ import com.ipeakoin.dto.req.DefaultReq;
  * @description UpdateCardReq
  * @date 2023/7/27 19:48
  */
-public class UpdateCardReq extends DefaultReq {
+public class UpdateCardReq extends DefaultReq implements Cloneable{
     private String id;
     private String accountId;
     private String phoneCode;
@@ -54,5 +54,16 @@ public class UpdateCardReq extends DefaultReq {
                 ", phone='" + phone + '\'' +
                 ", accessToken='" + accessToken + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public UpdateCardReq clone() {
+        try {
+            UpdateCardReq clone = (UpdateCardReq) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

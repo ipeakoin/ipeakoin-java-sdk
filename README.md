@@ -177,61 +177,62 @@ public class test {
 
 #### Vl API List
 
-| name                               | func                                                     |
-|------------------------------------|----------------------------------------------------------|
-| List account fee rates             | service.v1().accountFeeRates(...)                        |
-| Create a account                   | service.v1().createAccount(...)                          |
-| List all accounts                  | service.v1().getAccounts(...)                            |
-| List all users                     | service.v1().getUsers(...)                               |
-| Upload file                        | service.v1().uploadFile(...)                             |
-| OCR (ID card - Face)               | service.v1().ocrIdCardFace(...)                          |
-| OCR (ID card - Back)               | service.v1().ocrIdCardBack(...)                          |
-| OCR (Passport)                     | service.v1().ocrPassport(...)                            |
-| Submit account KYC                 | service.v1().submitAccountKyc(...)                       |
-| Reset account KYC                  | service.v1().resetAccountKyc(...)                        |
-| Get a face authentication url      | service.v1().getFaceAuthUrl(...)                         |
-| Face authentication                | service.v1().faceAuth(...)                               |
-| Get a account KYC                  | service.v1().getAccountKyc(...)                          |
-| List all balances                  | service.v1().getBalances(...)                            |
-| Create a transfer                  | service.v1().createTransfer(...)                         |
-| Get a transfer                     | service.v1().getTransfer(...)                            |
-| Trigger webhook                    | service.v1().triggerWebhook(...)                         |
-| List all budgets                   | service.v1().card().getBudgets(...)                      |
-| Update a budget                    | service.v1().card().updateBudget(...)                    |
-| Create a budget                    | service.v1().card().createBudget(...)                    |
-| Increase the budget balance        | service.v1().card().increaseBudgetBalance(...)           |
-| Decrease the budget balance        | service.v1().card().decreaseBudgetBalance(...)           |
-| List all budget transactions       | service.v1().card().getBudgetTransactions(...)           |
-| List all available card BIN        | service.v1().card().getCardBins(...)                     |
-| List all quantum cards             | service.v1().card().getCards(...)                        |
-| Create a quantum card              | service.v1().card().createCard(...)                      |
-| Delete quantum card                | service.v1().card().deleteCard(...)                      |
-| Quantum card transfer in           | service.v1().card().cardTransferIn(...)                  |
-| Quantum card transfer out          | service.v1().card().cardTransferOut(...)                 |
-| Frozen quantum card                | service.v1().card().suspendCard(...)                     |
-| Unfrozen quantum card              | service.v1().card().enableCard(...)                      |
-| Velocity Control                   | service.v1().card().velocityControl(...)                 |
-| Frozen quantum card balance        | service.v1().card().frozenCardBalance(...)               |
-| Unfrozen quantum card balance      | service.v1().card().unfrozenCardBalance(...)             |
-| Get a quantum card private info    | service.v1().card().getCardPrivateInfo(...)              |
-| List all quantum card transactions | service.v1().card().getCardTransactions(...)             |
-| List all wallet balances           | service.v1().cryptoAssets().getBalances(...)             |
-| List all addresses                 | service.v1().cryptoAssets().getAddresses(...)            |
-| Create a blockchain address        | service.v1().cryptoAssets().createBlockchainAddress(...) |
-| List all deposit history           | service.v1().cryptoAssets().getDeposits(...)             |
-| List all withdrawal history        | service.v1().cryptoAssets().getWithdrawals(...)          |
-| Withdraw coin                      | service.v1().cryptoAssets().withdrawal(...)              |
-| List all bills                     | service.v1().cryptoAssets().getBills(...)                |
-| Get a trade currency pair          | service.v1().cryptoAssets().getCurrencyPair(...)         |
-| Get a estimate quote               | service.v1().cryptoAssets().estimateQuote(...)           |
-| List all trades                    | service.v1().cryptoAssets().getTrades(...)               |
-| Create a trade                     | service.v1().cryptoAssets().trade(...)                   |
-| List all Wire bank accounts        | service.v1().cryptoAssets().getWires(...)                |
-| Create a wire bank account         | service.v1().cryptoAssets().wire(...)                    |
-| Delete a Wire bank account         | service.v1().cryptoAssets().deleteWire(...)              |
-| List all payouts                   | service.v1().cryptoAssets().getPayouts(...)              |
-| Create a payout                    | service.v1().cryptoAssets().payout(...)                  |
-| Get a payout                       | service.v1().cryptoAssets().getPayout(...)               |
+| name                                 | func                                                     |
+|--------------------------------------|----------------------------------------------------------|
+| List account fee rates               | service.v1().accountFeeRates(...)                        |
+| Create a account                     | service.v1().createAccount(...)                          |
+| List all accounts                    | service.v1().getAccounts(...)                            |
+| List all users                       | service.v1().getUsers(...)                               |
+| Upload file                          | service.v1().uploadFile(...)                             |
+| OCR (ID card - Face)                 | service.v1().ocrIdCardFace(...)                          |
+| OCR (ID card - Back)                 | service.v1().ocrIdCardBack(...)                          |
+| OCR (Passport)                       | service.v1().ocrPassport(...)                            |
+| Submit account KYC                   | service.v1().submitAccountKyc(...)                       |
+| Reset account KYC                    | service.v1().resetAccountKyc(...)                        |
+| Get a face authentication url        | service.v1().getFaceAuthUrl(...)                         |
+| Face authentication                  | service.v1().faceAuth(...)                               |
+| Get a account KYC                    | service.v1().getAccountKyc(...)                          |
+| List all balances                    | service.v1().getBalances(...)                            |
+| Create a transfer                    | service.v1().createTransfer(...)                         |
+| Get a transfer                       | service.v1().getTransfer(...)                            |
+| Trigger webhook                      | service.v1().triggerWebhook(...)                         |
+| List all budgets                     | service.v1().card().getBudgets(...)                      |
+| Update a budget                      | service.v1().card().updateBudget(...)                    |
+| Create a budget                      | service.v1().card().createBudget(...)                    |
+| Increase the budget balance          | service.v1().card().increaseBudgetBalance(...)           |
+| Decrease the budget balance          | service.v1().card().decreaseBudgetBalance(...)           |
+| List all budget transactions         | service.v1().card().getBudgetTransactions(...)           |
+| List all available card BIN          | service.v1().card().getCardBins(...)                     |
+| List all quantum cards               | service.v1().card().getCards(...)                        |
+| Create a quantum card                | service.v1().card().createCard(...)                      |
+| Create Quantum card parameters check | service.v1().card().createCardCheck(...)                 |
+| Delete quantum card                  | service.v1().card().deleteCard(...)                      |
+| Quantum card transfer in             | service.v1().card().cardTransferIn(...)                  |
+| Quantum card transfer out            | service.v1().card().cardTransferOut(...)                 |
+| Frozen quantum card                  | service.v1().card().suspendCard(...)                     |
+| Unfrozen quantum card                | service.v1().card().enableCard(...)                      |
+| Velocity Control                     | service.v1().card().velocityControl(...)                 |
+| Frozen quantum card balance          | service.v1().card().frozenCardBalance(...)               |
+| Unfrozen quantum card balance        | service.v1().card().unfrozenCardBalance(...)             |
+| Get a quantum card private info      | service.v1().card().getCardPrivateInfo(...)              |
+| List all quantum card transactions   | service.v1().card().getCardTransactions(...)             |
+| List all wallet balances             | service.v1().cryptoAssets().getBalances(...)             |
+| List all addresses                   | service.v1().cryptoAssets().getAddresses(...)            |
+| Create a blockchain address          | service.v1().cryptoAssets().createBlockchainAddress(...) |
+| List all deposit history             | service.v1().cryptoAssets().getDeposits(...)             |
+| List all withdrawal history          | service.v1().cryptoAssets().getWithdrawals(...)          |
+| Withdraw coin                        | service.v1().cryptoAssets().withdrawal(...)              |
+| List all bills                       | service.v1().cryptoAssets().getBills(...)                |
+| Get a trade currency pair            | service.v1().cryptoAssets().getCurrencyPair(...)         |
+| Get a estimate quote                 | service.v1().cryptoAssets().estimateQuote(...)           |
+| List all trades                      | service.v1().cryptoAssets().getTrades(...)               |
+| Create a trade                       | service.v1().cryptoAssets().trade(...)                   |
+| List all Wire bank accounts          | service.v1().cryptoAssets().getWires(...)                |
+| Create a wire bank account           | service.v1().cryptoAssets().wire(...)                    |
+| Delete a Wire bank account           | service.v1().cryptoAssets().deleteWire(...)              |
+| List all payouts                     | service.v1().cryptoAssets().getPayouts(...)              |
+| Create a payout                      | service.v1().cryptoAssets().payout(...)                  |
+| Get a payout                         | service.v1().cryptoAssets().getPayout(...)               |
 
 ### V2 Interface Example
 
@@ -265,11 +266,14 @@ public class test {
 
 #### V2 API List
 
-| name           | func                                |
-|----------------|-------------------------------------|
-| List all cards | service.v2().card().getCards(...)   |
-| Get a card     | service.v2().card().getCard(...)    |
-| Update card    | service.v2().card().updateCard(...) |
+| name                                  | func                                                      |
+|---------------------------------------|-----------------------------------------------------------|
+| List all cards                        | service.v2().card().getCards(...)                         |
+| Get a card                            | service.v2().card().getCard(...)                          |
+| Delete account                        | service.v2().deleteAccount(...)                           |
+| Update a account                      | service.v2().updateAccount(...)                           |
+| List all quantum account transactions | service.v2().quantumAccount().getAccountTransactions(...) |
+| Get a quantum account transaction     | service.v2().quantumAccount().getAccountTransaction(...)  |
 
 ## Contact Us
 

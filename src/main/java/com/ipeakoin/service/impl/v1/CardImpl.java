@@ -188,6 +188,24 @@ public class CardImpl implements Card {
     }
 
     /**
+     * Create Quantum card parameters check
+     *
+     * @param input {@link  CreateCardReq}
+     * @return {@link  Boolean}
+     */
+    @Override
+    public ApiResponse<List<CreateCardCheckRes>> createCardCheck(CreateCardReq input) throws ApiException {
+        String uri = "/open-api/v1/cards/create/check";
+
+        String jsonString = JsonToString(mapper, input);
+        StringEntity entity = new StringEntity(jsonString, Constant.CHARSET);
+
+        JavaType generic = mapper.getTypeFactory().constructParametricType(List.class, CreateCardCheckRes.class);
+
+        return this.service.invokeAPI(uri, "POST", entity, input.getAccessToken(), returnType(mapper, generic));
+    }
+
+    /**
      * Delete quantum card
      *
      * @param input {@link  DeleteCardReq}

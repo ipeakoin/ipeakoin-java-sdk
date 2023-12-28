@@ -6,7 +6,7 @@
 
     <artifactId>ipeakoin-sdk</artifactId>
     <groupId>com.ipeakoin</groupId>
-    <version>2.0.0-beta</version>
+    <version>2.0.1-beta</version>
     <packaging>jar</packaging>
     <name>iPeakoin api</name>
     <description>iPeakoin bass api</description>

@@ -15,10 +15,10 @@ import java.util.List;
 
 public class CardImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://api-sandbox.ipeakoin.com")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
             .build();
 
-    private static String accessToken = "af42bf2e75328908c9861aa65b073c06d4c5946a";
+    private static String accessToken = "0a07a759166548a925db985e0df646d3cc539d72";
 
     public void testGetBudgets() throws ApiException {
         ApiResponse<ListRes<Budget>> res = service.v1().card().getBudgets(new BudgetsReq() {{
@@ -110,6 +110,30 @@ public class CardImplTest extends TestCase {
             this.setBudgetId("929c63c9-e318-4a9c-a0b0-5276517edab5");
         }});
         System.out.println(res);
+    }
+
+    public void testCreateCardCheck() throws ApiException {
+        Address address = new Address() {{
+            this.setAddressLine1("39.No");
+            this.setAddressLine2("");
+            this.setCity("hangzhou");
+            this.setCountry("CN");
+            this.setPostalCode("330000");
+            this.setState("zhejiang");
+        }};
+        ApiResponse<List<CreateCardCheckRes>> res = service.v1().card().createCardCheck(new CreateCardReq() {{
+            this.setAccessToken(CardImplTest.accessToken);
+            this.setType("BudgetCard");
+            this.setCardAddress(address);
+            this.setBin("493193");
+            this.setBatchCount(1);
+            this.setEmail("111111111");
+//            this.setCost(BigDecimal.valueOf(10));
+            this.setFirstName("KLOVER");
+            this.setLastName("W");
+            this.setBudgetId("929c63c9-e318-4a9c-a0b0-5276517edab5");
+        }});
+        System.out.println(res.getContent());
     }
 
     public void testDeleteCard() throws ApiException {

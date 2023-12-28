@@ -9,23 +9,20 @@ import com.ipeakoin.dto.res.v1.*;
 import com.ipeakoin.service.Client;
 import junit.framework.TestCase;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class V1ImplTest extends TestCase {
     private static Client service = new Client.Builder()
-            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "https://api-sandbox.ipeakoin.com")
+            .config("ipeakoin1ab59eccfbc78d1b", "93fc39d77ef6a3a7b5f26b83fbbebe81", "http://127.0.0.1:3000")
             .build();
 
-    private static String accessToken = "af42bf2e75328908c9861aa65b073c06d4c5946a";
+    private static String accessToken = "3ee80920910541024a5ad91b9ac9a6c8b863e40e";
 
     public void testAccountFeeRates() throws ApiException {
         ApiResponse<List<AccountFeeRatesRes>> res = service.v1().accountFeeRates(new DefaultReq() {{
