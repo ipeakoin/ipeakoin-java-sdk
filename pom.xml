@@ -22,10 +22,10 @@
     </licenses>
     <modules>
         <module>ipeakoin-sdk</module>
-        <module>auth</module>
         <module>utils</module>
         <module>http-client</module>
         <module>bom</module>
+        <module>v1</module>
     </modules>
 
     <!-- SCM信息 -> git在github上托管 -->
@@ -56,6 +56,16 @@
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13.2</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <profiles>
         <profile>
             <id>release</id>

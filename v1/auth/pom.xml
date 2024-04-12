@@ -5,22 +5,27 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ipeakoin</groupId>
-        <artifactId>ipeakoin-sdk-pom</artifactId>
+        <artifactId>v1</artifactId>
         <version>2.1.1-beta</version>
     </parent>
 
-    <artifactId>utils</artifactId>
+    <artifactId>auth-v1</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.15.3</version>
+            <groupId>com.ipeakoin</groupId>
+            <artifactId>http-client</artifactId>
+            <version>${sdk.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.15.3</version>
+            <groupId>com.ipeakoin</groupId>
+            <artifactId>utils</artifactId>
+            <version>${sdk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -32,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Automatic-Module-Name>com.ipeakoin.utils</Automatic-Module-Name>
+                            <Automatic-Module-Name>com.ipeakoin.v1.auth</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
                 </configuration>
