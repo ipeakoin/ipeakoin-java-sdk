@@ -17,11 +17,11 @@
     <description>iPeakoin bass api</description>
     <url>https://github.com/ipeakoin/ipeakoin-java-sdk</url>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.ipeakoin</groupId>-->
-<!--            <artifactId>auth</artifactId>-->
-<!--            <version>${sdk.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.ipeakoin</groupId>
+            <artifactId>auth-v1</artifactId>
+            <version>${sdk.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.ipeakoin</groupId>
             <artifactId>utils</artifactId>

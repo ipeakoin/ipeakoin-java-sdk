@@ -65,6 +65,13 @@ public class JsonUtil {
         return getInstance().convertValue(content, javaType);
     }
 
+    public static <T> T convert(Object content, JavaType javaType, ObjectMapper mapper) {
+        if (content == null) {
+            return null;
+        }
+        return mapper.convertValue(content, javaType);
+    }
+
     /**
      * 将json反序列化成对象
      *
@@ -116,12 +123,23 @@ public class JsonUtil {
      * @param javaType 泛型类型
      * @return Bean
      */
-    public static <T> T parse(String content, JavaType javaType) {
+    public static <T> T parse(String content, JavaType javaType, ObjectMapper mapper) {
         try {
-            return getInstance().readValue(content, javaType);
+            return mapper.readValue(content, javaType);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 将json反序列化成对象
+     *
+     * @param content  content
+     * @param javaType 泛型类型
+     * @return Bean
+     */
+    public static <T> T parse(String content, JavaType javaType) {
+        return parse(content, javaType, getInstance());
     }
 
     /**

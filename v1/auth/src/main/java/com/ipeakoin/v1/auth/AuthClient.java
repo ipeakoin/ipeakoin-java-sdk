@@ -32,7 +32,6 @@ public interface AuthClient {
             return Credentials(new Credentials(clientId, clientSecret, baseurl));
         }
 
-
         public AuthClient build(CloseableHttpClient httpClient) {
             return new AuthClientImpl(httpClient, JsonUtil.getInstance(), this.credentials);
         }

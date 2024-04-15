@@ -14,11 +14,12 @@ public class Util {
     /**
      * 处理get 请求参数
      *
-     * @param map 参数
-     * @param url 链接
+     * @param params 参数
+     * @param url    链接
      * @return String
      */
-    public static String dealGetParams(Map<String, Object> map, String url) {
+    public static String dealGetParams(Object params, String url) {
+        Map<String, Object> map = JsonUtil.convert(params);
         if (map == null) {
             return url;
         }

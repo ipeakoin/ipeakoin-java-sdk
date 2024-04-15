@@ -1,5 +1,6 @@
 package com.ipeakoin.http.client;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipeakoin.http.client.dto.constant.Constant;
 import com.ipeakoin.http.client.dto.res.ApiException;
@@ -13,6 +14,7 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.util.Timeout;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.Objects.requireNonNull;
@@ -61,6 +63,9 @@ public class HttpRequestsBase {
     }
 
     public static StringEntity buildEntity(Object params) {
+        if (params instanceof String) {
+            return new StringEntity((String) params);
+        }
         String jsonString = JsonUtil.toJSONString(params);
         return new StringEntity(jsonString);
     }
@@ -77,13 +82,8 @@ public class HttpRequestsBase {
      * @throws ApiException error
      */
     public <T> T authInvokeAPI(String path, String method, HttpEntity entity, String accessToken, Class<T> returnType) throws ApiException {
-        HttpRes res = this.request(path, method, entity, accessToken);
-
-        int status = res.getStatus();
-        if (status >= 200 && status < 300) {
-            return JsonUtil.parse(res.getContent(), returnType, this.mapper);
-        }
-        throw new ApiException(status, res.getContent(), res.getHeaders(), JsonUtil.parse(res.getContent(), ErrorMessage.class, this.mapper));
+        String s = invokeAPI(path, method, entity, accessToken);
+        return JsonUtil.parse(s, returnType, this.mapper);
     }
 
     /**
@@ -97,15 +97,46 @@ public class HttpRequestsBase {
      * @return {@link <T>}
      * @throws ApiException error
      */
-    public <T> T invokeAPI(String path, String method, HttpEntity entity, String accessToken, Class<T> returnType) throws ApiException {
+    public <T> T invokeAPI(String path, String method, HttpEntity entity, String accessToken, JavaType returnType) throws ApiException {
+        String s = invokeAPI(path, method, entity, accessToken);
+        Map<String, Object> parse = JsonUtil.parse(s);
+        return JsonUtil.convert(parse.get("data"), returnType, this.mapper);
+    }
+
+    /**
+     * 代理请求 参数处理
+     *
+     * @param path        路径
+     * @param method      请求方式
+     * @param entity      请求参数
+     * @param <T>         返回泛型
+     * @param returnType 返回参数类型
+     * @return {@link <T>}
+     * @throws ApiException error
+     */
+    public <T> T invokeAPI(String path, String method, HttpEntity entity, String accessToken, Class<?> returnType) throws ApiException {
+        JavaType javaType = JsonUtil.getCollectionType(returnType);
+        return invokeAPI(path, method, entity, accessToken, javaType);
+    }
+
+    /**
+     * 代理请求 参数处理
+     *
+     * @param path   路径
+     * @param method 请求方式
+     * @param entity 请求参数
+     * @return {@link String}
+     * @throws ApiException error
+     */
+    public String invokeAPI(String path, String method, HttpEntity entity, String accessToken) throws ApiException {
         HttpRes res = this.request(path, method, entity, accessToken);
+
         int status = res.getStatus();
         if (status >= 200 && status < 300) {
-
+            return res.getContent();
         }
         throw new ApiException(status, res.getContent(), res.getHeaders(), JsonUtil.parse(res.getContent(), ErrorMessage.class, this.mapper));
     }
-
 
     /**
      * 请求 参数处理

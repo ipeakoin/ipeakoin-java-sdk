@@ -11,6 +11,9 @@
 
     <modules>
         <module>auth</module>
+        <module>core</module>
+        <module>quantum-card</module>
+        <module>crypto-assets</module>
     </modules>
 
     <artifactId>v1</artifactId>
