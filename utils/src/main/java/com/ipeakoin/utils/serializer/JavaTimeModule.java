@@ -28,8 +28,8 @@ public class JavaTimeModule extends SimpleModule {
     public JavaTimeModule() {
         super(JavaTimeModule.class.getSimpleName() + MODULE_ID_SEQ.getAndIncrement(), PackageVersion.VERSION);
 
-        // 将java.util.date类型映射成毫秒戳
-        this.addSerializer(Date.class, DateToTimestampSerializer.instance);
+        // 将java.util.date类型映射成yyyy-MM-dd HH:mm:ss
+        this.addSerializer(Date.class, DateToStringSerializer.instance);
 
         // 将java.time.LocalDateTime类型映射成YYYY-MM-DD HH:mm:ss
         DateTimeFormatter datetimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

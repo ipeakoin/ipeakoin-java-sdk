@@ -8,6 +8,7 @@ import com.ipeakoin.utils.JsonUtil;
 import com.ipeakoin.utils.res.PageRes;
 import com.ipeakoin.v1.core.dto.entity.Account;
 import com.ipeakoin.v1.core.dto.entity.Balance;
+import com.ipeakoin.v1.core.dto.entity.FileData;
 import com.ipeakoin.v1.core.dto.entity.User;
 import com.ipeakoin.v1.core.dto.req.*;
 import com.ipeakoin.v1.core.dto.res.*;
@@ -100,38 +101,38 @@ public interface CoreClient {
     /**
      * Upload file
      *
-     * @param input {@link UploadFileReq}
+     * @param files files
      * @return {@link List<String>}
      * @throws ApiException error
      */
-    List<String> uploadFile(UploadFileReq input) throws ApiException;
+    List<String> uploadFile(List<FileData> files) throws ApiException;
 
     /**
      * OCR (ID card - Face)
      *
-     * @param input {@link OcrReq}
+     * @param image image
      * @return {@link OcrIdCardFaceRes}
      * @throws ApiException error
      */
-    OcrIdCardFaceRes ocrIdCardFace(OcrReq input) throws ApiException;
+    OcrIdCardFaceRes ocrIdCardFace(String image) throws ApiException;
 
     /**
      * OCR (ID card - Back)
      *
-     * @param input {@link OcrReq}
+     * @param image image
      * @return {@link OcrIdCardBackRes}
      * @throws ApiException error
      */
-    OcrIdCardBackRes ocrIdCardBack(OcrReq input) throws ApiException;
+    OcrIdCardBackRes ocrIdCardBack(String image) throws ApiException;
 
     /**
      * OCR (Passport)
      *
-     * @param input {@link OcrReq}
+     * @param image image
      * @return {@link OcrPassportRes}
      * @throws ApiException error
      */
-    OcrPassportRes ocrPassport(OcrReq input) throws ApiException;
+    OcrPassportRes ocrPassport(String image) throws ApiException;
 
     /**
      * Submit account KYC
@@ -145,20 +146,20 @@ public interface CoreClient {
     /**
      * Reset account KYC
      *
-     * @param input {@link ResetAccountKycReq}
+     * @param accountId accountId
      * @return {@link Boolean}
      * @throws ApiException error
      */
-    Boolean resetAccountKyc(ResetAccountKycReq input) throws ApiException;
+    Boolean resetAccountKyc(String accountId) throws ApiException;
 
     /**
      * Get a face authentication url
      *
-     * @param input {@link FaceAuthUrlReq}
+     * @param accountId accountId
      * @return {@link String}
      * @throws ApiException error
      */
-    String getFaceAuthUrl(FaceAuthUrlReq input) throws ApiException;
+    String getFaceAuthUrl(String accountId) throws ApiException;
 
     /**
      * Face authentication
@@ -172,11 +173,11 @@ public interface CoreClient {
     /**
      * Get a account KYC
      *
-     * @param input {@link AccountKycReq}
+     * @param accountId accountId
      * @return {@link AccountKycRes}
      * @throws ApiException error
      */
-    AccountKycRes getAccountKyc(AccountKycReq input) throws ApiException;
+    AccountKycRes getAccountKyc(String accountId) throws ApiException;
 
     /**
      * List all balances
@@ -199,11 +200,11 @@ public interface CoreClient {
     /**
      * Get a transfer
      *
-     * @param input {@link TransferReq}
+     * @param id id
      * @return {@link TransferRes}
      * @throws ApiException error
      */
-    TransferRes getTransfer(TransferReq input) throws ApiException;
+    TransferRes getTransfer(String id) throws ApiException;
 
     /**
      * Trigger webhook

@@ -18,7 +18,7 @@ public class AuthClientTest extends TestCase {
     }
 
     public void testGetAccessToken() throws ApiException {
-        AccessTokenRes res = service.getAccessToken("be0ec3651e65154e1db4af8dcfd2ef7f");
+        AccessTokenRes res = service.getAccessToken("01c86efb0d064efbb82098da6b54c344");
         System.out.println(JsonUtil.toJSONString(res));
     }
 

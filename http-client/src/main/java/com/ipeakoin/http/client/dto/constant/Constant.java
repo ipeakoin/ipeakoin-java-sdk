@@ -33,11 +33,6 @@ public class Constant {
     public static final String VERSION = System.getProperty("java.version");
 
     /**
-     * CHARSET
-     */
-    public static final String CHARSET = "UTF-8";
-
-    /**
      * 出现连接/超时异常
      */
     public static final String HTTP_CONNECTION_TIMEOUT = "Connection/timeout exception occurred";

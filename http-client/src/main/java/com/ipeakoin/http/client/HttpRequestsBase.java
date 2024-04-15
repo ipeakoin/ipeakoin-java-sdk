@@ -14,6 +14,8 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.util.Timeout;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -64,10 +66,10 @@ public class HttpRequestsBase {
 
     public static StringEntity buildEntity(Object params) {
         if (params instanceof String) {
-            return new StringEntity((String) params);
+            return new StringEntity((String) params, StandardCharsets.UTF_8);
         }
         String jsonString = JsonUtil.toJSONString(params);
-        return new StringEntity(jsonString);
+        return new StringEntity(jsonString, StandardCharsets.UTF_8);
     }
 
     /**
@@ -106,10 +108,10 @@ public class HttpRequestsBase {
     /**
      * 代理请求 参数处理
      *
-     * @param path        路径
-     * @param method      请求方式
-     * @param entity      请求参数
-     * @param <T>         返回泛型
+     * @param path       路径
+     * @param method     请求方式
+     * @param entity     请求参数
+     * @param <T>        返回泛型
      * @param returnType 返回参数类型
      * @return {@link <T>}
      * @throws ApiException error
@@ -152,6 +154,7 @@ public class HttpRequestsBase {
         HttpUriRequestBase base;
         switch (method) {
             case "POST":
+            case "UPLOAD":
                 base = new HttpPost(url);
                 break;
             case "GET":
@@ -166,6 +169,10 @@ public class HttpRequestsBase {
             default:
                 throw new ApiException(500, "Method parameter error");
         }
+        if (!"UPLOAD".equals(method)) {
+            // 设置传送的内容类型是json格式
+            base.setHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_VALUR);
+        }
         return request(base, entity, accessToken);
     }
 
@@ -179,8 +186,6 @@ public class HttpRequestsBase {
      */
     private HttpRes request(HttpUriRequestBase req, HttpEntity entity, String accessToken) {
         try {
-            // 设置传送的内容类型是json格式
-            req.setHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_VALUR);
             if (accessToken != null) {
                 req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
             }

@@ -112,20 +112,19 @@ public class CoreClientImpl implements CoreClient {
     /**
      * Upload file
      *
-     * @param input {@link UploadFileReq}
+     * @param files files
      * @return {@link List<String>}
      * @throws ApiException error
      */
     @Override
-    public List<String> uploadFile(UploadFileReq input) throws ApiException {
+    public List<String> uploadFile(List<FileData> files) throws ApiException {
         String uri = "/open-api/v1/files/upload";
         JavaType javaType = JsonUtil.getCollectionType(List.class, String.class);
 
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        builder.setMode(HttpMultipartMode.EXTENDED);
 
         ContentType fileContentType;
-        for (FileData file : input.getFiles()) {
+        for (FileData file : files) {
             String mimeType = URLConnection.guessContentTypeFromName(file.getFilename());
             if (mimeType == null) {
                 // guess this is a video uploading
@@ -137,45 +136,48 @@ public class CoreClientImpl implements CoreClient {
             builder.addBinaryBody("files", file.getStream(), fileContentType, file.getFilename());
         }
 
-        return this.service.invokeAPI(uri, "POST", builder.build(), this.accessToken, javaType);
+        return this.service.invokeAPI(uri, "UPLOAD", builder.build(), this.accessToken, javaType);
     }
 
     /**
      * OCR (ID card - Face)
      *
-     * @param input {@link OcrReq}
+     * @param image image
      * @return {@link OcrIdCardFaceRes}
      * @throws ApiException error
      */
     @Override
-    public OcrIdCardFaceRes ocrIdCardFace(OcrReq input) throws ApiException {
+    public OcrIdCardFaceRes ocrIdCardFace(String image) throws ApiException {
         String uri = "/open-api/v1/ocr/idcard/face";
+        String input = String.format("{\"image\":\"%s\"}", image);
         return this.service.invokeAPI(uri, "POST", buildEntity(input), this.accessToken, OcrIdCardFaceRes.class);
     }
 
     /**
      * OCR (ID card - Back)
      *
-     * @param input {@link OcrReq}
+     * @param image image
      * @return {@link OcrIdCardBackRes}
      * @throws ApiException error
      */
     @Override
-    public OcrIdCardBackRes ocrIdCardBack(OcrReq input) throws ApiException {
+    public OcrIdCardBackRes ocrIdCardBack(String image) throws ApiException {
         String uri = "/open-api/v1/ocr/idcard/back";
+        String input = String.format("{\"image\":\"%s\"}", image);
         return this.service.invokeAPI(uri, "POST", buildEntity(input), this.accessToken, OcrIdCardBackRes.class);
     }
 
     /**
      * OCR (Passport)
      *
-     * @param input {@link OcrReq}
+     * @param image image
      * @return {@link OcrPassportRes}
      * @throws ApiException error
      */
     @Override
-    public OcrPassportRes ocrPassport(OcrReq input) throws ApiException {
+    public OcrPassportRes ocrPassport(String image) throws ApiException {
         String uri = "/open-api/v1/ocr/passport";
+        String input = String.format("{\"image\":\"%s\"}", image);
         return this.service.invokeAPI(uri, "POST", buildEntity(input), this.accessToken, OcrPassportRes.class);
     }
 
@@ -195,27 +197,28 @@ public class CoreClientImpl implements CoreClient {
     /**
      * Reset account KYC
      *
-     * @param input {@link ResetAccountKycReq}
+     * @param accountId accountId
      * @return {@link Boolean}
      * @throws ApiException error
      */
     @Override
-    public Boolean resetAccountKyc(ResetAccountKycReq input) throws ApiException {
+    public Boolean resetAccountKyc(String accountId) throws ApiException {
         String uri = "/open-api/v1/kyc/reset";
+        String input = String.format("{\"accountId\":\"%s\"}", accountId);
         return this.service.invokeAPI(uri, "POST", buildEntity(input), this.accessToken, Boolean.class);
     }
 
     /**
      * Get a face authentication url
      *
-     * @param input {@link FaceAuthUrlReq}
+     * @param accountId accountId
      * @return {@link String}
      * @throws ApiException error
      */
     @Override
-    public String getFaceAuthUrl(FaceAuthUrlReq input) throws ApiException {
-        String uri = "/open-api/v1/kyc/face-auth-url";
-        return this.service.invokeAPI(Util.dealGetParams(input, uri), "GET", null, this.accessToken, String.class);
+    public String getFaceAuthUrl(String accountId) throws ApiException {
+        String uri = String.format("/open-api/v1/kyc/face-auth-url?accountId=%s", accountId);
+        return this.service.invokeAPI(uri, "GET", null, this.accessToken, String.class);
     }
 
     /**
@@ -246,19 +249,19 @@ public class CoreClientImpl implements CoreClient {
         builder.addBinaryBody("file", file.getStream(), fileContentType, file.getFilename());
         builder.addTextBody("accountId", input.getAccountId());
 
-        return this.service.invokeAPI(uri, "POST", builder.build(), this.accessToken, Boolean.class);
+        return this.service.invokeAPI(uri, "UPLOAD", builder.build(), this.accessToken, Boolean.class);
     }
 
     /**
      * Get a account KYC
      *
-     * @param input {@link AccountKycReq}
+     * @param accountId accountId
      * @return {@link AccountKycRes}
      * @throws ApiException error
      */
     @Override
-    public AccountKycRes getAccountKyc(AccountKycReq input) throws ApiException {
-        String uri = String.format("/open-api/v1/kyc/%s", input.getAccountId());
+    public AccountKycRes getAccountKyc(String accountId) throws ApiException {
+        String uri = String.format("/open-api/v1/kyc/%s", accountId);
         return this.service.invokeAPI(uri, "GET", null, this.accessToken, AccountKycRes.class);
     }
 
@@ -293,13 +296,13 @@ public class CoreClientImpl implements CoreClient {
     /**
      * Get a transfer
      *
-     * @param input {@link TransferReq}
+     * @param id id
      * @return {@link TransferRes}
      * @throws ApiException error
      */
     @Override
-    public TransferRes getTransfer(TransferReq input) throws ApiException {
-        String uri = String.format("/open-api/v1/asset/transfers/%s", input.getId());
+    public TransferRes getTransfer(String id) throws ApiException {
+        String uri = String.format("/open-api/v1/asset/transfers/%s", id);
         return this.service.invokeAPI(uri, "GET", null, this.accessToken, TransferRes.class);
     }
 
