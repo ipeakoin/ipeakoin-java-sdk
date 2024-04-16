@@ -11,6 +11,9 @@
 
     <artifactId>quantum-card-v1</artifactId>
     <packaging>jar</packaging>
+    <name>iPeakoin api</name>
+    <description>iPeakoin bass api</description>
+    <url>https://github.com/ipeakoin/ipeakoin-java-sdk</url>
 
     <dependencies>
         <dependency>
