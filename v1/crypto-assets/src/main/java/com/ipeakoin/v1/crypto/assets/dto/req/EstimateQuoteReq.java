@@ -1,5 +1,7 @@
 package com.ipeakoin.v1.crypto.assets.dto.req;
 
+import java.math.BigDecimal;
+
 /**
  * EstimateQuoteReq
  *
@@ -12,7 +14,7 @@ public class EstimateQuoteReq {
     private String quoteCurrency;
     private String side;
     private String rfqCurrency;
-    private String rfqAmount;
+    private BigDecimal rfqAmount;
 
     @Override
     public String toString() {
@@ -66,11 +68,11 @@ public class EstimateQuoteReq {
         this.rfqCurrency = rfqCurrency;
     }
 
-    public String getRfqAmount() {
+    public BigDecimal getRfqAmount() {
         return rfqAmount;
     }
 
-    public void setRfqAmount(String rfqAmount) {
+    public void setRfqAmount(BigDecimal rfqAmount) {
         this.rfqAmount = rfqAmount;
     }
 }

@@ -1,5 +1,7 @@
 package com.ipeakoin.v1.crypto.assets.dto.req;
 
+import com.ipeakoin.utils.req.LimitReq;
+
 /**
  * BalanceReq
  *

@@ -10,7 +10,6 @@ import com.ipeakoin.v1.quantum.card.dto.res.CardPrivateInfoReqRes;
 import com.ipeakoin.v1.quantum.card.dto.res.CreateCardCheckRes;
 import junit.framework.TestCase;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class QuantumCardClientTest extends TestCase {

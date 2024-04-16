@@ -1,5 +1,7 @@
 package com.ipeakoin.v1.crypto.assets.dto.req;
 
+import java.math.BigDecimal;
+
 /**
  * PayoutReq
  *
@@ -9,7 +11,7 @@ package com.ipeakoin.v1.crypto.assets.dto.req;
 public class PayoutReq {
     private String accountId;
     private String wireId;
-    private String amount;
+    private BigDecimal amount;
 
     @Override
     public String toString() {
@@ -36,11 +38,11 @@ public class PayoutReq {
         this.wireId = wireId;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

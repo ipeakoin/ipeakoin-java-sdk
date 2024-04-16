@@ -1,5 +1,7 @@
 package com.ipeakoin.v1.crypto.assets.dto.req;
 
+import java.math.BigDecimal;
+
 /**
  * WithdrawalReq
  *
@@ -10,7 +12,7 @@ public class WithdrawalReq {
     private String accountId;
     private String chain;
     private String currency;
-    private String amount;
+    private BigDecimal amount;
     private String address;
 
     @Override
@@ -48,11 +50,11 @@ public class WithdrawalReq {
         this.currency = currency;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
