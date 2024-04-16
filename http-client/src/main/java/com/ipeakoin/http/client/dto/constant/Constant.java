@@ -12,6 +12,10 @@ public class Constant {
      */
     public static final String X_ACCESS_TOKEN = "x-ipeakoin-access-token";
 
+    public static final String X_VERSION="x-version";
+
+    public static final String X_VERSION_VAL = "java "+ "2.0.0";
+
     /**
      * CONTENT_TYPE
      */

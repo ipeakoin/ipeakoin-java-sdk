@@ -205,6 +205,7 @@ public class HttpRequestsBase {
             if (accessToken != null) {
                 req.setHeader(Constant.X_ACCESS_TOKEN, accessToken);
             }
+            req.setHeader(Constant.X_VERSION, Constant.X_VERSION_VAL);
             req.setConfig(this.requestConfig);
             if (entity != null) {
                 req.setEntity(entity);

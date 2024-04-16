@@ -29,7 +29,7 @@ Add the following dependencies to your build.gradle file
 
 ```groovy
 // https://mvnrepository.com/artifact/com.ipeakoin/ipeakoin-sdk
-implementation group: 'com.ipeakoin', name: 'ipeakoin-sdk', version: '1.0.0-beta'
+implementation group: 'com.ipeakoin', name: 'ipeakoin-sdk', version: '2.0.0'
 
 ```
 
