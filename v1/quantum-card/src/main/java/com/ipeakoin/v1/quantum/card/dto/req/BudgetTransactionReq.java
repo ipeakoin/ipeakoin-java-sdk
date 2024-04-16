@@ -1,12 +1,14 @@
 package com.ipeakoin.v1.quantum.card.dto.req;
 
+import com.ipeakoin.utils.req.LimitReq;
+
 /**
  * BudgetTransactionReq
  *
  * @author klover
  * @date 2024/4/15 11:31
  */
-public class BudgetTransactionReq {
+public class BudgetTransactionReq extends LimitReq {
     private String id;
     private String accountId;
 
@@ -15,6 +17,8 @@ public class BudgetTransactionReq {
         return "BudgetTransactionReq{" +
                 "id='" + id + '\'' +
                 ", accountId='" + accountId + '\'' +
+                ", limit=" + limit +
+                ", page=" + page +
                 '}';
     }
 

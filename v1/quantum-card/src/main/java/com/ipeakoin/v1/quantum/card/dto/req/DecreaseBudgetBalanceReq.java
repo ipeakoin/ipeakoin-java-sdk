@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  */
 public class DecreaseBudgetBalanceReq {
     private String budgetId;
-    private BigDecimal cost;
+    private Integer cost;
     private String clientTransactionId;
 
     @Override
@@ -30,11 +30,11 @@ public class DecreaseBudgetBalanceReq {
         this.budgetId = budgetId;
     }
 
-    public BigDecimal getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(BigDecimal cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 

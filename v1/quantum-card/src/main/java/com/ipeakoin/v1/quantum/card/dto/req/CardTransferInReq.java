@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class CardTransferInReq {
     private String cardId;
     private String clientTransactionId;
-    private BigDecimal cost;
+    private Integer cost;
 
     @Override
     public String toString() {
@@ -38,11 +38,11 @@ public class CardTransferInReq {
         this.clientTransactionId = clientTransactionId;
     }
 
-    public BigDecimal getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(BigDecimal cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 }

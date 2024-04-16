@@ -294,7 +294,7 @@ public class QuantumCardClientImpl implements QuantumCardClient {
     public PageRes<CardTransaction> getCardTransactions(CardTransactionReq input) throws ApiException {
         String uri = "/open-api/v1/cards/transactions";
         JavaType javaType = JsonUtil.getCollectionType(PageRes.class, CardTransaction.class);
-        return this.service.invokeAPI(Util.dealGetParams(input, uri), "GET", null, this.accessToken, javaType);
+        return this.service.authInvokeAPI(Util.dealGetParams(input, uri), "GET", null, this.accessToken, javaType);
     }
 
 }

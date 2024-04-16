@@ -99,6 +99,22 @@ public class HttpRequestsBase {
      * @return {@link <T>}
      * @throws ApiException error
      */
+    public <T> T authInvokeAPI(String path, String method, HttpEntity entity, String accessToken, JavaType returnType) throws ApiException {
+        String s = invokeAPI(path, method, entity, accessToken);
+        return JsonUtil.parse(s, returnType, this.mapper);
+    }
+
+    /**
+     * 代理请求 参数处理
+     *
+     * @param path       路径
+     * @param method     请求方式
+     * @param entity     请求参数
+     * @param <T>        返回泛型
+     * @param returnType 返回参数类型
+     * @return {@link <T>}
+     * @throws ApiException error
+     */
     public <T> T invokeAPI(String path, String method, HttpEntity entity, String accessToken, JavaType returnType) throws ApiException {
         String s = invokeAPI(path, method, entity, accessToken);
         Map<String, Object> parse = JsonUtil.parse(s);
