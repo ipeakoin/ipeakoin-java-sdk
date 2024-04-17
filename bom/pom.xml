@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ipeakoin</groupId>
+        <artifactId>ipeakoin-sdk-pom</artifactId>
+        <version>2.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>bom</artifactId>
+    <packaging>pom</packaging>
+    <description>iPeakoin bass api</description>
+    <url>https://github.com/ipeakoin/ipeakoin-java-sdk</url>
+
+    <!-- SCM信息 -> git在github上托管 -->
+    <scm>
+        <connection>scm:git:https://github.com/ipeakoin/ipeakoin-java-sdk.git</connection>
+        <url>git:https://github.com/ipeakoin/ipeakoin-java-sdk</url>
+    </scm>
+
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <name>iPeakoin Team</name>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>auth-v1</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>core-v1</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>crypto-assets-v1</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>quantum-card-v1</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>core-v2</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>quantum-card-v2</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>utils</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ipeakoin</groupId>
+                <artifactId>http-client</artifactId>
+                <version>${sdk.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
