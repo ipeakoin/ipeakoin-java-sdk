@@ -5,6 +5,7 @@ import com.ipeakoin.http.client.MyHttpClientBuilder;
 import com.ipeakoin.http.client.dto.Credentials;
 import com.ipeakoin.http.client.dto.res.ApiException;
 import com.ipeakoin.utils.JsonUtil;
+import com.ipeakoin.v1.core.CoreClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 
 /**
@@ -13,7 +14,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
  * @author klover
  * @date 2024/4/11 20:24
  */
-public interface CoreV2Client {
+public interface CoreV2Client extends CoreClient {
     /**
      * Service构造器
      */

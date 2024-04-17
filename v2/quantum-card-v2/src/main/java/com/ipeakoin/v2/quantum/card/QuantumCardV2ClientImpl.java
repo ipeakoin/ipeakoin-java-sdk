@@ -8,6 +8,7 @@ import com.ipeakoin.http.client.dto.res.ApiException;
 import com.ipeakoin.utils.JsonUtil;
 import com.ipeakoin.utils.Util;
 import com.ipeakoin.utils.res.PageRes;
+import com.ipeakoin.v1.quantum.card.QuantumCardClientImpl;
 import com.ipeakoin.v2.quantum.card.dto.entity.AccountTransaction;
 import com.ipeakoin.v2.quantum.card.dto.entity.Card;
 import com.ipeakoin.v2.quantum.card.dto.req.AccountTxsReq;
@@ -20,13 +21,14 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
  * @author klover
  * @date 2024/4/11 20:48
  */
-public class QuantumCardV2ClientImpl implements QuantumCardV2Client {
+public class QuantumCardV2ClientImpl extends QuantumCardClientImpl implements QuantumCardV2Client {
     private final CloseableHttpClient httpClient;
     private final Credentials credentials;
     private final HttpRequestsBase service;
     private String accessToken;
 
     public QuantumCardV2ClientImpl(CloseableHttpClient httpClient, ObjectMapper mapper, Credentials credentials) {
+        super(httpClient, mapper, credentials);
         this.credentials = credentials;
         this.httpClient = httpClient;
         this.service = new HttpRequestsBase.Builder().build(this.httpClient, credentials.getBaseurl(), mapper, credentials.getRequestConfig());
@@ -39,6 +41,7 @@ public class QuantumCardV2ClientImpl implements QuantumCardV2Client {
      */
     @Override
     public void setAccessToken(String accessToken) {
+        super.setAccessToken(accessToken);
         this.accessToken = accessToken;
     }
 
@@ -50,7 +53,7 @@ public class QuantumCardV2ClientImpl implements QuantumCardV2Client {
      * @throws ApiException
      */
     @Override
-    public PageRes<Card> getCards(CardsReq input) throws ApiException {
+    public PageRes<Card> getCardList(CardsReq input) throws ApiException {
         String uri = "/open-api/v2/cards";
         JavaType javaType = JsonUtil.getCollectionType(PageRes.class, Card.class);
         return this.service.invokeAPI(Util.dealGetParams(input, uri), "GET", null, this.accessToken, javaType);
@@ -74,7 +77,7 @@ public class QuantumCardV2ClientImpl implements QuantumCardV2Client {
      * List all quantum account transactions
      *
      * @param input {@link AccountTxsReq}
-     * @return {@link PageRes< AccountTransaction >}
+     * @return {@link PageRes<AccountTransaction>}
      * @throws ApiException
      */
     @Override

@@ -124,6 +124,7 @@ public interface QuantumCardClient {
      * @param input {@link  CardReq}
      * @return {@link  PageRes<Card>}
      */
+    @Deprecated
     PageRes<Card> getCards(CardReq input) throws ApiException;
 
     /**

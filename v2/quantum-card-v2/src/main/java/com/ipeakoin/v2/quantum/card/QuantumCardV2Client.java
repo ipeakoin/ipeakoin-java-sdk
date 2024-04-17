@@ -6,6 +6,7 @@ import com.ipeakoin.http.client.dto.Credentials;
 import com.ipeakoin.http.client.dto.res.ApiException;
 import com.ipeakoin.utils.JsonUtil;
 import com.ipeakoin.utils.res.PageRes;
+import com.ipeakoin.v1.quantum.card.QuantumCardClient;
 import com.ipeakoin.v2.quantum.card.dto.entity.AccountTransaction;
 import com.ipeakoin.v2.quantum.card.dto.entity.Card;
 import com.ipeakoin.v2.quantum.card.dto.req.AccountTxsReq;
@@ -18,7 +19,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
  * @author klover
  * @date 2024/4/11 20:24
  */
-public interface QuantumCardV2Client {
+public interface QuantumCardV2Client extends QuantumCardClient {
     /**
      * Service构造器
      */
@@ -68,7 +69,7 @@ public interface QuantumCardV2Client {
      * @return {@link PageRes<Card>}
      * @throws ApiException
      */
-    PageRes<Card> getCards(CardsReq input) throws ApiException;
+    PageRes<Card> getCardList(CardsReq input) throws ApiException;
 
     /**
      * List all cards

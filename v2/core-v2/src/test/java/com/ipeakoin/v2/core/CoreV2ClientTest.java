@@ -1,7 +1,11 @@
 package com.ipeakoin.v2.core;
 
 import com.ipeakoin.http.client.dto.res.ApiException;
+import com.ipeakoin.utils.JsonUtil;
+import com.ipeakoin.v1.core.dto.res.AccountFeeRatesRes;
 import junit.framework.TestCase;
+
+import java.util.List;
 
 public class CoreV2ClientTest extends TestCase {
     private static CoreV2Client service = new CoreV2Client.Builder()
@@ -20,5 +24,14 @@ public class CoreV2ClientTest extends TestCase {
     public void testUpdateAccount() throws ApiException {
         Boolean res = service.updateAccount("c0e0822d-5e73-4f8d-9805-4b0814812dbe", "111@qq.com");
         System.out.println(res);
+    }
+
+    /**
+     * 调用V1中的方法
+     * @throws ApiException
+     */
+    public void testAccountFeeRates() throws ApiException {
+        List<AccountFeeRatesRes> res = service.accountFeeRates();
+        System.out.println(JsonUtil.toJSONString(res));
     }
 }
